@@ -2,28 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://phpopencv.org/zh-cn/docs/erosion_dilatation.html</loc>
+    <loc>http://phpopencv.org/zh-cn/index.html</loc>
     
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/face.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/structure.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    <lastmod>2019-05-31T06:03:50.265Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://phpopencv.org/index.html</loc>
+    
+    <lastmod>2019-05-31T06:03:44.329Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/zh-cn/docs/how_to_scan_images.html</loc>
     
     <lastmod>2019-05-31T02:04:10.262Z</lastmod>
     
@@ -37,21 +30,7 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/zh-cn/docs/mat_mask_operations.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/mat.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/index.html</loc>
+    <loc>http://phpopencv.org/zh-cn/docs/threshold.html</loc>
     
     <lastmod>2019-05-31T02:04:10.262Z</lastmod>
     
@@ -65,49 +44,7 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/zh-cn/docs/install.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/how_to_scan_images.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/flood_fill.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/threshold.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/quick-start.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/zh-cn/docs/gausian_median_blur_bilateral_filter.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/docs/opening_closing_hats.html</loc>
+    <loc>http://phpopencv.org/zh-cn/docs/mat_mask_operations.html</loc>
     
     <lastmod>2019-05-31T02:04:10.262Z</lastmod>
     
@@ -142,7 +79,63 @@
   </url>
   
   <url>
+    <loc>http://phpopencv.org/zh-cn/docs/structure.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/zh-cn/docs/quick-start.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/docs/opening_closing_hats.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/zh-cn/docs/gausian_median_blur_bilateral_filter.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/zh-cn/docs/mat.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://phpopencv.org/zh-cn/docs/adding_images.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/zh-cn/docs/install.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/zh-cn/docs/basic_geometric_drawing.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/zh-cn/docs/erosion_dilatation.html</loc>
     
     <lastmod>2019-05-31T02:04:10.262Z</lastmod>
     
@@ -163,56 +156,21 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/zh-cn/docs/basic_geometric_drawing.html</loc>
+    <loc>http://phpopencv.org/zh-cn/docs/face.html</loc>
     
     <lastmod>2019-05-31T02:04:10.262Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://phpopencv.org/docs/index.html</loc>
+    <loc>http://phpopencv.org/zh-cn/docs/flood_fill.html</loc>
     
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/docs/cascade_classifier_training.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    <lastmod>2019-05-31T02:04:10.262Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://phpopencv.org/docs/face.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/docs/erosion_dilatation.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/docs/flood_fill.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/docs/gausian_median_blur_bilateral_filter.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/api/core_functions.html</loc>
+    <loc>http://phpopencv.org/docs/internationalization.html</loc>
     
     <lastmod>2019-05-31T02:04:10.258Z</lastmod>
     
@@ -226,28 +184,21 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/docs/install.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/docs/generating.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://phpopencv.org/docs/internationalization.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://phpopencv.org/docs/mat.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/docs/index.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/docs/install.html</loc>
     
     <lastmod>2019-05-31T02:04:10.258Z</lastmod>
     
@@ -268,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/api/imgproc_constants.html</loc>
+    <loc>http://phpopencv.org/docs/mat_operations.html</loc>
     
     <lastmod>2019-05-31T02:04:10.258Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://phpopencv.org/docs/mat_operations.html</loc>
+    <loc>http://phpopencv.org/api/core_functions.html</loc>
     
     <lastmod>2019-05-31T02:04:10.258Z</lastmod>
     
@@ -296,13 +247,6 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/api/mat.html</loc>
-    
-    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://phpopencv.org/api/rotated_rect.html</loc>
     
     <lastmod>2019-05-31T02:04:10.258Z</lastmod>
@@ -317,7 +261,21 @@
   </url>
   
   <url>
+    <loc>http://phpopencv.org/api/mat.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://phpopencv.org/docs/basic_geometric_drawing.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/api/imgproc_constants.html</loc>
     
     <lastmod>2019-05-31T02:04:10.258Z</lastmod>
     
@@ -331,6 +289,13 @@
   </url>
   
   <url>
+    <loc>http://phpopencv.org/docs/cascade_classifier_training.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://phpopencv.org/docs/dev-prepare.html</loc>
     
     <lastmod>2019-05-31T02:04:10.258Z</lastmod>
@@ -338,9 +303,37 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/zh-cn/docs/core/mat.html</loc>
+    <loc>http://phpopencv.org/docs/erosion_dilatation.html</loc>
     
-    <lastmod>2019-05-31T02:04:10.000Z</lastmod>
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/docs/face.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/docs/generating.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/docs/gausian_median_blur_bilateral_filter.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://phpopencv.org/docs/flood_fill.html</loc>
+    
+    <lastmod>2019-05-31T02:04:10.258Z</lastmod>
     
   </url>
   
@@ -352,7 +345,7 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/zh-cn/docs/pyramids.html</loc>
+    <loc>http://phpopencv.org/zh-cn/docs/generating.html</loc>
     
     <lastmod>2018-12-04T04:04:00.361Z</lastmod>
     
@@ -373,7 +366,7 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/zh-cn/docs/generating.html</loc>
+    <loc>http://phpopencv.org/zh-cn/docs/pyramids.html</loc>
     
     <lastmod>2018-12-04T04:04:00.361Z</lastmod>
     
@@ -422,14 +415,14 @@
   </url>
   
   <url>
-    <loc>http://phpopencv.org/news/2014/07/13/hexo-2-8-released/</loc>
+    <loc>http://phpopencv.org/news/2014/06/14/hexo-2-7-released/</loc>
     
     <lastmod>2018-12-04T04:04:00.189Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://phpopencv.org/news/2014/06/14/hexo-2-7-released/</loc>
+    <loc>http://phpopencv.org/news/2014/07/13/hexo-2-8-released/</loc>
     
     <lastmod>2018-12-04T04:04:00.189Z</lastmod>
     
