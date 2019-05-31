@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>图像平滑处理 | PHPOpenCV</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://phpopencv.org/zh-cn/docs/gausian_median_blur_bilateral_filter.html">
+  <!-- Alternative links -->
+  
+    
+      <link rel="alternative" hreflang="en" href="http://phpopencv.org/docs/gausian_median_blur_bilateral_filter.html">
+    
+      <link rel="alternative" hreflang="zh-cn" href="http://phpopencv.org/zh-cn/docs/gausian_median_blur_bilateral_filter.html">
+    
+  
+  <!-- Icon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/icon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/icon/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#2f83cd">
+  <meta name="msapplication-TileImage" content="/icon/mstile-144x144.png">
+  <!-- CSS -->
+  <!-- build:css build/css/navy.css -->
+  <link rel="stylesheet" href="/css/navy.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css">
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="PHPOpenCV">
+  <!-- Open Graph -->
+  <meta name="description" content="目标在本教程中，您将学习如何使用多种线性滤镜来平滑使用PHPOpenCV功能的图像，如：  均值滤波————CV\blur 函数 高斯滤波————CV\GaussianBlur函数 中值滤波————CV\medianBlur函数 双边滤波————CV\bilateralFilter函数  原理注意下面的解释出自Richard Szeliski的《Computer Vision: Algorithm">
+<meta property="og:type" content="website">
+<meta property="og:title" content="图像平滑处理">
+<meta property="og:url" content="http://phpopencv.org/zh-cn/docs/gausian_median_blur_bilateral_filter.html">
+<meta property="og:site_name" content="PHPOpenCV">
+<meta property="og:description" content="目标在本教程中，您将学习如何使用多种线性滤镜来平滑使用PHPOpenCV功能的图像，如：  均值滤波————CV\blur 函数 高斯滤波————CV\GaussianBlur函数 中值滤波————CV\medianBlur函数 双边滤波————CV\bilateralFilter函数  原理注意下面的解释出自Richard Szeliski的《Computer Vision: Algorithm">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://phpopencv.org/images/docs/gausian_median_blur_bilateral_filter/1.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/gausian_median_blur_bilateral_filter/2.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/gausian_median_blur_bilateral_filter/3.jpg">
+<meta property="og:image" content="http://phpopencv.org/images/docs/gausian_median_blur_bilateral_filter/4.png">
+<meta property="og:updated_time" content="2019-05-31T02:04:10.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像平滑处理">
+<meta name="twitter:description" content="目标在本教程中，您将学习如何使用多种线性滤镜来平滑使用PHPOpenCV功能的图像，如：  均值滤波————CV\blur 函数 高斯滤波————CV\GaussianBlur函数 中值滤波————CV\medianBlur函数 双边滤波————CV\bilateralFilter函数  原理注意下面的解释出自Richard Szeliski的《Computer Vision: Algorithm">
+<meta name="twitter:image" content="http://phpopencv.org/images/docs/gausian_median_blur_bilateral_filter/1.png">
+<meta name="twitter:site" content="hexojs">
+<meta property="fb:admins" content="100000247608790">
+  <!-- Google Analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48498357-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  <!-- Google AdSense -->
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9461880259118621",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <!-- Github Button -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <header id="header" class="wrapper">
+  <div id="header-inner" class="inner">
+    <h1 id="logo-wrap">
+      <a href="/zh-cn/" id="logo">PHPOpenCV</a>
+    </h1>
+    <nav id="main-nav">
+      <a href="/docs/" class="main-nav-link">文档</a>
+      <a href="https://github.com/hihozhou/php-opencv" class="main-nav-link"><i class="fa fa-github-alt"></i></a>
+
+    </nav>
+    <div id="lang-select-wrap">
+      <label id="lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></label>
+      <select id="lang-select" data-canonical="docs/gausian_median_blur_bilateral_filter.html">
+        
+          <option value="en">English</option>
+        
+          <option value="zh-cn" selected>简体中文</option>
+        
+      </select>
+    </div>
+    <a id="mobile-nav-toggle">
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+    </a>
+  </div>
+</header>
+
+    <div id="content-wrap">
+  <div id="content" class="wrapper">
+    <div id="content-inner">
+      <article class="article-container" itemscope itemtype="http://schema.org/Article">
+        <div class="article-inner">
+          <div class="article">
+            <div class="inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">图像平滑处理</h1>
+                <a href="https://github.com/phpopencv/site/edit/master/source/zh-cn/docs/gausian_median_blur_bilateral_filter.md" class="article-edit-link" title="改进本文"><i class="fa fa-pencil"></i></a>
+              </header>
+              <div class="article-content" itemprop="articleBody">
+                <h2 id="目标" class="article-heading"><a href="#目标" class="headerlink" title="目标"></a>目标<a class="article-anchor" href="#目标" aria-hidden="true"></a></h2><p>在本教程中，您将学习如何使用多种线性滤镜来平滑使用PHPOpenCV功能的图像，如：</p>
+<ul>
+<li>均值滤波————CV\blur 函数</li>
+<li>高斯滤波————CV\GaussianBlur函数</li>
+<li>中值滤波————CV\medianBlur函数</li>
+<li>双边滤波————CV\bilateralFilter函数</li>
+</ul>
+<h2 id="原理" class="article-heading"><a href="#原理" class="headerlink" title="原理"></a>原理<a class="article-anchor" href="#原理" aria-hidden="true"></a></h2><blockquote class="note tip"><strong class="note-title">注意</strong><p>下面的解释出自Richard Szeliski的<a href="http://szeliski.org/Book/" target="_blank" rel="noopener">《Computer Vision: Algorithms and Applications》</a>一书</p>
+</blockquote>
+<ul>
+<li>平滑，也称为模糊，是一种简单而经常使用的图像处理操作。</li>
+<li>平滑的原因很多。在本教程中，我们将专注于平滑以减少噪音（其他用途将在以下教程中看到）。</li>
+<li>我们使用滤波器对图像进行平滑操作。最常见的是滤波器是线性滤波器，线性滤波处理输出的像素值<code>g(i,j))</code>为输入像素值<code>f(i+k,j+l)</code>的加权和</li>
+</ul>
+<div align="center"><br><img src="/images/docs/gausian_median_blur_bilateral_filter/1.png" alt="1.png"><br></div>
+
+<p><code>h(k,l)</code>被称为内核，它只不过是过滤器的系数。<br>它有助于可视化过滤器作为一个窗口的系数滑动横跨图像</p>
+<ul>
+<li>有很多种过滤器，这里我们将提到最常用的：</li>
+</ul>
+<h2 id="归一化框过滤器" class="article-heading"><a href="#归一化框过滤器" class="headerlink" title="归一化框过滤器"></a>归一化框过滤器<a class="article-anchor" href="#归一化框过滤器" aria-hidden="true"></a></h2><ul>
+<li>这个过滤器是最简单的！每个输出像素是其内核邻居的均值（均为相等权重）</li>
+<li>内核如下：</li>
+</ul>
+<div align="center"><br><img src="/images/docs/gausian_median_blur_bilateral_filter/2.png" alt="2.png"><br></div>
+
+<h2 id="高斯滤波器" class="article-heading"><a href="#高斯滤波器" class="headerlink" title="高斯滤波器"></a>高斯滤波器<a class="article-anchor" href="#高斯滤波器" aria-hidden="true"></a></h2><ul>
+<li>可能是最有用的过滤器（虽然不是最快的）。高斯滤波是通过将输入数组中的每个点与高斯核进行卷积来完成的，然后将它们相加以产生输出数组。</li>
+<li>只是为了使图片更清晰，一维高斯内核是这样的</li>
+</ul>
+<div align="center"><br><img src="/images/docs/gausian_median_blur_bilateral_filter/3.jpg" alt="3.jpg"><br></div>
+
+<p>假设图像为1D，您可以注意到位于中间的像素将具有最大的权重。其邻居的权重随着它们与中心像素之间的空间距离的增加而减小。</p>
+<blockquote class="note tip"><strong class="note-title">注意</strong><p>2D高斯可以表示为：<br>    <div align="center"><br>    <img src="/images/docs/gausian_median_blur_bilateral_filter/4.png" alt="4.png"><br>    </div></p>
+<p>其中μ是平均值（峰值）和σ表示方差（每个变量x和y）</p>
+</blockquote>
+<h2 id="中值滤波" class="article-heading"><a href="#中值滤波" class="headerlink" title="中值滤波"></a>中值滤波<a class="article-anchor" href="#中值滤波" aria-hidden="true"></a></h2><p>中值滤波器遍历信号的每个元素（在这种情况下为图像），并用其相邻像素的中位数（位于估计像素周围的正方形邻域）中替换每个像素。</p>
+<h2 id="双边滤波" class="article-heading"><a href="#双边滤波" class="headerlink" title="双边滤波"></a>双边滤波<a class="article-anchor" href="#双边滤波" aria-hidden="true"></a></h2><ul>
+<li>到目前为止，我们已经解释了一些过滤器，其主要目标是平滑输入图像。然而，有时过滤器不仅可以消除噪音，还可以使边缘平滑。为了避免这种情况（至少在一定程度上），我们可以使用双边筛选器。</li>
+<li>以与高斯滤波器类似的方式，双边滤波器也考虑相邻像素，其权重分配给它们。这些权重具有两个分量，其中第一个是高斯滤波器使用的相同加权。第二个组件考虑了相邻像素与被评估的像素之间的强度差异。</li>
+<li>有关更详细的说明，您可以查看此链接</li>
+</ul>
+<h2 id="代码例子" class="article-heading"><a href="#代码例子" class="headerlink" title="代码例子"></a>代码例子<a class="article-anchor" href="#代码例子" aria-hidden="true"></a></h2><ul>
+<li>这个程序是做什么的？<ul>
+<li>加载图像</li>
+<li>应用4种不同的过滤器（在理论中解释），并顺序显示过滤的图像</li>
+</ul>
+</li>
+<li>可下载的代码：<a href="https://github.com/phpopencv/tutorial-demo/tree/master/ImgProc/Smoothing" target="_blank" rel="noopener">点击这里</a></li>
+<li>代码一览：</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">Mat</span>, <span class="title">Point</span>, <span class="title">Scalar</span>, <span class="title">Size</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">putText</span>, <span class="title">imshow</span>, <span class="title">waitKey</span>, <span class="title">namedWindow</span>, <span class="title">imread</span>,</span><br><span class="line">    <span class="title">blur</span>, <span class="title">GaussianBlur</span>, <span class="title">medianBlur</span>, <span class="title">bilateralFilter</span>,<span class="title">moveWindow</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">FONT_HERSHEY_COMPLEX</span>, <span class="title">WINDOW_AUTOSIZE</span>, <span class="title">IMREAD_COLOR</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> DELAY_CAPTION = <span class="number">1500</span>;</span><br><span class="line"><span class="keyword">const</span> DELAY_BLUR = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> MAX_KERNEL_LENGTH = <span class="number">31</span>;</span><br><span class="line"></span><br><span class="line">$windowName = <span class="string">'Smoothing Demo'</span>;</span><br><span class="line">$src = <span class="keyword">null</span>;</span><br><span class="line">$dst = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">displayCaption</span><span class="params">(string $caption)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $src, $dst, $windowName;</span><br><span class="line">    $dst = Mat::zerosBySize($src-&gt;size(), $src-&gt;type());</span><br><span class="line">    putText(</span><br><span class="line">        $dst,</span><br><span class="line">        $caption,</span><br><span class="line">        <span class="keyword">new</span> Point($src-&gt;cols / <span class="number">4</span>, $src-&gt;rows / <span class="number">2</span>),</span><br><span class="line">        FONT_HERSHEY_COMPLEX,</span><br><span class="line">        <span class="number">1</span>,</span><br><span class="line">        <span class="keyword">new</span> Scalar(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    imshow($windowName, $dst);</span><br><span class="line">    $key = waitKey(DELAY_CAPTION);</span><br><span class="line">    <span class="keyword">if</span> ($key &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">displayDst</span><span class="params">(int $delay)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $dst, $windowName;</span><br><span class="line">    imshow($windowName, $dst);</span><br><span class="line">    $key = waitKey($delay);</span><br><span class="line">    <span class="keyword">if</span> ($key &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $windowName, $src, $dst;</span><br><span class="line">    namedWindow($windowName, WINDOW_AUTOSIZE);</span><br><span class="line">    moveWindow($windowName,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Load the source image</span></span><br><span class="line">    $src = imread(<span class="string">"lena.jpg"</span>, IMREAD_COLOR);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (displayCaption(<span class="string">"Original Image"</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    $dst = $src-&gt;clone();</span><br><span class="line">    <span class="keyword">if</span> (displayDst(DELAY_CAPTION) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Applying Homogeneous blur</span></span><br><span class="line">    <span class="keyword">if</span> (displayCaption(<span class="string">"Homogeneous Blur"</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//![blur]</span></span><br><span class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt; MAX_KERNEL_LENGTH; $i = $i + <span class="number">2</span>) &#123;</span><br><span class="line">        blur($src, $dst, <span class="keyword">new</span> Size($i, $i), <span class="keyword">new</span> Point(<span class="number">-1</span>, <span class="number">-1</span>));</span><br><span class="line">        <span class="keyword">if</span> (displayDst(DELAY_BLUR) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//![blur]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Applying Gaussian blur</span></span><br><span class="line">    <span class="keyword">if</span> (displayCaption(<span class="string">"Gaussian Blur"</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//![gaussianblur]</span></span><br><span class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt; MAX_KERNEL_LENGTH; $i = $i + <span class="number">2</span>) &#123;</span><br><span class="line">        GaussianBlur($src, $dst, <span class="keyword">new</span> Size($i, $i), <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span> (displayDst(DELAY_BLUR) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//![gaussianblur]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Applying Median blur</span></span><br><span class="line">    <span class="keyword">if</span> (displayCaption(<span class="string">"Median Blur"</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//![medianblur]</span></span><br><span class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt; MAX_KERNEL_LENGTH; $i = $i + <span class="number">2</span>) &#123;</span><br><span class="line">        medianBlur($src, $dst, $i);</span><br><span class="line">        <span class="keyword">if</span> (displayDst(DELAY_BLUR) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//![medianblur]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Applying Bilateral Filter</span></span><br><span class="line">    <span class="keyword">if</span> (displayCaption(<span class="string">"Bilateral Blur"</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//![bilateralfilter]</span></span><br><span class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt; MAX_KERNEL_LENGTH; $i = $i + <span class="number">2</span>) &#123;</span><br><span class="line">        bilateralFilter($src, $dst, $i, $i * <span class="number">2</span>, $i / <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span> (displayDst(DELAY_BLUR) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//![bilateralfilter]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Wait until user press a key</span></span><br><span class="line">    displayCaption(<span class="string">"End: Press a key!"</span>);</span><br><span class="line"></span><br><span class="line">    waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">run();</span><br></pre></td></tr></table></figure>
+<h3 id="运行结果" class="article-heading"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果<a class="article-anchor" href="#运行结果" aria-hidden="true"></a></h3><div align="center"><br>    <video id="video" controls src="/images/docs/gausian_median_blur_bilateral_filter/result.mp4"><br>          <p>Your user agent does not support the HTML5 Video element.</p><br>    </video><br></div>
+
+
+
+
+              </div>
+              <footer class="article-footer">
+                <time class="article-footer-updated" datetime="2019-05-31T02:04:10.262Z" itemprop="dateModified">上次更新：2019-05-31</time>
+                <a href="file_input_output_with_xml_yml.html" class="article-footer-prev" title="文件输入和输出使用XML和YAML文件"><i class="fa fa-chevron-left"></i><span>上一页</span></a><a href="erosion_dilatation.html" class="article-footer-next" title="腐蚀和膨胀"><span>下一页</span><i class="fa fa-chevron-right"></i></a>
+              </footer>
+              
+<section id="comments">
+  <div id="disqus_thread"></div>
+</section>
+<script>
+  var disqus_shortname = 'phpopencv';
+  var disqus_url = 'http://phpopencv.org/zh-cn/docs/gausian_median_blur_bilateral_filter.html';
+  var disqus_title = "图像平滑处理";
+  var disqus_config = function(){
+    this.language = 'zh';
+  };
+  (function(){
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+            </div>
+          </div>
+          <aside id="article-toc" role="navigation">
+            <div id="article-toc-inner">
+              <strong class="sidebar-title">目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归一化框过滤器"><span class="toc-text">归一化框过滤器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯滤波器"><span class="toc-text">高斯滤波器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中值滤波"><span class="toc-text">中值滤波</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双边滤波"><span class="toc-text">双边滤波</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码例子"><span class="toc-text">代码例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#运行结果"><span class="toc-text">运行结果</span></a></li></ol></li></ol>
+              <a href="#" id="article-toc-top">回到顶部</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <aside id="sidebar" role="navigation">
+  <div class="inner"><strong class="sidebar-title">开始使用</strong><a href="index.html" class="sidebar-link">概述</a><a href="install.html" class="sidebar-link">安装</a><a href="structure.html" class="sidebar-link">结构</a><a href="dev-prepare.html" class="sidebar-link">开发前准备</a><a href="quick-start.html" class="sidebar-link">快速开始</a><strong class="sidebar-title">核心模块</strong><a href="core/mat.html" class="sidebar-link">sidebar.docs.mat123</a><a href="mat.html" class="sidebar-link">Mat</a><a href="how_to_scan_images.html" class="sidebar-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="sidebar-link">矩阵的掩码操作</a><a href="mat_operations.html" class="sidebar-link">图像操作</a><a href="adding_images.html" class="sidebar-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="sidebar-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="sidebar-link">基本绘图</a><a href="random_generator_and_text.html" class="sidebar-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="sidebar-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="sidebar-link">文件输入和输出使用XML和YAML文件</a><strong class="sidebar-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="sidebar-link current">图像平滑处理</a><a href="erosion_dilatation.html" class="sidebar-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="sidebar-link">更多的形态变换</a><a href="flood_fill.html" class="sidebar-link">漫水填充</a><a href="pyramids.html" class="sidebar-link">图像金字塔</a><a href="threshold.html" class="sidebar-link">基本的阈值操作</a><a href="threshold_inRange.html" class="sidebar-link">阈值的使用范围</a><a href="filter_2d.html" class="sidebar-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="sidebar-link">向图像添加边框</a><a href="sobel_derivatives.html" class="sidebar-link">索贝尔衍生物</a><a href="laplace_operator.html" class="sidebar-link">拉普拉斯算子</a><a href="canny_detector.html" class="sidebar-link">Canny边缘检测器</a><a href="hough_lines.html" class="sidebar-link">霍夫线变换</a><a href="hough_circle.html" class="sidebar-link">霍夫圈变换</a><strong class="sidebar-title">highgui</strong><a href="trackbar.html" class="sidebar-link">滑动条</a><strong class="sidebar-title">目标检测</strong><a href="cascade_classifier.html" class="sidebar-link">级联分类器</a><a href="cascade_classifier_training.html" class="sidebar-link">级联分类器训练</a><strong class="sidebar-title">contaib模块</strong><a href="face.html" class="sidebar-link">人脸识别</a></div>
+</aside>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="wrapper">
+  <div class="inner">
+    <div id="footer-copyright">
+      &copy; 2019 <a href="https://github.com/hihozhou" target="_blank">HiHo Zhou</a><br>
+      Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
+    </div>
+    <div id="footer-links">
+      <a href="http://weibo.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-weibo"></i></a>
+      <a href="https://twitter.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-twitter"></i></a>
+      <a href="https://github.com/hihozhou/php-opencv" class="footer-link" target="_blank"><i class="fa fa-github-alt"></i></a>
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <div id="mobile-nav-dimmer"></div>
+  <nav id="mobile-nav">
+  <div id="mobile-nav-inner">
+    <ul id="mobile-nav-list">
+      <a href="/docs/" class="mobile-nav-link">文档</a>
+      <li class="mobile-nav-item">
+        <a href="https://github.com/hihozhou/php-opencv" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
+      </li>
+    </ul>
+    
+      <strong class="mobile-nav-title">开始使用</strong><a href="index.html" class="mobile-nav-link">概述</a><a href="install.html" class="mobile-nav-link">安装</a><a href="structure.html" class="mobile-nav-link">结构</a><a href="dev-prepare.html" class="mobile-nav-link">开发前准备</a><a href="quick-start.html" class="mobile-nav-link">快速开始</a><strong class="mobile-nav-title">核心模块</strong><a href="core/mat.html" class="mobile-nav-link">sidebar.docs.mat123</a><a href="mat.html" class="mobile-nav-link">Mat</a><a href="how_to_scan_images.html" class="mobile-nav-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="mobile-nav-link">矩阵的掩码操作</a><a href="mat_operations.html" class="mobile-nav-link">图像操作</a><a href="adding_images.html" class="mobile-nav-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="mobile-nav-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="mobile-nav-link">基本绘图</a><a href="random_generator_and_text.html" class="mobile-nav-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="mobile-nav-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="mobile-nav-link">文件输入和输出使用XML和YAML文件</a><strong class="mobile-nav-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="mobile-nav-link current">图像平滑处理</a><a href="erosion_dilatation.html" class="mobile-nav-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="mobile-nav-link">更多的形态变换</a><a href="flood_fill.html" class="mobile-nav-link">漫水填充</a><a href="pyramids.html" class="mobile-nav-link">图像金字塔</a><a href="threshold.html" class="mobile-nav-link">基本的阈值操作</a><a href="threshold_inRange.html" class="mobile-nav-link">阈值的使用范围</a><a href="filter_2d.html" class="mobile-nav-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="mobile-nav-link">向图像添加边框</a><a href="sobel_derivatives.html" class="mobile-nav-link">索贝尔衍生物</a><a href="laplace_operator.html" class="mobile-nav-link">拉普拉斯算子</a><a href="canny_detector.html" class="mobile-nav-link">Canny边缘检测器</a><a href="hough_lines.html" class="mobile-nav-link">霍夫线变换</a><a href="hough_circle.html" class="mobile-nav-link">霍夫圈变换</a><strong class="mobile-nav-title">highgui</strong><a href="trackbar.html" class="mobile-nav-link">滑动条</a><strong class="mobile-nav-title">目标检测</strong><a href="cascade_classifier.html" class="mobile-nav-link">级联分类器</a><a href="cascade_classifier_training.html" class="mobile-nav-link">级联分类器训练</a><strong class="mobile-nav-title">contaib模块</strong><a href="face.html" class="mobile-nav-link">人脸识别</a>
+    
+  </div>
+  <div id="mobile-lang-select-wrap">
+    <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></span>
+    <select id="mobile-lang-select" data-canonical="docs/gausian_median_blur_bilateral_filter.html">
+      
+        <option value="en">English</option>
+      
+        <option value="zh-cn" selected>简体中文</option>
+      
+    </select>
+  </div>
+</nav>
+  <!-- Scripts -->
+<!-- build:js build/js/main.js -->
+<script src="/js/lang_select.js"></script>
+<script src="/js/scrollingelement.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/mobile_nav.js"></script>
+<!-- endbuild -->
+<script src="https://cdn.jsdelivr.net/retinajs/1.3.0/retina.min.js" async></script>
+
+<!-- Algolia -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript">
+document.getElementById('search-input-wrap').classList.add('on');
+docsearch({
+  apiKey: 'cdea7d4e47d84f6145b77e7f68689f35',
+  indexName: 'hexo_zh-cn',
+  inputSelector: '#search-input'
+});
+</script>
+
+
+</body>
+</html>

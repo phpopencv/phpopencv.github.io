@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>基本绘图 | PHPOpenCV</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://phpopencv.org/docs/basic_geometric_drawing.html">
+  <!-- Alternative links -->
+  
+    
+      <link rel="alternative" hreflang="en" href="http://phpopencv.org/docs/basic_geometric_drawing.html">
+    
+      <link rel="alternative" hreflang="zh-cn" href="http://phpopencv.org/zh-cn/docs/basic_geometric_drawing.html">
+    
+  
+  <!-- Icon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/icon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/icon/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#2f83cd">
+  <meta name="msapplication-TileImage" content="/icon/mstile-144x144.png">
+  <!-- CSS -->
+  <!-- build:css build/css/navy.css -->
+  <link rel="stylesheet" href="/css/navy.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css">
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="PHPOpenCV">
+  <!-- Open Graph -->
+  <meta name="description" content="目标在本篇教程中你将学到：  在图像中使用CV\Point定义二维点 使用CV\Scalar以及为何它很有用 使用CV\line绘制一条直线 使用CV\ellipse绘制一个椭圆 使用CV\rectangleByPoint绘制一个矩形 使用CV\circle绘制一个圆 使用CV\fillPoly绘制一个填充的多边形  原理在本篇教程中，我们将着重使用两个对象：CV\Point 和 CV\Scala">
+<meta property="og:type" content="website">
+<meta property="og:title" content="基本绘图">
+<meta property="og:url" content="http://phpopencv.org/docs/basic_geometric_drawing.html">
+<meta property="og:site_name" content="PHPOpenCV">
+<meta property="og:description" content="目标在本篇教程中你将学到：  在图像中使用CV\Point定义二维点 使用CV\Scalar以及为何它很有用 使用CV\line绘制一条直线 使用CV\ellipse绘制一个椭圆 使用CV\rectangleByPoint绘制一个矩形 使用CV\circle绘制一个圆 使用CV\fillPoly绘制一个填充的多边形  原理在本篇教程中，我们将着重使用两个对象：CV\Point 和 CV\Scala">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://phpopencv.org/images/docs/basic_geometric_drawing/result.png">
+<meta property="og:updated_time" content="2019-05-31T02:04:10.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基本绘图">
+<meta name="twitter:description" content="目标在本篇教程中你将学到：  在图像中使用CV\Point定义二维点 使用CV\Scalar以及为何它很有用 使用CV\line绘制一条直线 使用CV\ellipse绘制一个椭圆 使用CV\rectangleByPoint绘制一个矩形 使用CV\circle绘制一个圆 使用CV\fillPoly绘制一个填充的多边形  原理在本篇教程中，我们将着重使用两个对象：CV\Point 和 CV\Scala">
+<meta name="twitter:image" content="http://phpopencv.org/images/docs/basic_geometric_drawing/result.png">
+<meta name="twitter:site" content="hexojs">
+<meta property="fb:admins" content="100000247608790">
+  <!-- Google Analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48498357-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  <!-- Google AdSense -->
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9461880259118621",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <!-- Github Button -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <header id="header" class="wrapper">
+  <div id="header-inner" class="inner">
+    <h1 id="logo-wrap">
+      <a href="/" id="logo">PHPOpenCV</a>
+    </h1>
+    <nav id="main-nav">
+      <a href="/docs/" class="main-nav-link">Docs</a>
+      <a href="https://github.com/hihozhou/php-opencv" class="main-nav-link"><i class="fa fa-github-alt"></i></a>
+
+    </nav>
+    <div id="lang-select-wrap">
+      <label id="lang-select-label"><i class="fa fa-globe"></i><span>English</span></label>
+      <select id="lang-select" data-canonical="docs/basic_geometric_drawing.html">
+        
+          <option value="en" selected>English</option>
+        
+          <option value="zh-cn">简体中文</option>
+        
+      </select>
+    </div>
+    <a id="mobile-nav-toggle">
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+    </a>
+  </div>
+</header>
+
+    <div id="content-wrap">
+  <div id="content" class="wrapper">
+    <div id="content-inner">
+      <article class="article-container" itemscope itemtype="http://schema.org/Article">
+        <div class="article-inner">
+          <div class="article">
+            <div class="inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">基本绘图</h1>
+                <a href="https://github.com/phpopencv/site/edit/master/source/docs/basic_geometric_drawing.md" class="article-edit-link" title="Improve this doc"><i class="fa fa-pencil"></i></a>
+              </header>
+              <div class="article-content" itemprop="articleBody">
+                <h2 id="目标" class="article-heading"><a href="#目标" class="headerlink" title="目标"></a>目标<a class="article-anchor" href="#目标" aria-hidden="true"></a></h2><p>在本篇教程中你将学到：</p>
+<ul>
+<li>在图像中使用<code>CV\Point</code>定义二维点</li>
+<li>使用<code>CV\Scalar</code>以及为何它很有用</li>
+<li>使用<code>CV\line</code>绘制一条直线</li>
+<li>使用<code>CV\ellipse</code>绘制一个椭圆</li>
+<li>使用<code>CV\rectangleByPoint</code>绘制一个矩形</li>
+<li>使用<code>CV\circle</code>绘制一个圆</li>
+<li>使用<code>CV\fillPoly</code>绘制一个填充的多边形</li>
+</ul>
+<h2 id="原理" class="article-heading"><a href="#原理" class="headerlink" title="原理"></a>原理<a class="article-anchor" href="#原理" aria-hidden="true"></a></h2><p>在本篇教程中，我们将着重使用两个对象：<code>CV\Point</code> 和 <code>CV\Scalar</code> :</p>
+<h3 id="Point对象" class="article-heading"><a href="#Point对象" class="headerlink" title="Point对象"></a>Point对象<a class="article-anchor" href="#Point对象" aria-hidden="true"></a></h3><p>Point对象表示一个由它的图像坐标<code>x</code>和<code>y</code>指定的二维点。我们可以像下面这样定义它：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$pt = <span class="keyword">new</span> Ponit();</span><br><span class="line">$pt-&gt;x = <span class="number">10</span>;</span><br><span class="line">$pt-&gt;y = <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$pt = <span class="keyword">new</span> Ponit(<span class="number">10</span>,<span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="Scalar对象" class="article-heading"><a href="#Scalar对象" class="headerlink" title="Scalar对象"></a>Scalar对象<a class="article-anchor" href="#Scalar对象" aria-hidden="true"></a></h3><ul>
+<li>代表一个4元素的向量。 Scalar对象在PHPOpenCV中被广泛地用于传递像素的值。</li>
+<li>在本教程中，我们将使用它来表示BGR颜色值（3个参数）。 如果不打算使用最后一个参数的话，则无需定义它。</li>
+<li>让我们来看个小例子， 当我们需要一个代表颜色的参数时，像下面这样写：<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$color = <span class="keyword">new</span> Scalar($a, $b, $c);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样我们就定义了一个<code>BGR</code>表示的颜色参数，其中:B(Blue)的值为$a,G(Green)的值为$b,R(Red)的值为$c</p>
+<h2 id="源代码" class="article-heading"><a href="#源代码" class="headerlink" title="源代码"></a>源代码<a class="article-anchor" href="#源代码" aria-hidden="true"></a></h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">CV</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">Mat</span>, <span class="title">Point</span>, <span class="title">Size</span>, <span class="title">Scalar</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">CV_8UC3</span>, <span class="title">LINE_8</span>, <span class="title">FILLED</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">ellipse</span>, <span class="title">circle</span>, <span class="title">fillPoly</span>, <span class="title">rectangleByPoint</span>, <span class="title">line</span>, <span class="title">imshow</span>, <span class="title">moveWindow</span>, <span class="title">waitKey</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">define(<span class="string">'w'</span>, <span class="number">400</span>);</span><br><span class="line"></span><br><span class="line">$atom_window = <span class="string">"Drawing 1: Atom"</span>;</span><br><span class="line">$rook_window = <span class="string">"Drawing 2: Rook"</span>;</span><br><span class="line">$atom_image = Mat::zeros(w, w, CV_8UC3);</span><br><span class="line">$rook_image = Mat::zeros(w, w, CV_8UC3);</span><br><span class="line">MyEllipse($atom_image, <span class="number">90</span>);</span><br><span class="line">MyEllipse($atom_image, <span class="number">0</span>);</span><br><span class="line">MyEllipse($atom_image, <span class="number">45</span>);</span><br><span class="line">MyEllipse($atom_image, <span class="number">-45</span>);</span><br><span class="line">MyFilledCircle($atom_image, <span class="keyword">new</span> Point(w / <span class="number">2</span>, w / <span class="number">2</span>));</span><br><span class="line">MyPolygon($rook_image);</span><br><span class="line">rectangleByPoint(</span><br><span class="line">    $rook_image,</span><br><span class="line">    <span class="keyword">new</span> Point(<span class="number">0</span>, <span class="number">7</span> * w / <span class="number">8</span>),</span><br><span class="line">    <span class="keyword">new</span> Point(w, w),</span><br><span class="line">    <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>),</span><br><span class="line">    FILLED,</span><br><span class="line">    LINE_8);</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point(<span class="number">0</span>, <span class="number">15</span> * w / <span class="number">16</span>), <span class="keyword">new</span> Point(w, <span class="number">15</span> * w / <span class="number">16</span>));</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point(w / <span class="number">4</span>, <span class="number">7</span> * w / <span class="number">8</span>), <span class="keyword">new</span> Point(w / <span class="number">4</span>, w));</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point(w / <span class="number">2</span>, <span class="number">7</span> * w / <span class="number">8</span>), <span class="keyword">new</span> Point(w / <span class="number">2</span>, w));</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, <span class="number">7</span> * w / <span class="number">8</span>), <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, w));</span><br><span class="line">imshow($atom_window, $atom_image);</span><br><span class="line">moveWindow($atom_window, <span class="number">0</span>, <span class="number">200</span>);</span><br><span class="line">imshow($rook_window, $rook_image);</span><br><span class="line">moveWindow($rook_window, w, <span class="number">200</span>);</span><br><span class="line">waitKey(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyEllipse</span><span class="params">($img, $angle)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $thickness = <span class="number">2</span>;</span><br><span class="line">    $lineType = <span class="number">8</span>;</span><br><span class="line">    ellipse(</span><br><span class="line">        $img,</span><br><span class="line">        <span class="keyword">new</span> Point(w / <span class="number">2</span>, w / <span class="number">2</span>),</span><br><span class="line">        <span class="keyword">new</span> Size(w / <span class="number">4</span>, w / <span class="number">16</span>),</span><br><span class="line">        $angle,</span><br><span class="line">        <span class="number">0</span>,</span><br><span class="line">        <span class="number">360</span>,</span><br><span class="line">        <span class="keyword">new</span> Scalar(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>),</span><br><span class="line">        $thickness,</span><br><span class="line">        $lineType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyFilledCircle</span><span class="params">($img, $center)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    circle(</span><br><span class="line">        $img,</span><br><span class="line">        $center,</span><br><span class="line">        w / <span class="number">32</span>,</span><br><span class="line">        <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>),</span><br><span class="line">        FILLED,</span><br><span class="line">        LINE_8);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPolygon</span><span class="params">($img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $lineType = LINE_8;</span><br><span class="line">    $rook_points[<span class="number">0</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, <span class="number">7</span> * w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">1</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, <span class="number">7</span> * w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">2</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">    $rook_points[<span class="number">3</span>] = <span class="keyword">new</span> Point(<span class="number">11</span> * w / <span class="number">16</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">    $rook_points[<span class="number">4</span>] = <span class="keyword">new</span> Point(<span class="number">19</span> * w / <span class="number">32</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">5</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">6</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">7</span>] = <span class="keyword">new</span> Point(<span class="number">26</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">8</span>] = <span class="keyword">new</span> Point(<span class="number">26</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">    $rook_points[<span class="number">9</span>] = <span class="keyword">new</span> Point(<span class="number">22</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">    $rook_points[<span class="number">10</span>] = <span class="keyword">new</span> Point(<span class="number">22</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">11</span>] = <span class="keyword">new</span> Point(<span class="number">18</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">12</span>] = <span class="keyword">new</span> Point(<span class="number">18</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">    $rook_points[<span class="number">13</span>] = <span class="keyword">new</span> Point(<span class="number">14</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">    $rook_points[<span class="number">14</span>] = <span class="keyword">new</span> Point(<span class="number">14</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">15</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">16</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">17</span>] = <span class="keyword">new</span> Point(<span class="number">13</span> * w / <span class="number">32</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">    $rook_points[<span class="number">18</span>] = <span class="keyword">new</span> Point(<span class="number">5</span> * w / <span class="number">16</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">    $rook_points[<span class="number">19</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">    fillPoly($img,</span><br><span class="line">        $rook_points,</span><br><span class="line">        <span class="keyword">new</span> Scalar(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>),</span><br><span class="line">        $lineType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyLine</span><span class="params">($img, $start, $end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $thickness = <span class="number">2</span>;</span><br><span class="line">    $lineType = LINE_8;</span><br><span class="line">    line($img,</span><br><span class="line">        $start,</span><br><span class="line">        $end,</span><br><span class="line">        <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>),</span><br><span class="line">        $thickness,</span><br><span class="line">        $lineType);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="代码解释" class="article-heading"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释<a class="article-anchor" href="#代码解释" aria-hidden="true"></a></h3><p>1.既然我们打算绘制两张示例图片 (一张原子图和一张国际象棋中的车的图篇)，我们需要创建两张图片和两个窗口来展示它们。<br>  <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$atom_window = <span class="string">"Drawing 1: Atom"</span>;</span><br><span class="line">$rook_window = <span class="string">"Drawing 2: Rook"</span>;</span><br><span class="line">$atom_image = Mat::zeros(w, w, CV_8UC3);</span><br><span class="line">$rook_image = Mat::zeros(w, w, CV_8UC3);</span><br></pre></td></tr></table></figure></p>
+<p>2.我们创建函数来绘制不同的几何图形。 例如，我们使用<code>MyEllipse</code>和<code>MyFilledCircle</code>绘制原子图：<br>   <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">MyEllipse($atom_image, <span class="number">90</span>);</span><br><span class="line">MyEllipse($atom_image, <span class="number">0</span>);</span><br><span class="line">MyEllipse($atom_image, <span class="number">45</span>);</span><br><span class="line">MyEllipse($atom_image, <span class="number">-45</span>);</span><br><span class="line">MyFilledCircle($atom_image, <span class="keyword">new</span> Point(w/<span class="number">2</span>, w/<span class="number">2</span>));</span><br></pre></td></tr></table></figure></p>
+<p>3.为了绘制国际象棋中的车，我们使用<code>MyLine</code>, <code>rectangleByPoint</code> 和<code>MyPolygon</code>:<br>   <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">MyPolygon($rook_image);</span><br><span class="line">rectangleByPoint( </span><br><span class="line">       $rook_image,</span><br><span class="line">       <span class="keyword">new</span> Point( <span class="number">0</span>, <span class="number">7</span>*w/<span class="number">8</span> ),</span><br><span class="line">       <span class="keyword">new</span> Point( w, w),</span><br><span class="line">       <span class="keyword">new</span> Scalar( <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span> ),</span><br><span class="line">       FILLED,</span><br><span class="line">       LINE_8 );</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point( <span class="number">0</span>, <span class="number">15</span>*w/<span class="number">16</span> ), <span class="keyword">new</span> Point( w, <span class="number">15</span>*w/<span class="number">16</span> ));</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point( w/<span class="number">4</span>, <span class="number">7</span>*w/<span class="number">8</span> ), <span class="keyword">new</span> Point( w/<span class="number">4</span>, w ));</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point( w/<span class="number">2</span>, <span class="number">7</span>*w/<span class="number">8</span> ), <span class="keyword">new</span> Point( w/<span class="number">2</span>, w ));</span><br><span class="line">MyLine($rook_image, <span class="keyword">new</span> Point( <span class="number">3</span>*w/<span class="number">4</span>, <span class="number">7</span>*w/<span class="number">8</span> ), <span class="keyword">new</span> Point( <span class="number">3</span>*w/<span class="number">4</span>, w ));</span><br></pre></td></tr></table></figure></p>
+<p>4.让我们检查一下这些函数的内部实现：</p>
+<ul>
+<li><p>MyLine</p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyLine</span><span class="params">($img, $start, $end)</span> </span>&#123;</span><br><span class="line">  $thickness = <span class="number">2</span>;</span><br><span class="line">  $lineType = LINE_8;</span><br><span class="line">  line( </span><br><span class="line">    $img,</span><br><span class="line">    $start,</span><br><span class="line">    $end,</span><br><span class="line">    <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>),</span><br><span class="line">    $thickness,</span><br><span class="line">    $lineType );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 如所见, <code>MyLine</code> 仅仅调用<code>CV\line</code>函数 , which does the following:</p>
+<ul>
+<li>从起始点($start)到终点($end)绘制一条直线 </li>
+<li>该线会被展示在<code>$img</code>参数所表示的图像中</li>
+<li>该线的颜色由参数<code>new Scalar(0, 0, 0)</code>决定，这是一RGB表示色，对应的颜色是黑色</li>
+<li>该线的宽度由<code>$thicknes</code>参数设置 (在此例中其值为2)</li>
+<li>该线为八连接线型(a 8-connected one), <code>$lineType = LINE_8</code></li>
+</ul>
+</li>
+<li><p>MyEllipse</p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyEllipse</span><span class="params">($img, $angle)</span> </span>&#123;</span><br><span class="line">  $thickness = <span class="number">2</span>;</span><br><span class="line">  $lineType = <span class="number">8</span>;</span><br><span class="line">  ellipse(</span><br><span class="line">       $img,</span><br><span class="line">       <span class="keyword">new</span> Point( w/<span class="number">2</span>, w/<span class="number">2</span> ),</span><br><span class="line">       <span class="keyword">new</span> Size( w/<span class="number">4</span>, w/<span class="number">16</span> ),</span><br><span class="line">       $angle,</span><br><span class="line">       <span class="number">0</span>,</span><br><span class="line">       <span class="number">360</span>,</span><br><span class="line">       <span class="keyword">new</span> Scalar(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>),</span><br><span class="line">       $thickness,</span><br><span class="line">       $lineType );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 从上方的代码中，我们可以观察到<code>CV\ellipse</code>函数会绘制这样的一个椭圆：</p>
+<ul>
+<li>该椭圆会被展示在<code>$img</code>参数所表示的图像中</li>
+<li>该椭圆的几何中心位于点<code>new Point(w/2, w/2)</code> 并被封闭在一个大小为<code>new Size(w/4, w/16)</code> 的盒子中（注：实际上<code>w/4</code>, <code>w/16</code>分别代表该椭圆的横半轴轴长和纵半轴轴长）</li>
+<li>该椭圆会转动的角度为<code>$angle</code>度</li>
+<li>椭圆弧起始角度为<code>0</code>,椭圆弧终止角度为<code>360</code></li>
+<li>图像的颜色会是<code>new Scalar(255, 0, 0)</code> ，这在BGR颜色系统中表示蓝色</li>
+<li>该椭圆的宽度为2</li>
+</ul>
+</li>
+<li><p>MyFilledCircle</p>
+  <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyFilledCircle</span><span class="params">($img, $center)</span> </span>&#123;</span><br><span class="line">  circle( </span><br><span class="line">      $img,</span><br><span class="line">      $center,</span><br><span class="line">      w/<span class="number">32</span>,</span><br><span class="line">      <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>),</span><br><span class="line">      FILLED,</span><br><span class="line">      LINE_8 );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  同<code>ellipse</code>函数相似，我们可以观察到<code>circle</code>函数接收如下参数：</p>
+<ul>
+<li>该圆会被展示在<code>$img</code>参数所表示的图像中</li>
+<li>该圆的几何中心位于点<code>$center</code></li>
+<li>该圆的半径为<code>w/32</code></li>
+<li>该圆的颜色为<code>new Scalar(255, 0, 0)</code> ，这在BGR颜色系统中表示红色</li>
+<li>由于<code>$thickness = -1</code> （<code>$thickness</code>参数默认值为<code>-1</code>），该圆将被绘制填充满</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>MyPolygon</p>
+  <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPolygon</span><span class="params">($img)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $lineType = LINE_8;</span><br><span class="line">        $rook_points[<span class="number">0</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, <span class="number">7</span> * w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">1</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, <span class="number">7</span> * w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">2</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">        $rook_points[<span class="number">3</span>] = <span class="keyword">new</span> Point(<span class="number">11</span> * w / <span class="number">16</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">        $rook_points[<span class="number">4</span>] = <span class="keyword">new</span> Point(<span class="number">19</span> * w / <span class="number">32</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">5</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">6</span>] = <span class="keyword">new</span> Point(<span class="number">3</span> * w / <span class="number">4</span>, w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">7</span>] = <span class="keyword">new</span> Point(<span class="number">26</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">8</span>] = <span class="keyword">new</span> Point(<span class="number">26</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">        $rook_points[<span class="number">9</span>] = <span class="keyword">new</span> Point(<span class="number">22</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">        $rook_points[<span class="number">10</span>] = <span class="keyword">new</span> Point(<span class="number">22</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">11</span>] = <span class="keyword">new</span> Point(<span class="number">18</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">12</span>] = <span class="keyword">new</span> Point(<span class="number">18</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">        $rook_points[<span class="number">13</span>] = <span class="keyword">new</span> Point(<span class="number">14</span> * w / <span class="number">40</span>, w / <span class="number">4</span>);</span><br><span class="line">        $rook_points[<span class="number">14</span>] = <span class="keyword">new</span> Point(<span class="number">14</span> * w / <span class="number">40</span>, w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">15</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">16</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">17</span>] = <span class="keyword">new</span> Point(<span class="number">13</span> * w / <span class="number">32</span>, <span class="number">3</span> * w / <span class="number">8</span>);</span><br><span class="line">        $rook_points[<span class="number">18</span>] = <span class="keyword">new</span> Point(<span class="number">5</span> * w / <span class="number">16</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">        $rook_points[<span class="number">19</span>] = <span class="keyword">new</span> Point(w / <span class="number">4</span>, <span class="number">13</span> * w / <span class="number">16</span>);</span><br><span class="line">        fillPoly($img,</span><br><span class="line">            $rook_points,</span><br><span class="line">            <span class="keyword">new</span> Scalar(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>),</span><br><span class="line">            $lineType);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>  绘制一个填充的多边形，我们使用函数<code>CV\fillPoly</code>。我们注意到：:</p>
+<ul>
+<li>在$img上绘制多边形</li>
+<li>传入需要绘制的点数组，数组中每个值用<code>CV\Point</code>对象表示，这里我们传入20个点</li>
+<li>多边形的颜色由Scalar（255,255,255）定义，它是白色的BGR值</li>
+</ul>
+</li>
+<li><p>rectangleByPoint</p>
+  <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">rectangleByPoint( </span><br><span class="line">       $rook_image,</span><br><span class="line">       <span class="keyword">new</span> Point( <span class="number">0</span>, <span class="number">7</span>*w/<span class="number">8</span> ),</span><br><span class="line">       <span class="keyword">new</span> Point( w, w),</span><br><span class="line">       <span class="keyword">new</span> Scalar( <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span> ),</span><br><span class="line">       FILLED,</span><br><span class="line">       LINE_8 );</span><br></pre></td></tr></table></figure>
+<p>  最后我们再来看一下<code>CV\rectangleByPoint</code> 函数:</p>
+<ul>
+<li>该矩形会被绘制在<code>$rook_image</code>参数所表示的图像中</li>
+<li>该矩形的两个对角顶点由<code>new Point( 0, 7*w/8 )</code> 和<code>new Point( w, w)</code>决定</li>
+<li>该矩形的颜色为<code>new Scalar( 0, 255, 255 )</code>，这在BGR颜色系统中表示黄色</li>
+<li>由于<code>$thickness</code>参数给定的值为<code>FILLED</code> （即-1），该矩形将被绘制填充满</li>
+</ul>
+</li>
+</ul>
+<h3 id="运行结果" class="article-heading"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果<a class="article-anchor" href="#运行结果" aria-hidden="true"></a></h3><p>运行你的程序后会返回如下结果：</p>
+<p><img src="/images/docs/basic_geometric_drawing/result.png" alt="result.png"></p>
+<h3 id="源码地址" class="article-heading"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址<a class="article-anchor" href="#源码地址" aria-hidden="true"></a></h3><p><a href="https://github.com/phpopencv/tutorial-demo/blob/master/Matrix/Drawing_1.php" target="_blank" rel="noopener">https://github.com/phpopencv/tutorial-demo/blob/master/Matrix/Drawing_1.php</a></p>
+
+              </div>
+              <footer class="article-footer">
+                <time class="article-footer-updated" datetime="2019-05-31T02:04:10.258Z" itemprop="dateModified">Last updated: 2019-05-31</time>
+                <a href="basic_linear_transform.html" class="article-footer-prev" title="Changing the contrast and brightness of an image!"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="random_generator_and_text.html" class="article-footer-next" title="随机生成器和OpenCV文本"><span>Next</span><i class="fa fa-chevron-right"></i></a>
+              </footer>
+              
+<section id="comments">
+  <div id="disqus_thread"></div>
+</section>
+<script>
+  var disqus_shortname = 'phpopencv';
+  var disqus_url = 'http://phpopencv.org/docs/basic_geometric_drawing.html';
+  var disqus_title = "基本绘图";
+  var disqus_config = function(){
+    this.language = 'en';
+  };
+  (function(){
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+            </div>
+          </div>
+          <aside id="article-toc" role="navigation">
+            <div id="article-toc-inner">
+              <strong class="sidebar-title">Contents</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Point对象"><span class="toc-text">Point对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scalar对象"><span class="toc-text">Scalar对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源代码"><span class="toc-text">源代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码解释"><span class="toc-text">代码解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行结果"><span class="toc-text">运行结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码地址"><span class="toc-text">源码地址</span></a></li></ol></li></ol>
+              <a href="#" id="article-toc-top">Back to Top</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <aside id="sidebar" role="navigation">
+  <div class="inner"><strong class="sidebar-title">Getting Started</strong><a href="index.html" class="sidebar-link">Overview</a><a href="install.html" class="sidebar-link">Install</a><a href="structure.html" class="sidebar-link">结构</a><a href="dev-prepare.html" class="sidebar-link">Preparation</a><a href="quick-start.html" class="sidebar-link">Quick Start</a><strong class="sidebar-title">Core</strong><a href="core/mat.html" class="sidebar-link">sidebar.docs.mat123</a><a href="mat.html" class="sidebar-link">Mat</a><a href="how_to_scan_images.html" class="sidebar-link">Images Scan</a><a href="mat_mask_operations.html" class="sidebar-link">Mask operations on matrices</a><a href="mat_operations.html" class="sidebar-link">Operations with images</a><a href="adding_images.html" class="sidebar-link">Adding (blending) two images using PHPOpenCV</a><a href="basic_linear_transform.html" class="sidebar-link">Changing the contrast and brightness of an image!</a><a href="basic_geometric_drawing.html" class="sidebar-link current">Basic Drawing</a><a href="random_generator_and_text.html" class="sidebar-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="sidebar-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="sidebar-link">文件输入和输出使用XML和YAML文件</a><strong class="sidebar-title">Image Processing</strong><a href="gausian_median_blur_bilateral_filter.html" class="sidebar-link">Smoothing Images</a><a href="erosion_dilatation.html" class="sidebar-link">Eroding and Dilating</a><a href="opening_closing_hats.html" class="sidebar-link">More Morphology Transformations</a><a href="flood_fill.html" class="sidebar-link">Flood Fill</a><a href="pyramids.html" class="sidebar-link">图像金字塔</a><a href="threshold.html" class="sidebar-link">基本的阈值操作</a><a href="threshold_inRange.html" class="sidebar-link">阈值的使用范围</a><a href="filter_2d.html" class="sidebar-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="sidebar-link">向图像添加边框</a><a href="sobel_derivatives.html" class="sidebar-link">索贝尔衍生物</a><a href="laplace_operator.html" class="sidebar-link">拉普拉斯算子</a><a href="canny_detector.html" class="sidebar-link">Canny边缘检测器</a><a href="hough_lines.html" class="sidebar-link">霍夫线变换</a><a href="hough_circle.html" class="sidebar-link">霍夫圈变换</a><strong class="sidebar-title">highgui</strong><a href="trackbar.html" class="sidebar-link">滑动条</a><strong class="sidebar-title">Object Detection</strong><a href="cascade_classifier.html" class="sidebar-link">Cascade Classifier</a><a href="cascade_classifier_training.html" class="sidebar-link">Cascade Classifier Training</a><strong class="sidebar-title">contaib</strong><a href="face.html" class="sidebar-link">Face Recognition</a></div>
+</aside>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="wrapper">
+  <div class="inner">
+    <div id="footer-copyright">
+      &copy; 2019 <a href="https://github.com/hihozhou" target="_blank">HiHo Zhou</a><br>
+      Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
+    </div>
+    <div id="footer-links">
+      <a href="http://weibo.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-weibo"></i></a>
+      <a href="https://twitter.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-twitter"></i></a>
+      <a href="https://github.com/hihozhou/php-opencv" class="footer-link" target="_blank"><i class="fa fa-github-alt"></i></a>
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <div id="mobile-nav-dimmer"></div>
+  <nav id="mobile-nav">
+  <div id="mobile-nav-inner">
+    <ul id="mobile-nav-list">
+      <a href="/docs/" class="mobile-nav-link">Docs</a>
+      <li class="mobile-nav-item">
+        <a href="https://github.com/hihozhou/php-opencv" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
+      </li>
+    </ul>
+    
+      <strong class="mobile-nav-title">Getting Started</strong><a href="index.html" class="mobile-nav-link">Overview</a><a href="install.html" class="mobile-nav-link">Install</a><a href="structure.html" class="mobile-nav-link">结构</a><a href="dev-prepare.html" class="mobile-nav-link">Preparation</a><a href="quick-start.html" class="mobile-nav-link">Quick Start</a><strong class="mobile-nav-title">Core</strong><a href="core/mat.html" class="mobile-nav-link">sidebar.docs.mat123</a><a href="mat.html" class="mobile-nav-link">Mat</a><a href="how_to_scan_images.html" class="mobile-nav-link">Images Scan</a><a href="mat_mask_operations.html" class="mobile-nav-link">Mask operations on matrices</a><a href="mat_operations.html" class="mobile-nav-link">Operations with images</a><a href="adding_images.html" class="mobile-nav-link">Adding (blending) two images using PHPOpenCV</a><a href="basic_linear_transform.html" class="mobile-nav-link">Changing the contrast and brightness of an image!</a><a href="basic_geometric_drawing.html" class="mobile-nav-link current">Basic Drawing</a><a href="random_generator_and_text.html" class="mobile-nav-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="mobile-nav-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="mobile-nav-link">文件输入和输出使用XML和YAML文件</a><strong class="mobile-nav-title">Image Processing</strong><a href="gausian_median_blur_bilateral_filter.html" class="mobile-nav-link">Smoothing Images</a><a href="erosion_dilatation.html" class="mobile-nav-link">Eroding and Dilating</a><a href="opening_closing_hats.html" class="mobile-nav-link">More Morphology Transformations</a><a href="flood_fill.html" class="mobile-nav-link">Flood Fill</a><a href="pyramids.html" class="mobile-nav-link">图像金字塔</a><a href="threshold.html" class="mobile-nav-link">基本的阈值操作</a><a href="threshold_inRange.html" class="mobile-nav-link">阈值的使用范围</a><a href="filter_2d.html" class="mobile-nav-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="mobile-nav-link">向图像添加边框</a><a href="sobel_derivatives.html" class="mobile-nav-link">索贝尔衍生物</a><a href="laplace_operator.html" class="mobile-nav-link">拉普拉斯算子</a><a href="canny_detector.html" class="mobile-nav-link">Canny边缘检测器</a><a href="hough_lines.html" class="mobile-nav-link">霍夫线变换</a><a href="hough_circle.html" class="mobile-nav-link">霍夫圈变换</a><strong class="mobile-nav-title">highgui</strong><a href="trackbar.html" class="mobile-nav-link">滑动条</a><strong class="mobile-nav-title">Object Detection</strong><a href="cascade_classifier.html" class="mobile-nav-link">Cascade Classifier</a><a href="cascade_classifier_training.html" class="mobile-nav-link">Cascade Classifier Training</a><strong class="mobile-nav-title">contaib</strong><a href="face.html" class="mobile-nav-link">Face Recognition</a>
+    
+  </div>
+  <div id="mobile-lang-select-wrap">
+    <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>English</span></span>
+    <select id="mobile-lang-select" data-canonical="docs/basic_geometric_drawing.html">
+      
+        <option value="en" selected>English</option>
+      
+        <option value="zh-cn">简体中文</option>
+      
+    </select>
+  </div>
+</nav>
+  <!-- Scripts -->
+<!-- build:js build/js/main.js -->
+<script src="/js/lang_select.js"></script>
+<script src="/js/scrollingelement.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/mobile_nav.js"></script>
+<!-- endbuild -->
+<script src="https://cdn.jsdelivr.net/retinajs/1.3.0/retina.min.js" async></script>
+
+<!-- Algolia -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript">
+document.getElementById('search-input-wrap').classList.add('on');
+docsearch({
+  apiKey: 'c3d5d4c995b5e0c2ffb5623900279a66',
+  indexName: 'hexo',
+  inputSelector: '#search-input'
+});
+</script>
+
+
+</body>
+</html>

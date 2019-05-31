@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>如何使用PHPOpenCV访问图像像素，查找表格和时间测量 | PHPOpenCV</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://phpopencv.org/docs/how_to_scan_images.html">
+  <!-- Alternative links -->
+  
+    
+      <link rel="alternative" hreflang="en" href="http://phpopencv.org/docs/how_to_scan_images.html">
+    
+      <link rel="alternative" hreflang="zh-cn" href="http://phpopencv.org/zh-cn/docs/how_to_scan_images.html">
+    
+  
+  <!-- Icon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/icon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/icon/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#2f83cd">
+  <meta name="msapplication-TileImage" content="/icon/mstile-144x144.png">
+  <!-- CSS -->
+  <!-- build:css build/css/navy.css -->
+  <link rel="stylesheet" href="/css/navy.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css">
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="PHPOpenCV">
+  <!-- Open Graph -->
+  <meta name="description" content="目标我们将解决一下问题：  如何操作图像中的每个像素？ PHPOpenCV中的矩阵值储存？ 如何衡量我们的算法的性能？ 什么是查找表（lookup tables），为什么使用它们？  图像在内存中的储存方式&amp;emsp;&amp;emsp;在之前的章节中，我们已经了解到图像矩阵的大小取决于所有的颜色模型，确切来说，取决于所有通道数。如果是灰度图，矩阵如下所示：   &amp;emsp;&amp;emsp;而对多通道来说，矩">
+<meta property="og:type" content="website">
+<meta property="og:title" content="如何使用PHPOpenCV访问图像像素，查找表格和时间测量">
+<meta property="og:url" content="http://phpopencv.org/docs/how_to_scan_images.html">
+<meta property="og:site_name" content="PHPOpenCV">
+<meta property="og:description" content="目标我们将解决一下问题：  如何操作图像中的每个像素？ PHPOpenCV中的矩阵值储存？ 如何衡量我们的算法的性能？ 什么是查找表（lookup tables），为什么使用它们？  图像在内存中的储存方式&amp;emsp;&amp;emsp;在之前的章节中，我们已经了解到图像矩阵的大小取决于所有的颜色模型，确切来说，取决于所有通道数。如果是灰度图，矩阵如下所示：   &amp;emsp;&amp;emsp;而对多通道来说，矩">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://phpopencv.org/images/docs/how_to_scan_images/1.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/how_to_scan_images/2.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/how_to_scan_images/3.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/how_to_scan_images/result.png">
+<meta property="og:updated_time" content="2019-05-31T02:04:10.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用PHPOpenCV访问图像像素，查找表格和时间测量">
+<meta name="twitter:description" content="目标我们将解决一下问题：  如何操作图像中的每个像素？ PHPOpenCV中的矩阵值储存？ 如何衡量我们的算法的性能？ 什么是查找表（lookup tables），为什么使用它们？  图像在内存中的储存方式&amp;emsp;&amp;emsp;在之前的章节中，我们已经了解到图像矩阵的大小取决于所有的颜色模型，确切来说，取决于所有通道数。如果是灰度图，矩阵如下所示：   &amp;emsp;&amp;emsp;而对多通道来说，矩">
+<meta name="twitter:image" content="http://phpopencv.org/images/docs/how_to_scan_images/1.png">
+<meta name="twitter:site" content="hexojs">
+<meta property="fb:admins" content="100000247608790">
+  <!-- Google Analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48498357-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  <!-- Google AdSense -->
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9461880259118621",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <!-- Github Button -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <header id="header" class="wrapper">
+  <div id="header-inner" class="inner">
+    <h1 id="logo-wrap">
+      <a href="/" id="logo">PHPOpenCV</a>
+    </h1>
+    <nav id="main-nav">
+      <a href="/docs/" class="main-nav-link">Docs</a>
+      <a href="https://github.com/hihozhou/php-opencv" class="main-nav-link"><i class="fa fa-github-alt"></i></a>
+
+    </nav>
+    <div id="lang-select-wrap">
+      <label id="lang-select-label"><i class="fa fa-globe"></i><span>English</span></label>
+      <select id="lang-select" data-canonical="docs/how_to_scan_images.html">
+        
+          <option value="en" selected>English</option>
+        
+          <option value="zh-cn">简体中文</option>
+        
+      </select>
+    </div>
+    <a id="mobile-nav-toggle">
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+    </a>
+  </div>
+</header>
+
+    <div id="content-wrap">
+  <div id="content" class="wrapper">
+    <div id="content-inner">
+      <article class="article-container" itemscope itemtype="http://schema.org/Article">
+        <div class="article-inner">
+          <div class="article">
+            <div class="inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">如何使用PHPOpenCV访问图像像素，查找表格和时间测量</h1>
+                <a href="https://github.com/phpopencv/site/edit/master/source/docs/how_to_scan_images.md" class="article-edit-link" title="Improve this doc"><i class="fa fa-pencil"></i></a>
+              </header>
+              <div class="article-content" itemprop="articleBody">
+                <h2 id="目标" class="article-heading"><a href="#目标" class="headerlink" title="目标"></a>目标<a class="article-anchor" href="#目标" aria-hidden="true"></a></h2><p>我们将解决一下问题：</p>
+<ul>
+<li>如何操作图像中的每个像素？</li>
+<li>PHPOpenCV中的矩阵值储存？</li>
+<li>如何衡量我们的算法的性能？</li>
+<li>什么是查找表（lookup tables），为什么使用它们？</li>
+</ul>
+<h2 id="图像在内存中的储存方式" class="article-heading"><a href="#图像在内存中的储存方式" class="headerlink" title="图像在内存中的储存方式"></a>图像在内存中的储存方式<a class="article-anchor" href="#图像在内存中的储存方式" aria-hidden="true"></a></h2><p>&emsp;&emsp;在之前的章节中，我们已经了解到图像矩阵的大小取决于所有的颜色模型，确切来说，取决于所有通道数。<br>如果是灰度图，矩阵如下所示：</p>
+<div align="center"><br><img src="/images/docs/how_to_scan_images/1.png" alt="1.png"><br></div>
+
+<p>&emsp;&emsp;而对多通道来说，矩阵中的列会包含多个子列，其中列个数与通道数相等。例如RGB颜色模型的矩阵：</p>
+<div align="center"><br><img src="/images/docs/how_to_scan_images/2.png" alt="2.png"><br></div>
+
+<h2 id="颜色空间缩减" class="article-heading"><a href="#颜色空间缩减" class="headerlink" title="颜色空间缩减"></a>颜色空间缩减<a class="article-anchor" href="#颜色空间缩减" aria-hidden="true"></a></h2><p>&emsp;&emsp;我们知道，若矩阵元素储存的是单通道元素（扩展中使用C或C++的无符号字符类型，也就是<code>unsigned char</code>），那么每个像素的值可以有256个不同值（0～255），<br>但如果是三通道图像（RGB等），这种储存格式的颜色数值就太多了（确切的说一个像素的值就有1600多万中，也就是256的3次方）。<br>用这么多的颜色来处理，可能会对我们的算法性能造成严重影响。<br>&emsp;&emsp;其实，仅用这些颜色中具有代表性的很小的部分，就足以达到同样效果。<br>&emsp;&emsp;在这种情况下，我们通常会采用颜色空间缩减（color space reduction），它在很多引用中可以大大降低运算的复杂度。<br>&emsp;&emsp;颜色空间缩减的做法是：将现有的颜色空间某个输入值进行<code>除法</code>和<code>乘法</code>操作，以获得较少的颜色数值。<br>比如颜色0到9可取值为新值0，10到19可取值未10,以此类推。<br>&emsp;&emsp;例如三通道图像每个通道取值可以是0～255,那么每个像素就有256x256x256个不同的值。我们可以定义：</p>
+<ul>
+<li>0～9范围的取值未0;</li>
+<li>10～19范围的取值未10;</li>
+<li>20～29范围的取值未20;</li>
+<li>…</li>
+</ul>
+<p>&emsp;&emsp;这样的操作将颜色取值降为26x26x26种。定义域中进行的颜色缩减运算就可以表达为下面形式：</p>
+<div align="center"><br><img src="/images/docs/how_to_scan_images/3.png" alt="3.png"><br></div>
+
+<p>&emsp;&emsp;简单的颜色空间缩小算法就是将图像矩阵中每个像素套用这个公式进行一遍计算。但值得注意的是，我们做了一个除法和乘法。<br>这些操作对系统来说是昂贵的和需要一定的时间花销。此外，在像素值有限的情况下，现在只有0～255种值，即只有256中情况。<br>因此，对于较大的图像，预先计算所有可能的值，放到数组中，这样每种情况都不需计算，直接从数组中去结果即可。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$divideWith = <span class="number">10</span>;</span><br><span class="line">$table = [];</span><br><span class="line"><span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt;<span class="number">256</span>; ++ $i)&#123;</span><br><span class="line">    $table[$i] = $divideWith * intval($i/$divideWith);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>于是<code>$table[$i]</code>存放的是值未$i的像素说减颜色空间的结果，如果获取的代码为：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$value = $table[$value]</span><br></pre></td></tr></table></figure>
+<p>这样，简单的颜色空间缩减就可以由一下两部组成：<br>（1）遍历图像矩阵的每一个元素;<br>（2）对像素应用上述公式。</p>
+<h2 id="访问图像中的像素" class="article-heading"><a href="#访问图像中的像素" class="headerlink" title="访问图像中的像素"></a>访问图像中的像素<a class="article-anchor" href="#访问图像中的像素" aria-hidden="true"></a></h2><p>PHPOpenCV中可以通过Mat对象中的<code>at</code>方法获取或设置对象的像素值</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Mat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">CV_8UC3</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$mat = <span class="keyword">new</span> Mat(<span class="number">3</span>, <span class="number">3</span>, CV_8UC3);<span class="comment">//创建3行3列3通道的矩阵</span></span><br><span class="line">$mat-&gt;print();<span class="comment">//打印修改前的矩阵</span></span><br><span class="line">$mat-&gt;at(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>);<span class="comment">//设置第一行第一列第一通道的值为1</span></span><br><span class="line">$mat-&gt;at(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);<span class="comment">//获取第一行第一列第一通道的值</span></span><br><span class="line">$mat-&gt;print();<span class="comment">//打印修改后的矩阵</span></span><br></pre></td></tr></table></figure>
+<h2 id="LUT函数：Look-up-table" class="article-heading"><a href="#LUT函数：Look-up-table" class="headerlink" title="LUT函数：Look up table"></a>LUT函数：Look up table<a class="article-anchor" href="#LUT函数：Look-up-table" aria-hidden="true"></a></h2><p>对于look up table操作，你可以直接用at方法，循环矩阵中的<code>行</code>、<code>列</code>、<code>通道</code>，进行遍历更改值。<br>PHPOpenCV中强烈推荐使用<code>CV\LUT</code>函数来惊醒。他用于批量惊醒图像元素查找、扫描与操作图像。其使用方法如下：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$divideWith = <span class="number">50</span>;</span><br><span class="line">$table = [];</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; <span class="number">256</span>; ++$i) &#123;</span><br><span class="line">    $table[$i] = $divideWith * intval($i / $divideWith);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//简历一个mat对象用于查表</span></span><br><span class="line">$lut = <span class="keyword">new</span> Mat(<span class="number">1</span>, <span class="number">256</span>, CV_8U);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; <span class="number">256</span>; $i++) &#123;</span><br><span class="line">    $lut-&gt;at(<span class="number">0</span>, $i, <span class="number">0</span>, $table[$i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查找表操作</span></span><br><span class="line">LUT($src, $lut, $dst);</span><br></pre></td></tr></table></figure>
+<h2 id="计时器" class="article-heading"><a href="#计时器" class="headerlink" title="计时器"></a>计时器<a class="article-anchor" href="#计时器" aria-hidden="true"></a></h2><p>另外有一个问题是如何即使。可以利用这两个简便的即使函数</p>
+<ul>
+<li>CV\getTickCount()函数返回CPU自某个时间（入启动电脑）以来走过的时钟周期数</li>
+<li>CV\getTickFrequency()函数返回CPU一秒所走的时钟周期数。这样，我们就可以轻松地以秒未单位对某个运算即使。</li>
+</ul>
+<p>这两个函数组合起来使用的实例如下。<br><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$timeStart = getTickCount();<span class="comment">//记录起始时间</span></span><br><span class="line"><span class="comment">//do something... </span></span><br><span class="line">$time = (getTickCount()-$timeStart)/getTickFrequency();</span><br><span class="line"><span class="keyword">echo</span> $time;<span class="comment">//输出运行时间</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="例子" class="article-heading"><a href="#例子" class="headerlink" title="例子"></a>例子<a class="article-anchor" href="#例子" aria-hidden="true"></a></h2><p>要求对图片1.png进行图像缩减</p>
+<h3 id="代码" class="article-heading"><a href="#代码" class="headerlink" title="代码"></a>代码<a class="article-anchor" href="#代码" aria-hidden="true"></a></h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Mat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Formatter</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">CV_8U</span>,</span><br><span class="line">    <span class="title">CV_8UC3</span>,</span><br><span class="line">    <span class="title">CV_8UC1</span>,</span><br><span class="line">    <span class="title">CV_8UC2</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">imread</span>, <span class="title">LUT</span>, <span class="title">imshow</span>, <span class="title">waitKey</span>, <span class="title">getTickCount</span>, <span class="title">getTickFrequency</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$divideWith = <span class="number">50</span>;</span><br><span class="line">$table = [];</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; <span class="number">256</span>; ++$i) &#123;</span><br><span class="line">    $table[$i] = $divideWith * intval($i / $divideWith);</span><br><span class="line">&#125;</span><br><span class="line">$lut = <span class="keyword">new</span> Mat(<span class="number">1</span>, <span class="number">256</span>, CV_8U);</span><br><span class="line"><span class="comment">//$lut-&gt;print(Formatter::FMT_PYTHON);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; <span class="number">256</span>; $i++) &#123;</span><br><span class="line">    $lut-&gt;at(<span class="number">0</span>, $i, <span class="number">0</span>, $table[$i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//$lut-&gt;print(Formatter::FMT_PYTHON);</span></span><br><span class="line"></span><br><span class="line">$src = imread(<span class="string">"./1.jpg"</span>);</span><br><span class="line">$dst = <span class="keyword">null</span>;</span><br><span class="line">$timeStart = getTickCount();</span><br><span class="line"><span class="comment">//查找表操作</span></span><br><span class="line">LUT($src, $lut, $dst);</span><br><span class="line">$time = (getTickCount() - $timeStart) / getTickFrequency();</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'LUT方法时间为：'</span>.$time.<span class="string">"\r\n"</span>;</span><br><span class="line"></span><br><span class="line">imshow(<span class="string">"Original image"</span>, $src);</span><br><span class="line">imshow(<span class="string">"Result image"</span>, $dst);</span><br><span class="line"></span><br><span class="line">waitKey(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="结果" class="article-heading"><a href="#结果" class="headerlink" title="结果"></a>结果<a class="article-anchor" href="#结果" aria-hidden="true"></a></h3><div align="center"><br><img src="/images/docs/how_to_scan_images/result.png" alt="result.png"><br></div>
+
+<h3 id="代码下载地址" class="article-heading"><a href="#代码下载地址" class="headerlink" title="代码下载地址"></a>代码下载地址<a class="article-anchor" href="#代码下载地址" aria-hidden="true"></a></h3><p><a href="https://github.com/phpopencv/tutorial-demo/tree/master/core/how_to_scan_images" target="_blank" rel="noopener">例子地址</a></p>
+
+              </div>
+              <footer class="article-footer">
+                <time class="article-footer-updated" datetime="2019-05-31T02:04:10.258Z" itemprop="dateModified">Last updated: 2019-05-31</time>
+                <a href="mat.html" class="article-footer-prev" title="Mat"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="mat_mask_operations.html" class="article-footer-next" title="Mask operations on matrices"><span>Next</span><i class="fa fa-chevron-right"></i></a>
+              </footer>
+              
+<section id="comments">
+  <div id="disqus_thread"></div>
+</section>
+<script>
+  var disqus_shortname = 'phpopencv';
+  var disqus_url = 'http://phpopencv.org/docs/how_to_scan_images.html';
+  var disqus_title = "如何使用PHPOpenCV访问图像像素，查找表格和时间测量";
+  var disqus_config = function(){
+    this.language = 'en';
+  };
+  (function(){
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+            </div>
+          </div>
+          <aside id="article-toc" role="navigation">
+            <div id="article-toc-inner">
+              <strong class="sidebar-title">Contents</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像在内存中的储存方式"><span class="toc-text">图像在内存中的储存方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#颜色空间缩减"><span class="toc-text">颜色空间缩减</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问图像中的像素"><span class="toc-text">访问图像中的像素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LUT函数：Look-up-table"><span class="toc-text">LUT函数：Look up table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计时器"><span class="toc-text">计时器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-text">例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结果"><span class="toc-text">结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码下载地址"><span class="toc-text">代码下载地址</span></a></li></ol></li></ol>
+              <a href="#" id="article-toc-top">Back to Top</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <aside id="sidebar" role="navigation">
+  <div class="inner"><strong class="sidebar-title">Getting Started</strong><a href="index.html" class="sidebar-link">Overview</a><a href="install.html" class="sidebar-link">Install</a><a href="structure.html" class="sidebar-link">结构</a><a href="dev-prepare.html" class="sidebar-link">Preparation</a><a href="quick-start.html" class="sidebar-link">Quick Start</a><strong class="sidebar-title">Core</strong><a href="core/mat.html" class="sidebar-link">sidebar.docs.mat123</a><a href="mat.html" class="sidebar-link">Mat</a><a href="how_to_scan_images.html" class="sidebar-link current">Images Scan</a><a href="mat_mask_operations.html" class="sidebar-link">Mask operations on matrices</a><a href="mat_operations.html" class="sidebar-link">Operations with images</a><a href="adding_images.html" class="sidebar-link">Adding (blending) two images using PHPOpenCV</a><a href="basic_linear_transform.html" class="sidebar-link">Changing the contrast and brightness of an image!</a><a href="basic_geometric_drawing.html" class="sidebar-link">Basic Drawing</a><a href="random_generator_and_text.html" class="sidebar-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="sidebar-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="sidebar-link">文件输入和输出使用XML和YAML文件</a><strong class="sidebar-title">Image Processing</strong><a href="gausian_median_blur_bilateral_filter.html" class="sidebar-link">Smoothing Images</a><a href="erosion_dilatation.html" class="sidebar-link">Eroding and Dilating</a><a href="opening_closing_hats.html" class="sidebar-link">More Morphology Transformations</a><a href="flood_fill.html" class="sidebar-link">Flood Fill</a><a href="pyramids.html" class="sidebar-link">图像金字塔</a><a href="threshold.html" class="sidebar-link">基本的阈值操作</a><a href="threshold_inRange.html" class="sidebar-link">阈值的使用范围</a><a href="filter_2d.html" class="sidebar-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="sidebar-link">向图像添加边框</a><a href="sobel_derivatives.html" class="sidebar-link">索贝尔衍生物</a><a href="laplace_operator.html" class="sidebar-link">拉普拉斯算子</a><a href="canny_detector.html" class="sidebar-link">Canny边缘检测器</a><a href="hough_lines.html" class="sidebar-link">霍夫线变换</a><a href="hough_circle.html" class="sidebar-link">霍夫圈变换</a><strong class="sidebar-title">highgui</strong><a href="trackbar.html" class="sidebar-link">滑动条</a><strong class="sidebar-title">Object Detection</strong><a href="cascade_classifier.html" class="sidebar-link">Cascade Classifier</a><a href="cascade_classifier_training.html" class="sidebar-link">Cascade Classifier Training</a><strong class="sidebar-title">contaib</strong><a href="face.html" class="sidebar-link">Face Recognition</a></div>
+</aside>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="wrapper">
+  <div class="inner">
+    <div id="footer-copyright">
+      &copy; 2019 <a href="https://github.com/hihozhou" target="_blank">HiHo Zhou</a><br>
+      Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
+    </div>
+    <div id="footer-links">
+      <a href="http://weibo.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-weibo"></i></a>
+      <a href="https://twitter.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-twitter"></i></a>
+      <a href="https://github.com/hihozhou/php-opencv" class="footer-link" target="_blank"><i class="fa fa-github-alt"></i></a>
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <div id="mobile-nav-dimmer"></div>
+  <nav id="mobile-nav">
+  <div id="mobile-nav-inner">
+    <ul id="mobile-nav-list">
+      <a href="/docs/" class="mobile-nav-link">Docs</a>
+      <li class="mobile-nav-item">
+        <a href="https://github.com/hihozhou/php-opencv" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
+      </li>
+    </ul>
+    
+      <strong class="mobile-nav-title">Getting Started</strong><a href="index.html" class="mobile-nav-link">Overview</a><a href="install.html" class="mobile-nav-link">Install</a><a href="structure.html" class="mobile-nav-link">结构</a><a href="dev-prepare.html" class="mobile-nav-link">Preparation</a><a href="quick-start.html" class="mobile-nav-link">Quick Start</a><strong class="mobile-nav-title">Core</strong><a href="core/mat.html" class="mobile-nav-link">sidebar.docs.mat123</a><a href="mat.html" class="mobile-nav-link">Mat</a><a href="how_to_scan_images.html" class="mobile-nav-link current">Images Scan</a><a href="mat_mask_operations.html" class="mobile-nav-link">Mask operations on matrices</a><a href="mat_operations.html" class="mobile-nav-link">Operations with images</a><a href="adding_images.html" class="mobile-nav-link">Adding (blending) two images using PHPOpenCV</a><a href="basic_linear_transform.html" class="mobile-nav-link">Changing the contrast and brightness of an image!</a><a href="basic_geometric_drawing.html" class="mobile-nav-link">Basic Drawing</a><a href="random_generator_and_text.html" class="mobile-nav-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="mobile-nav-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="mobile-nav-link">文件输入和输出使用XML和YAML文件</a><strong class="mobile-nav-title">Image Processing</strong><a href="gausian_median_blur_bilateral_filter.html" class="mobile-nav-link">Smoothing Images</a><a href="erosion_dilatation.html" class="mobile-nav-link">Eroding and Dilating</a><a href="opening_closing_hats.html" class="mobile-nav-link">More Morphology Transformations</a><a href="flood_fill.html" class="mobile-nav-link">Flood Fill</a><a href="pyramids.html" class="mobile-nav-link">图像金字塔</a><a href="threshold.html" class="mobile-nav-link">基本的阈值操作</a><a href="threshold_inRange.html" class="mobile-nav-link">阈值的使用范围</a><a href="filter_2d.html" class="mobile-nav-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="mobile-nav-link">向图像添加边框</a><a href="sobel_derivatives.html" class="mobile-nav-link">索贝尔衍生物</a><a href="laplace_operator.html" class="mobile-nav-link">拉普拉斯算子</a><a href="canny_detector.html" class="mobile-nav-link">Canny边缘检测器</a><a href="hough_lines.html" class="mobile-nav-link">霍夫线变换</a><a href="hough_circle.html" class="mobile-nav-link">霍夫圈变换</a><strong class="mobile-nav-title">highgui</strong><a href="trackbar.html" class="mobile-nav-link">滑动条</a><strong class="mobile-nav-title">Object Detection</strong><a href="cascade_classifier.html" class="mobile-nav-link">Cascade Classifier</a><a href="cascade_classifier_training.html" class="mobile-nav-link">Cascade Classifier Training</a><strong class="mobile-nav-title">contaib</strong><a href="face.html" class="mobile-nav-link">Face Recognition</a>
+    
+  </div>
+  <div id="mobile-lang-select-wrap">
+    <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>English</span></span>
+    <select id="mobile-lang-select" data-canonical="docs/how_to_scan_images.html">
+      
+        <option value="en" selected>English</option>
+      
+        <option value="zh-cn">简体中文</option>
+      
+    </select>
+  </div>
+</nav>
+  <!-- Scripts -->
+<!-- build:js build/js/main.js -->
+<script src="/js/lang_select.js"></script>
+<script src="/js/scrollingelement.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/mobile_nav.js"></script>
+<!-- endbuild -->
+<script src="https://cdn.jsdelivr.net/retinajs/1.3.0/retina.min.js" async></script>
+
+<!-- Algolia -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript">
+document.getElementById('search-input-wrap').classList.add('on');
+docsearch({
+  apiKey: 'c3d5d4c995b5e0c2ffb5623900279a66',
+  indexName: 'hexo',
+  inputSelector: '#search-input'
+});
+</script>
+
+
+</body>
+</html>

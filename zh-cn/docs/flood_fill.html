@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>漫水填充 | PHPOpenCV</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://phpopencv.org/zh-cn/docs/flood_fill.html">
+  <!-- Alternative links -->
+  
+    
+      <link rel="alternative" hreflang="en" href="http://phpopencv.org/docs/flood_fill.html">
+    
+      <link rel="alternative" hreflang="zh-cn" href="http://phpopencv.org/zh-cn/docs/flood_fill.html">
+    
+  
+  <!-- Icon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/icon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/icon/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#2f83cd">
+  <meta name="msapplication-TileImage" content="/icon/mstile-144x144.png">
+  <!-- CSS -->
+  <!-- build:css build/css/navy.css -->
+  <link rel="stylesheet" href="/css/navy.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css">
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="PHPOpenCV">
+  <!-- Open Graph -->
+  <meta name="description" content="本节我们将一起探讨OpenCV填充算法中漫水填充算法的相关的知识点，并了解OpenCV中实现漫水填充算法的两个版本的floodFill函数的使用方法。 漫水填充的定义漫水填充法是一种特定的颜色填充连通的区域，通过设置可连通像素的上下限以及联通方式来达到漫水填充经常用来标记或分离图像的一部分，以便对其进行进一步处理或分析，也可以用来从输入图像获取掩码区域，掩码会加速处理过程，或只处理掩码执定的像素点">
+<meta property="og:type" content="website">
+<meta property="og:title" content="漫水填充">
+<meta property="og:url" content="http://phpopencv.org/zh-cn/docs/flood_fill.html">
+<meta property="og:site_name" content="PHPOpenCV">
+<meta property="og:description" content="本节我们将一起探讨OpenCV填充算法中漫水填充算法的相关的知识点，并了解OpenCV中实现漫水填充算法的两个版本的floodFill函数的使用方法。 漫水填充的定义漫水填充法是一种特定的颜色填充连通的区域，通过设置可连通像素的上下限以及联通方式来达到漫水填充经常用来标记或分离图像的一部分，以便对其进行进一步处理或分析，也可以用来从输入图像获取掩码区域，掩码会加速处理过程，或只处理掩码执定的像素点">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://phpopencv.org/images/docs/flood_fill/1.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/flood_fill/2.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/flood_fill/3.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/flood_fill/4.png">
+<meta property="og:updated_time" content="2019-05-31T02:04:10.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="漫水填充">
+<meta name="twitter:description" content="本节我们将一起探讨OpenCV填充算法中漫水填充算法的相关的知识点，并了解OpenCV中实现漫水填充算法的两个版本的floodFill函数的使用方法。 漫水填充的定义漫水填充法是一种特定的颜色填充连通的区域，通过设置可连通像素的上下限以及联通方式来达到漫水填充经常用来标记或分离图像的一部分，以便对其进行进一步处理或分析，也可以用来从输入图像获取掩码区域，掩码会加速处理过程，或只处理掩码执定的像素点">
+<meta name="twitter:image" content="http://phpopencv.org/images/docs/flood_fill/1.png">
+<meta name="twitter:site" content="hexojs">
+<meta property="fb:admins" content="100000247608790">
+  <!-- Google Analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48498357-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  <!-- Google AdSense -->
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9461880259118621",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <!-- Github Button -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <header id="header" class="wrapper">
+  <div id="header-inner" class="inner">
+    <h1 id="logo-wrap">
+      <a href="/zh-cn/" id="logo">PHPOpenCV</a>
+    </h1>
+    <nav id="main-nav">
+      <a href="/docs/" class="main-nav-link">文档</a>
+      <a href="https://github.com/hihozhou/php-opencv" class="main-nav-link"><i class="fa fa-github-alt"></i></a>
+
+    </nav>
+    <div id="lang-select-wrap">
+      <label id="lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></label>
+      <select id="lang-select" data-canonical="docs/flood_fill.html">
+        
+          <option value="en">English</option>
+        
+          <option value="zh-cn" selected>简体中文</option>
+        
+      </select>
+    </div>
+    <a id="mobile-nav-toggle">
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+    </a>
+  </div>
+</header>
+
+    <div id="content-wrap">
+  <div id="content" class="wrapper">
+    <div id="content-inner">
+      <article class="article-container" itemscope itemtype="http://schema.org/Article">
+        <div class="article-inner">
+          <div class="article">
+            <div class="inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">漫水填充</h1>
+                <a href="https://github.com/phpopencv/site/edit/master/source/zh-cn/docs/flood_fill.md" class="article-edit-link" title="改进本文"><i class="fa fa-pencil"></i></a>
+              </header>
+              <div class="article-content" itemprop="articleBody">
+                <p>本节我们将一起探讨OpenCV填充算法中漫水填充算法的相关的知识点，并了解OpenCV中实现漫水填充算法<br>的两个版本的<code>floodFill</code>函数的使用方法。</p>
+<h2 id="漫水填充的定义" class="article-heading"><a href="#漫水填充的定义" class="headerlink" title="漫水填充的定义"></a>漫水填充的定义<a class="article-anchor" href="#漫水填充的定义" aria-hidden="true"></a></h2><p>漫水填充法是一种特定的颜色填充连通的区域，通过设置可连通像素的上下限以及联通方式来达到漫水填充经<br>常用来标记或分离图像的一部分，以便对其进行进一步处理或分析，也可以用来从输入图像获取掩码区域，<br>掩码会加速处理过程，或只处理掩码执定的像素点，操作的结果总是某个连续的区域。</p>
+<h2 id="漫水天从法的基本思想" class="article-heading"><a href="#漫水天从法的基本思想" class="headerlink" title="漫水天从法的基本思想"></a>漫水天从法的基本思想<a class="article-anchor" href="#漫水天从法的基本思想" aria-hidden="true"></a></h2><p>所谓漫水填充，简单来说，就是自动选中了和种子点相连的区域，接着将该区域替换成指定的颜色，<br>这是个非常游泳的功能，经常用来标记或者分离图像的一部分进行处理或分析。漫水填充也可以用来<br>标记或分离图像的一部分，以便对其进行进一步处理或分析，也可以用来从输入图像获取掩码区域，<br>掩码会加速处理过程，或只处理掩码执定的像素点。</p>
+<p>以填充算法为基础，类似PhotoShop的<code>魔术棒</code>选择工具就很容易实现了。漫水填充（FloodFill）是<br>查找和种子点连接的颜色相同点，魔术棒选择工具则是查找和种子点联通的颜色相近的点，把和初始种子像素<br>相近的点压进栈作为新的种子。</p>
+<p>在PHPOpenCV中，漫水填充是填充算法中最通用的方法。他把原C++版OpenCV中重载的两个<code>FloodFill</code>函数<br>合并为一个。其中第4个参数中mask起关键区别作用。这个掩膜mask，就是用于进一步控制那些区域将被<br>填充颜色（比如说当对同意图像进行多次填充时）。其异同为：</p>
+<ul>
+<li>相同的是：都在图像中选择一个种子点，然后把临近区域所有相似点填充上同样的颜色</li>
+<li>不同的是：不一定将所有邻近像素点都染上同一颜色，漫水填充操作的结果总是某个连续的区域</li>
+</ul>
+<p>当邻近像素位于给定的范围（从<code>$loDiff</code>到<code>$upDiff</code>）内或在原始<code>$seedPoint</code>像素值范围内时，<br>FloodFill函数就会为这个点涂上颜色。</p>
+<h2 id="floodFill函数：" class="article-heading"><a href="#floodFill函数：" class="headerlink" title="floodFill函数："></a>floodFill函数：<a class="article-anchor" href="#floodFill函数：" aria-hidden="true"></a></h2><p>在PHPOpenCV中，漫水填充算法是由<code>floodFill</code>函数来实现，其作用是用我们指定的颜色从种子点开始填充一个<br>连接域。连通性由像素的接近值程度来衡量。源函数如下<br><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">floodFill</span><span class="params">(Mat $image, Point $seedPoint, Scalar $newVal, Mat $mat = null, Rect $rect = null, Scalar $loDiff = null, Scalar $upDiff = null, int $flags = <span class="number">4</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    \\....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>（1）第一个参数，<code>Mat</code>类型的<code>$image</code>，输入/输出1通道或3通道，8位或浮点图像，具体参数由之后参数指明。</li>
+<li>（2）第二个参数，<code>Point</code>类型的<code>$seedPoint</code>，漫水填充算法的起始点。</li>
+<li>（3）弟三个参数，<code>Scalar</code>类型的<code>$newVal</code>，像素点被染色的值，即在重绘区域像素的新值。</li>
+<li>（4）第四个参数，<code>Mat</code>类型的<code>$mask</code>，表示操作掩膜。它应该为单通道，8位，长和宽上都比输入图像<br><code>$image</code>大两个像素点的图像。<code>floodFill</code>需要使用以及更新掩膜。需要注意的是，漫水填充不会填充<code>$mask</code><br>的非零像素区域。例如，一个边缘检测算子的输出可以用来作为掩膜，以防填充到边缘。同样的，也可以在多次的<br>函数调用中使用同一个掩膜，以确保填充的区域不会重叠。另外需要注意的是，掩膜<code>$mask</code>会闭需要填充的图像大，<br>所以<code>$mask</code>中与输入图像<code>(x,y)</code>像素点对应的点的坐标为(x+1,y+1)。</li>
+<li>（5）第五个参数，<code>Rect</code>类型的<code>$rect</code>，默认值为null，一个可选的参数，用于设置<code>floodFill</code>函数将<br>要重绘制区域的最小边界矩形区域。</li>
+<li>（6）第六个参数，<code>Scalar</code>类型的<code>$loDiff</code>，有默认值为null，表示当前观察像素值与其部件邻域像素值<br>或者待加入该部件的种子像素之间的亮度或颜色之负差（lower brightness/color difference）的最大值。</li>
+<li>（7）第七个参数，<code>Scalar</code>类型的<code>$loDiff</code>，有默认值为null，表示当前观察像素值与其部件邻域像素值<br>或者待加入该部件的种子像素之间的亮度或颜色之正差（lower brightness/color difference）的最大值。</li>
+<li><p>（8）第八个参数，<code>int</code>类型的<code>$flags</code>，操作标识符，此参数包含三个部分，比较复杂，我们一起详细看看。</p>
+<ul>
+<li>（A） 低八位（第0～7位）用于控制算法的连通性 ，可取4（4为默认值）或者8.如果设为4,表示填充算法只考<br>虑当前像素水平方向和垂直方向的相邻点;如果设为8，除上述相邻点外，还会包含对角线方向的相邻点。</li>
+<li><p>（B） 高八位（16～23位）可以为0或者如下两种选项标识符的组合。</p>
+<ul>
+<li>① FLOODFILL_EIXED_RANGE：如果设置未这个标识符，就会考虑当前像素与种子像素之间的差，否则<br>就考虑当前像素与其相邻像素的差。也就是说，这个范围是否动的。</li>
+<li>② FLOODFILL_MASK_ONLY:如果设置为这个标识符，函数不会去填充改变原始像素（也就是忽略第三个参数<br><code>$newVal</code>），而是去填充掩膜图像（<code>$mask</code>）。</li>
+</ul>
+</li>
+<li><p>（C）中间八位部分，上面关于高八位FLOODFILL_MASK_ONLY标识符中已经说得很明显，素要输入符合要求的掩码。<br>floodFill的$flags参数的中间八位的值就是用于指定填充掩码图像的值。但是如果$flags中间八位的值未<br>0，则掩码会用1来填充</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="简单例子" class="article-heading"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子<a class="article-anchor" href="#简单例子" aria-hidden="true"></a></h2><p>接着，来看一个关于<code>floodFill</code>的简单调用范例。</p>
+<h3 id="源码" class="article-heading"><a href="#源码" class="headerlink" title="源码"></a>源码<a class="article-anchor" href="#源码" aria-hidden="true"></a></h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Point</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Scalar</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Rect</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">getStructuringElement</span>, <span class="title">morphologyEx</span>, <span class="title">imshow</span>, <span class="title">namedWindow</span>,</span><br><span class="line">    <span class="title">createTrackbar</span>, <span class="title">getTrackBarPos</span>, <span class="title">waitKey</span>, <span class="title">floodFill</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\<span class="title">imread</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">IMREAD_COLOR</span>, <span class="title">WINDOW_AUTOSIZE</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$src = imread(<span class="string">"demo.jpg"</span>);</span><br><span class="line">$rect = <span class="keyword">new</span> Rect(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">imshow(<span class="string">'origin'</span>, $src);</span><br><span class="line">floodFill($src, <span class="keyword">new</span> Point(<span class="number">50</span>, <span class="number">300</span>), <span class="keyword">new</span> Scalar(<span class="number">155</span>, <span class="number">255</span>, <span class="number">55</span>), <span class="keyword">null</span>, $rect, <span class="keyword">new</span> Scalar(<span class="number">20</span>, <span class="number">20</span>, <span class="number">20</span>), <span class="keyword">new</span> Scalar(<span class="number">20</span>, <span class="number">20</span>, <span class="number">20</span>));</span><br><span class="line">imshow(<span class="string">'result'</span>, $src);</span><br><span class="line"></span><br><span class="line">waitKey(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="运行结果：" class="article-heading"><a href="#运行结果：" class="headerlink" title="运行结果："></a>运行结果：<a class="article-anchor" href="#运行结果：" aria-hidden="true"></a></h3><p><img src="/images/docs/flood_fill/1.png" alt="1.png"></p>
+<h2 id="综合示例：漫水填充" class="article-heading"><a href="#综合示例：漫水填充" class="headerlink" title="综合示例：漫水填充"></a>综合示例：漫水填充<a class="article-anchor" href="#综合示例：漫水填充" aria-hidden="true"></a></h2><p>本次的综合示例为OpenCV自带的一个程序。作者对其做了适当的修改并详细注释，供大家消化。<br><img src="/images/docs/flood_fill/2.png" alt="2.png"><br>可以看到，此程序有不少按键功能。我们用鼠标对窗口中的图形进行多次单击，就可以得到类似<code>PhotoShp</code><br>中的魔术棒的效果。当然短短的两百行写出来的东西，体现还是比不上PS的魔术棒工具的，代码如下：</p>
+<h3 id="源码-1" class="article-heading"><a href="#源码-1" class="headerlink" title="源码"></a>源码<a class="article-anchor" href="#源码-1" aria-hidden="true"></a></h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Point</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Scalar</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Mat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">getStructuringElement</span>, <span class="title">morphologyEx</span>, <span class="title">imshow</span>, <span class="title">namedWindow</span>,</span><br><span class="line">    <span class="title">createTrackbar</span>, <span class="title">getTrackBarPos</span>, <span class="title">waitKey</span>, <span class="title">floodFill</span>, <span class="title">cvtColor</span>, <span class="title">setMouseCallback</span>,</span><br><span class="line">    <span class="title">threshold</span>, <span class="title">destroyWindow</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\<span class="title">imread</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">IMREAD_COLOR</span>, <span class="title">WINDOW_AUTOSIZE</span>, <span class="title">COLOR_BGR2GRAY</span>, <span class="title">CV_8UC1</span>,</span><br><span class="line">    <span class="title">EVENT_LBUTTONDOWN</span>, <span class="title">FLOODFILL_FIXED_RANGE</span>, <span class="title">THRESH_BINARY</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$g_srcImage = <span class="keyword">null</span>;<span class="comment">//定义原始图</span></span><br><span class="line">$g_dstImage = <span class="keyword">null</span>;<span class="comment">//目标图</span></span><br><span class="line">$g_grayImage = <span class="keyword">null</span>;<span class="comment">//灰度图</span></span><br><span class="line">$g_maskImage = <span class="keyword">null</span>;<span class="comment">//掩模图</span></span><br><span class="line">$g_nFillMode = <span class="number">1</span>;<span class="comment">//漫水填充的模式</span></span><br><span class="line">$g_nLowDifference = <span class="number">20</span>;<span class="comment">//负差最大值</span></span><br><span class="line">$g_nUpDifference = <span class="number">20</span>;<span class="comment">//正差最大值</span></span><br><span class="line">$g_nConnectivity = <span class="number">4</span>;<span class="comment">//表示floodFill函数标识符低八位的连通值</span></span><br><span class="line">$g_bIsColor = <span class="keyword">true</span>;<span class="comment">//是否为彩色图的标识符布尔值</span></span><br><span class="line">$g_bUseMask = <span class="keyword">false</span>;<span class="comment">//是否显示掩膜窗口的布尔值</span></span><br><span class="line">$g_nNewMaskVal = <span class="number">255</span>;<span class="comment">//新的重新绘制的像素值</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showHelpText</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输出一些帮助信息</span></span><br><span class="line">    printf(<span class="string">"\n\n\t欢迎来到漫水填充示例程序~"</span>);</span><br><span class="line">    printf(<span class="string">"\n\n\t本示例根据鼠标选取的点搜索图像中与之颜色相近的点，并用不同颜色标注。"</span>);</span><br><span class="line"></span><br><span class="line">    printf(<span class="string">"\n\n\t按键操作说明: \n\n"</span></span><br><span class="line">        . <span class="string">"\t\t鼠标点击图中区域- 进行漫水填充操作\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【ESC】- 退出程序\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【1】-  切换彩色图/灰度图模式\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【2】- 显示/隐藏掩膜窗口\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【3】- 恢复原始图像\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【4】- 使用空范围的漫水填充\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【5】- 使用渐变、固定范围的漫水填充\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【6】- 使用渐变、浮动范围的漫水填充\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【7】- 操作标志符的低八位使用4位的连接模式\n"</span></span><br><span class="line">        . <span class="string">"\t\t键盘按键【8】- 操作标志符的低八位使用8位的连接模式\n\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$onMouse = <span class="function"><span class="keyword">function</span> <span class="params">(int $event, int $x, int $y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $g_nFillMode;</span><br><span class="line">    <span class="keyword">global</span> $g_nLowDifference;</span><br><span class="line">    <span class="keyword">global</span> $g_nUpDifference;</span><br><span class="line">    <span class="keyword">global</span> $g_nConnectivity;</span><br><span class="line">    <span class="keyword">global</span> $g_nNewMaskVal;</span><br><span class="line">    <span class="keyword">global</span> $g_bIsColor;</span><br><span class="line">    <span class="keyword">global</span> $g_dstImage;</span><br><span class="line">    <span class="keyword">global</span> $g_grayImage;</span><br><span class="line">    <span class="keyword">global</span> $g_bUseMask;</span><br><span class="line">    <span class="keyword">global</span> $g_maskImage;</span><br><span class="line">    <span class="comment">// 若鼠标左键没有按下，便返回</span></span><br><span class="line">    <span class="comment">//此句代码的OpenCV2版为：</span></span><br><span class="line">    <span class="comment">//if( event != CV_EVENT_LBUTTONDOWN )</span></span><br><span class="line">    <span class="comment">//此句代码的OpenCV3版为：</span></span><br><span class="line">    <span class="keyword">if</span> ($event != EVENT_LBUTTONDOWN)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//-------------------【&lt;1&gt;调用floodFill函数之前的参数准备部分】---------------</span></span><br><span class="line">    $seed = <span class="keyword">new</span> Point($x, $y);</span><br><span class="line">    $LowDifference = $g_nFillMode == <span class="number">0</span> ? <span class="number">0</span> : $g_nLowDifference;<span class="comment">//空范围的漫水填充，此值设为0，否则设为全局的g_nLowDifference</span></span><br><span class="line">    $UpDifference = $g_nFillMode == <span class="number">0</span> ? <span class="number">0</span> : $g_nUpDifference;<span class="comment">//空范围的漫水填充，此值设为0，否则设为全局的g_nUpDifference</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//标识符的0~7位为g_nConnectivity，8~15位为g_nNewMaskVal左移8位的值，16~23位为CV_FLOODFILL_FIXED_RANGE或者0。</span></span><br><span class="line">    <span class="comment">//此句代码的OpenCV2版为：</span></span><br><span class="line">    <span class="comment">//int flags = g_nConnectivity + (g_nNewMaskVal &lt;&lt; 8) +(g_nFillMode == 1 ? CV_FLOODFILL_FIXED_RANGE : 0);</span></span><br><span class="line">    <span class="comment">//此句代码的OpenCV3版为：</span></span><br><span class="line">    $flags = $g_nConnectivity + ($g_nNewMaskVal &lt;&lt; <span class="number">8</span>) + ($g_nFillMode == <span class="number">1</span> ? FLOODFILL_FIXED_RANGE : <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//随机生成bgr值</span></span><br><span class="line">    $b = rand(<span class="number">0</span>, <span class="number">255</span>);<span class="comment">//随机返回一个0~255之间的值</span></span><br><span class="line">    $g = rand(<span class="number">0</span>, <span class="number">255</span>);<span class="comment">//随机返回一个0~255之间的值</span></span><br><span class="line">    $r = rand(<span class="number">0</span>, <span class="number">255</span>);<span class="comment">//随机返回一个0~255之间的值</span></span><br><span class="line">    $rect = <span class="keyword">null</span>;<span class="comment">//定义重绘区域的最小边界矩形区域</span></span><br><span class="line"></span><br><span class="line">    $newVal = $g_bIsColor ? <span class="keyword">new</span> Scalar($b, $g, $r) : <span class="keyword">new</span> Scalar($r * <span class="number">0.299</span> + $g * <span class="number">0.587</span> + $b * <span class="number">0.114</span>);<span class="comment">//在重绘区域像素的新值，若是彩色图模式，取Scalar(b, g, r)；若是灰度图模式，取Scalar(r*0.299 + g*0.587 + b*0.114)</span></span><br><span class="line"></span><br><span class="line">    $dst = $g_bIsColor ? $g_dstImage : $g_grayImage;<span class="comment">//目标图的赋值</span></span><br><span class="line">    $area = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//--------------------【&lt;2&gt;正式调用floodFill函数】-----------------------------</span></span><br><span class="line">    <span class="keyword">if</span> ($g_bUseMask) &#123;</span><br><span class="line">        <span class="comment">//此句代码的OpenCV2版为：</span></span><br><span class="line">        <span class="comment">//threshold(g_maskImage, g_maskImage, 1, 128, CV_THRESH_BINARY);</span></span><br><span class="line">        <span class="comment">//此句代码的OpenCV3版为：</span></span><br><span class="line">        threshold($g_maskImage, $g_maskImage, <span class="number">1</span>, <span class="number">128</span>, THRESH_BINARY);</span><br><span class="line">        $area = floodFill($dst, $seed, $newVal, $g_maskImage, $rect, <span class="keyword">new</span> Scalar($LowDifference, $LowDifference, $LowDifference),</span><br><span class="line">            <span class="keyword">new</span> Scalar($UpDifference, $UpDifference, $UpDifference), $flags);</span><br><span class="line">        imshow(<span class="string">"mask"</span>, $g_maskImage);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $area = floodFill($dst, $seed, $newVal, <span class="keyword">null</span>, $rect, <span class="keyword">new</span> Scalar($LowDifference, $LowDifference, $LowDifference),</span><br><span class="line">            <span class="keyword">new</span> Scalar($UpDifference, $UpDifference, $UpDifference), $flags);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    imshow(<span class="string">"result"</span>, $dst);</span><br><span class="line">    print_r($area . <span class="string">" 个像素被重绘\n"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    showHelpText();</span><br><span class="line">    <span class="keyword">global</span> $g_srcImage;</span><br><span class="line">    <span class="keyword">global</span> $g_dstImage;</span><br><span class="line">    <span class="keyword">global</span> $g_grayImage;</span><br><span class="line">    <span class="keyword">global</span> $g_maskImage;</span><br><span class="line">    <span class="keyword">global</span> $g_nLowDifference;</span><br><span class="line">    <span class="keyword">global</span> $g_nUpDifference;</span><br><span class="line">    <span class="keyword">global</span> $onMouse;</span><br><span class="line">    <span class="keyword">global</span> $g_bIsColor;</span><br><span class="line">    <span class="keyword">global</span> $g_bUseMask;</span><br><span class="line">    $g_srcImage = imread(<span class="string">"floodFill2.jpg"</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> ($g_srcImage-&gt;empty()) &#123;</span><br><span class="line">        printf(<span class="string">"读取图片错误~！ \n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $g_srcImage-&gt;copyTo($g_dstImage);<span class="comment">//拷贝源图到目标图</span></span><br><span class="line">    $g_grayImage = cvtColor($g_srcImage, COLOR_BGR2GRAY);<span class="comment">//转换三通道的image0到灰度图</span></span><br><span class="line">    $g_maskImage = <span class="keyword">new</span> Mat($g_srcImage-&gt;rows + <span class="number">2</span>, $g_srcImage-&gt;cols + <span class="number">2</span>, CV_8UC1);<span class="comment">//利用image0的尺寸来初始化掩膜mask</span></span><br><span class="line"></span><br><span class="line">    namedWindow(<span class="string">"result"</span>, WINDOW_AUTOSIZE);</span><br><span class="line">    <span class="comment">//创建Trackbar</span></span><br><span class="line">    createTrackbar(<span class="string">"Maximum of negative difference"</span>, <span class="string">"result"</span>, $g_nLowDifference, <span class="number">255</span>);</span><br><span class="line"></span><br><span class="line">    createTrackbar(<span class="string">"Maximum positive difference"</span>, <span class="string">"result"</span>, $g_nUpDifference, <span class="number">255</span>);</span><br><span class="line">    setMouseCallback(<span class="string">"result"</span>, $onMouse);</span><br><span class="line">    <span class="comment">//循环轮询按键</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        <span class="comment">//先显示效果图</span></span><br><span class="line">        imshow(<span class="string">"result"</span>, $g_bIsColor ? $g_dstImage : $g_grayImage);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取键盘按键</span></span><br><span class="line">        $key = waitKey(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">//判断ESC是否按下，若按下便退出</span></span><br><span class="line">        <span class="keyword">if</span> (($key &amp; <span class="number">255</span>) == <span class="number">27</span>) &#123;</span><br><span class="line">            printf(<span class="string">"程序退出...........\n"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ($key == <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        $key = chr($key);</span><br><span class="line">        <span class="comment">//根据按键的不同，进行各种操作</span></span><br><span class="line">        <span class="keyword">switch</span> ($key) &#123;</span><br><span class="line">            <span class="comment">//如果键盘“1”被按下，效果图在在灰度图，彩色图之间互换</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'1'</span>:</span><br><span class="line">                <span class="keyword">if</span> ($g_bIsColor)<span class="comment">//若原来为彩色，转为灰度图，并且将掩膜mask所有元素设置为0</span></span><br><span class="line">                &#123;</span><br><span class="line">                    printf(<span class="string">"键盘“1”被按下，切换彩色/灰度模式，当前操作为将【彩色模式】切换为【灰度模式】\n"</span>);</span><br><span class="line">                    $g_grayImage = cvtColor($g_srcImage, COLOR_BGR2GRAY);</span><br><span class="line">                    $g_maskImage-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));    <span class="comment">//将mask所有元素设置为0</span></span><br><span class="line">                    $g_bIsColor = <span class="keyword">false</span>;    <span class="comment">//将标识符置为false，表示当前图像不为彩色，而是灰度</span></span><br><span class="line">                &#125; <span class="keyword">else</span><span class="comment">//若原来为灰度图，便将原来的彩图image0再次拷贝给image，并且将掩膜mask所有元素设置为0</span></span><br><span class="line">                &#123;</span><br><span class="line">                    printf(<span class="string">"键盘“1”被按下，切换彩色/灰度模式，当前操作为将【彩色模式】切换为【灰度模式】\n"</span>);</span><br><span class="line">                    $g_srcImage-&gt;copyTo($g_dstImage);</span><br><span class="line">                    $g_maskImage-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">                    $g_bIsColor = <span class="keyword">true</span>;<span class="comment">//将标识符置为true，表示当前图像模式为彩色</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果键盘按键“2”被按下，显示/隐藏掩膜窗口</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'2'</span>:</span><br><span class="line">                <span class="keyword">if</span> ($g_bUseMask) &#123;</span><br><span class="line">                    destroyWindow(<span class="string">"mask"</span>);</span><br><span class="line">                    $g_bUseMask = <span class="keyword">false</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    namedWindow(<span class="string">"mask"</span>, <span class="number">0</span>);</span><br><span class="line">                    $g_maskImage-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">                    imshow(<span class="string">"mask"</span>, $g_maskImage);</span><br><span class="line">                    $g_bUseMask = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果键盘按键“3”被按下，恢复原始图像</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'3'</span>:</span><br><span class="line">                printf(<span class="string">"按键“3”被按下，恢复原始图像\n"</span>);</span><br><span class="line">                $g_srcImage-&gt;copyTo($g_dstImage);</span><br><span class="line">                $g_grayImage = cvtColor($g_dstImage, COLOR_BGR2GRAY);</span><br><span class="line">                $g_maskImage-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果键盘按键“4”被按下，使用空范围的漫水填充</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'4'</span>:</span><br><span class="line">                printf(<span class="string">"按键“4”被按下，使用空范围的漫水填充\n"</span>);</span><br><span class="line">                $g_nFillMode = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果键盘按键“5”被按下，使用渐变、固定范围的漫水填充</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'5'</span>:</span><br><span class="line">                printf(<span class="string">"按键“5”被按下，使用渐变、固定范围的漫水填充\n"</span>);</span><br><span class="line">                $g_nFillMode = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果键盘按键“6”被按下，使用渐变、浮动范围的漫水填充</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'6'</span>:</span><br><span class="line">                printf(<span class="string">"按键“6”被按下，使用渐变、浮动范围的漫水填充\n"</span>);</span><br><span class="line">                $g_nFillMode = <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果键盘按键“7”被按下，操作标志符的低八位使用4位的连接模式</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'7'</span>:</span><br><span class="line">                printf(<span class="string">"按键“7”被按下，操作标志符的低八位使用4位的连接模式\n"</span>);</span><br><span class="line">                $g_nConnectivity = <span class="number">4</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果键盘按键“8”被按下，操作标志符的低八位使用8位的连接模式</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'8'</span>:</span><br><span class="line">                printf(<span class="string">"按键“8”被按下，操作标志符的低八位使用8位的连接模式\n"</span>);</span><br><span class="line">                $g_nConnectivity = <span class="number">8</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">run();</span><br></pre></td></tr></table></figure>
+<h3 id="运行结果" class="article-heading"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果<a class="article-anchor" href="#运行结果" aria-hidden="true"></a></h3><p><img src="/images/docs/flood_fill/3.png" alt="3.png"><img src="/images/docs/flood_fill/4.png" alt="4.png"></p>
+<h2 id="代码下载地址" class="article-heading"><a href="#代码下载地址" class="headerlink" title="代码下载地址"></a>代码下载地址<a class="article-anchor" href="#代码下载地址" aria-hidden="true"></a></h2><p><a href="https://github.com/phpopencv/tutorial-demo/tree/master/ImgProc/floodFill" target="_blank" rel="noopener">源码地址</a></p>
+
+              </div>
+              <footer class="article-footer">
+                <time class="article-footer-updated" datetime="2019-05-31T02:04:10.262Z" itemprop="dateModified">上次更新：2019-05-31</time>
+                <a href="opening_closing_hats.html" class="article-footer-prev" title="更多的形态变换"><i class="fa fa-chevron-left"></i><span>上一页</span></a><a href="pyramids.html" class="article-footer-next" title="图像金字塔"><span>下一页</span><i class="fa fa-chevron-right"></i></a>
+              </footer>
+              
+<section id="comments">
+  <div id="disqus_thread"></div>
+</section>
+<script>
+  var disqus_shortname = 'phpopencv';
+  var disqus_url = 'http://phpopencv.org/zh-cn/docs/flood_fill.html';
+  var disqus_title = "漫水填充";
+  var disqus_config = function(){
+    this.language = 'zh';
+  };
+  (function(){
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+            </div>
+          </div>
+          <aside id="article-toc" role="navigation">
+            <div id="article-toc-inner">
+              <strong class="sidebar-title">目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漫水填充的定义"><span class="toc-text">漫水填充的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漫水天从法的基本思想"><span class="toc-text">漫水天从法的基本思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#floodFill函数："><span class="toc-text">floodFill函数：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单例子"><span class="toc-text">简单例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码"><span class="toc-text">源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行结果："><span class="toc-text">运行结果：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#综合示例：漫水填充"><span class="toc-text">综合示例：漫水填充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码-1"><span class="toc-text">源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行结果"><span class="toc-text">运行结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码下载地址"><span class="toc-text">代码下载地址</span></a></li></ol>
+              <a href="#" id="article-toc-top">回到顶部</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <aside id="sidebar" role="navigation">
+  <div class="inner"><strong class="sidebar-title">开始使用</strong><a href="index.html" class="sidebar-link">概述</a><a href="install.html" class="sidebar-link">安装</a><a href="structure.html" class="sidebar-link">结构</a><a href="dev-prepare.html" class="sidebar-link">开发前准备</a><a href="quick-start.html" class="sidebar-link">快速开始</a><strong class="sidebar-title">核心模块</strong><a href="core/mat.html" class="sidebar-link">sidebar.docs.mat123</a><a href="mat.html" class="sidebar-link">Mat</a><a href="how_to_scan_images.html" class="sidebar-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="sidebar-link">矩阵的掩码操作</a><a href="mat_operations.html" class="sidebar-link">图像操作</a><a href="adding_images.html" class="sidebar-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="sidebar-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="sidebar-link">基本绘图</a><a href="random_generator_and_text.html" class="sidebar-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="sidebar-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="sidebar-link">文件输入和输出使用XML和YAML文件</a><strong class="sidebar-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="sidebar-link">图像平滑处理</a><a href="erosion_dilatation.html" class="sidebar-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="sidebar-link">更多的形态变换</a><a href="flood_fill.html" class="sidebar-link current">漫水填充</a><a href="pyramids.html" class="sidebar-link">图像金字塔</a><a href="threshold.html" class="sidebar-link">基本的阈值操作</a><a href="threshold_inRange.html" class="sidebar-link">阈值的使用范围</a><a href="filter_2d.html" class="sidebar-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="sidebar-link">向图像添加边框</a><a href="sobel_derivatives.html" class="sidebar-link">索贝尔衍生物</a><a href="laplace_operator.html" class="sidebar-link">拉普拉斯算子</a><a href="canny_detector.html" class="sidebar-link">Canny边缘检测器</a><a href="hough_lines.html" class="sidebar-link">霍夫线变换</a><a href="hough_circle.html" class="sidebar-link">霍夫圈变换</a><strong class="sidebar-title">highgui</strong><a href="trackbar.html" class="sidebar-link">滑动条</a><strong class="sidebar-title">目标检测</strong><a href="cascade_classifier.html" class="sidebar-link">级联分类器</a><a href="cascade_classifier_training.html" class="sidebar-link">级联分类器训练</a><strong class="sidebar-title">contaib模块</strong><a href="face.html" class="sidebar-link">人脸识别</a></div>
+</aside>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="wrapper">
+  <div class="inner">
+    <div id="footer-copyright">
+      &copy; 2019 <a href="https://github.com/hihozhou" target="_blank">HiHo Zhou</a><br>
+      Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
+    </div>
+    <div id="footer-links">
+      <a href="http://weibo.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-weibo"></i></a>
+      <a href="https://twitter.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-twitter"></i></a>
+      <a href="https://github.com/hihozhou/php-opencv" class="footer-link" target="_blank"><i class="fa fa-github-alt"></i></a>
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <div id="mobile-nav-dimmer"></div>
+  <nav id="mobile-nav">
+  <div id="mobile-nav-inner">
+    <ul id="mobile-nav-list">
+      <a href="/docs/" class="mobile-nav-link">文档</a>
+      <li class="mobile-nav-item">
+        <a href="https://github.com/hihozhou/php-opencv" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
+      </li>
+    </ul>
+    
+      <strong class="mobile-nav-title">开始使用</strong><a href="index.html" class="mobile-nav-link">概述</a><a href="install.html" class="mobile-nav-link">安装</a><a href="structure.html" class="mobile-nav-link">结构</a><a href="dev-prepare.html" class="mobile-nav-link">开发前准备</a><a href="quick-start.html" class="mobile-nav-link">快速开始</a><strong class="mobile-nav-title">核心模块</strong><a href="core/mat.html" class="mobile-nav-link">sidebar.docs.mat123</a><a href="mat.html" class="mobile-nav-link">Mat</a><a href="how_to_scan_images.html" class="mobile-nav-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="mobile-nav-link">矩阵的掩码操作</a><a href="mat_operations.html" class="mobile-nav-link">图像操作</a><a href="adding_images.html" class="mobile-nav-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="mobile-nav-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="mobile-nav-link">基本绘图</a><a href="random_generator_and_text.html" class="mobile-nav-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="mobile-nav-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="mobile-nav-link">文件输入和输出使用XML和YAML文件</a><strong class="mobile-nav-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="mobile-nav-link">图像平滑处理</a><a href="erosion_dilatation.html" class="mobile-nav-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="mobile-nav-link">更多的形态变换</a><a href="flood_fill.html" class="mobile-nav-link current">漫水填充</a><a href="pyramids.html" class="mobile-nav-link">图像金字塔</a><a href="threshold.html" class="mobile-nav-link">基本的阈值操作</a><a href="threshold_inRange.html" class="mobile-nav-link">阈值的使用范围</a><a href="filter_2d.html" class="mobile-nav-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="mobile-nav-link">向图像添加边框</a><a href="sobel_derivatives.html" class="mobile-nav-link">索贝尔衍生物</a><a href="laplace_operator.html" class="mobile-nav-link">拉普拉斯算子</a><a href="canny_detector.html" class="mobile-nav-link">Canny边缘检测器</a><a href="hough_lines.html" class="mobile-nav-link">霍夫线变换</a><a href="hough_circle.html" class="mobile-nav-link">霍夫圈变换</a><strong class="mobile-nav-title">highgui</strong><a href="trackbar.html" class="mobile-nav-link">滑动条</a><strong class="mobile-nav-title">目标检测</strong><a href="cascade_classifier.html" class="mobile-nav-link">级联分类器</a><a href="cascade_classifier_training.html" class="mobile-nav-link">级联分类器训练</a><strong class="mobile-nav-title">contaib模块</strong><a href="face.html" class="mobile-nav-link">人脸识别</a>
+    
+  </div>
+  <div id="mobile-lang-select-wrap">
+    <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></span>
+    <select id="mobile-lang-select" data-canonical="docs/flood_fill.html">
+      
+        <option value="en">English</option>
+      
+        <option value="zh-cn" selected>简体中文</option>
+      
+    </select>
+  </div>
+</nav>
+  <!-- Scripts -->
+<!-- build:js build/js/main.js -->
+<script src="/js/lang_select.js"></script>
+<script src="/js/scrollingelement.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/mobile_nav.js"></script>
+<!-- endbuild -->
+<script src="https://cdn.jsdelivr.net/retinajs/1.3.0/retina.min.js" async></script>
+
+<!-- Algolia -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript">
+document.getElementById('search-input-wrap').classList.add('on');
+docsearch({
+  apiKey: 'cdea7d4e47d84f6145b77e7f68689f35',
+  indexName: 'hexo_zh-cn',
+  inputSelector: '#search-input'
+});
+</script>
+
+
+</body>
+</html>

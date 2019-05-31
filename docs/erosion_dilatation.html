@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>腐蚀和膨胀 | PHPOpenCV</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://phpopencv.org/docs/erosion_dilatation.html">
+  <!-- Alternative links -->
+  
+    
+      <link rel="alternative" hreflang="en" href="http://phpopencv.org/docs/erosion_dilatation.html">
+    
+      <link rel="alternative" hreflang="zh-cn" href="http://phpopencv.org/zh-cn/docs/erosion_dilatation.html">
+    
+  
+  <!-- Icon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/icon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/icon/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#2f83cd">
+  <meta name="msapplication-TileImage" content="/icon/mstile-144x144.png">
+  <!-- CSS -->
+  <!-- build:css build/css/navy.css -->
+  <link rel="stylesheet" href="/css/navy.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css">
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="PHPOpenCV">
+  <!-- Open Graph -->
+  <meta name="description" content="目标这篇教程你将会学到：  应用两个非常常见的形态算子：腐蚀和膨胀。为此，您将使用以下PHPOpenCV功能： CV\erode CV\dilate    理论注意下面的解释出自浅墨的《OpenCV入门教程》  形态操作形态学（morphology）一词通常表示生物学的一个分支，该分支研究研究动植物的形态和结构。而我们图像处理的形态学，往往指数学形态学。下面一起来了解数学形态学的概念。 数学形态学">
+<meta property="og:type" content="website">
+<meta property="og:title" content="腐蚀和膨胀">
+<meta property="og:url" content="http://phpopencv.org/docs/erosion_dilatation.html">
+<meta property="og:site_name" content="PHPOpenCV">
+<meta property="og:description" content="目标这篇教程你将会学到：  应用两个非常常见的形态算子：腐蚀和膨胀。为此，您将使用以下PHPOpenCV功能： CV\erode CV\dilate    理论注意下面的解释出自浅墨的《OpenCV入门教程》  形态操作形态学（morphology）一词通常表示生物学的一个分支，该分支研究研究动植物的形态和结构。而我们图像处理的形态学，往往指数学形态学。下面一起来了解数学形态学的概念。 数学形态学">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://phpopencv.org/images/docs/erosion_dilatation/Morphology_1_Tutorial_Theory_Original_Image.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/erosion_dilatation/1.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/erosion_dilatation/Morphology_1_Tutorial_Theory_Dilation.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/erosion_dilatation/2.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/erosion_dilatation/Morphology_1_Tutorial_Theory_Erosion.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/erosion_dilatation/cat.jpg">
+<meta property="og:image" content="http://phpopencv.org/images/docs/erosion_dilatation/result.png">
+<meta property="og:updated_time" content="2019-05-31T02:04:10.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="腐蚀和膨胀">
+<meta name="twitter:description" content="目标这篇教程你将会学到：  应用两个非常常见的形态算子：腐蚀和膨胀。为此，您将使用以下PHPOpenCV功能： CV\erode CV\dilate    理论注意下面的解释出自浅墨的《OpenCV入门教程》  形态操作形态学（morphology）一词通常表示生物学的一个分支，该分支研究研究动植物的形态和结构。而我们图像处理的形态学，往往指数学形态学。下面一起来了解数学形态学的概念。 数学形态学">
+<meta name="twitter:image" content="http://phpopencv.org/images/docs/erosion_dilatation/Morphology_1_Tutorial_Theory_Original_Image.png">
+<meta name="twitter:site" content="hexojs">
+<meta property="fb:admins" content="100000247608790">
+  <!-- Google Analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48498357-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  <!-- Google AdSense -->
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9461880259118621",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <!-- Github Button -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <header id="header" class="wrapper">
+  <div id="header-inner" class="inner">
+    <h1 id="logo-wrap">
+      <a href="/" id="logo">PHPOpenCV</a>
+    </h1>
+    <nav id="main-nav">
+      <a href="/docs/" class="main-nav-link">Docs</a>
+      <a href="https://github.com/hihozhou/php-opencv" class="main-nav-link"><i class="fa fa-github-alt"></i></a>
+
+    </nav>
+    <div id="lang-select-wrap">
+      <label id="lang-select-label"><i class="fa fa-globe"></i><span>English</span></label>
+      <select id="lang-select" data-canonical="docs/erosion_dilatation.html">
+        
+          <option value="en" selected>English</option>
+        
+          <option value="zh-cn">简体中文</option>
+        
+      </select>
+    </div>
+    <a id="mobile-nav-toggle">
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+    </a>
+  </div>
+</header>
+
+    <div id="content-wrap">
+  <div id="content" class="wrapper">
+    <div id="content-inner">
+      <article class="article-container" itemscope itemtype="http://schema.org/Article">
+        <div class="article-inner">
+          <div class="article">
+            <div class="inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">腐蚀和膨胀</h1>
+                <a href="https://github.com/phpopencv/site/edit/master/source/docs/erosion_dilatation.md" class="article-edit-link" title="Improve this doc"><i class="fa fa-pencil"></i></a>
+              </header>
+              <div class="article-content" itemprop="articleBody">
+                <h2 id="目标" class="article-heading"><a href="#目标" class="headerlink" title="目标"></a>目标<a class="article-anchor" href="#目标" aria-hidden="true"></a></h2><p>这篇教程你将会学到：</p>
+<ul>
+<li>应用两个非常常见的形态算子：腐蚀和膨胀。为此，您将使用以下PHPOpenCV功能：<ul>
+<li>CV\erode</li>
+<li>CV\dilate</li>
+</ul>
+</li>
+</ul>
+<h2 id="理论" class="article-heading"><a href="#理论" class="headerlink" title="理论"></a>理论<a class="article-anchor" href="#理论" aria-hidden="true"></a></h2><blockquote class="note tip"><strong class="note-title">注意</strong><p>下面的解释出自浅墨的《OpenCV入门教程》</p>
+</blockquote>
+<h2 id="形态操作" class="article-heading"><a href="#形态操作" class="headerlink" title="形态操作"></a>形态操作<a class="article-anchor" href="#形态操作" aria-hidden="true"></a></h2><p>形态学（morphology）一词通常表示生物学的一个分支，该分支研究研究动植物的形态和结构。而我们图像<br>处理的形态学，往往指数学形态学。下面一起来了解数学形态学的概念。</p>
+<p>数学形态学（Mathematical morphology）是一门建立在<code>格论</code>和和<code>拓扑学</code>基础之上的图像分析学科，是数学<br>形态学图像处理的基本理论。其基本的函数包括：二值腐蚀和膨胀、二值开闭运算、骨架抽取、极限腐蚀、击<br>不击中变换、形态学梯度、Top-hat变换、颗粒分析、流域变换、灰度腐蚀和膨胀、灰度开闭运算、灰值形态<br>梯度等。</p>
+<p>简单来讲，形态学操作的基本形状的一系列图像处理操作。PHPOpenCV未进行图像的形态学变换提供了快捷、方便的函数。<br>最基本的形态学操作有两种，分别是：膨胀（dilate）与腐蚀（erode）。</p>
+<p>膨胀于腐蚀能实现多种多样的功能，主要如下。</p>
+<ul>
+<li>消除噪声;</li>
+<li>分割（isolate）出独立的图像元素，在图像中链接（join）相邻的像素;</li>
+<li>寻早图像中的明显的极大值区域扩极小值区域;</li>
+<li>求出图像的梯度。</li>
+</ul>
+<p>在这里我们将简要说明膨胀和腐蚀，使用一下图像作为示例：</p>
+<div align="center"><br><img src="/images/docs/erosion_dilatation/Morphology_1_Tutorial_Theory_Original_Image.png" alt="Morphology_1_Tutorial_Theory_Original_Image.png"><br></div>
+
+<blockquote class="note tip"><strong class="note-title">注意</strong><p>在提醒腐蚀和膨胀的讲解之前，首先提醒大家要注意，腐蚀和膨胀是对白色部分（高亮部分）而眼的，不是黑色部分。<br>膨胀是图像中的高亮部分进行膨胀，类是于“领域扩张”，效果图拥有比原图像更大的高亮区域；<br>腐蚀是原图中的高亮部分被腐蚀，类是于“领域被蚕食”，效果图拥有比原图像更小的高亮区域。</p>
+</blockquote>
+<h3 id="膨胀" class="article-heading"><a href="#膨胀" class="headerlink" title="膨胀"></a>膨胀<a class="article-anchor" href="#膨胀" aria-hidden="true"></a></h3><p>膨胀（dilate）就是求局部最大值操作。从数学角度来说，膨胀或者腐蚀操作就是将图像（或图像的一部分区域，称之为A）<br>与核（称之为B）进行卷积。</p>
+<p>核可以是任何形状和大小，它拥有一个独立定义出来的参考点，我们称其未锚点（anchorpoint）。多数情况下，核是一个小的，<br>中间带有参考点和实心的正方形或者圆盘。其实，可以把核视为模板或掩码。</p>
+<p>而膨胀就是求局部最大值操作。核B与图形卷积，即计算核B覆盖的区域的像素点的最大值，并把这个最大值赋值给参考点指定的像素。<br>这样就会使图像中的高亮区域逐渐增长，如下图所示，这就是膨胀操作的初衷。</p>
+<div align="center"><br><img src="/images/docs/erosion_dilatation/1.png" alt="1.png"><br></div>  
+
+<p>示例图像膨胀后效果：</p>
+<div align="center"><br><img src="/images/docs/erosion_dilatation/Morphology_1_Tutorial_Theory_Dilation.png" alt="Morphology_1_Tutorial_Theory_Dilation.png"><br></div>  
+
+
+<h3 id="腐蚀" class="article-heading"><a href="#腐蚀" class="headerlink" title="腐蚀"></a>腐蚀<a class="article-anchor" href="#腐蚀" aria-hidden="true"></a></h3><p>大家应该知道，膨胀和腐蚀（erode）是相反的一堆操作，所以腐蚀就是求局部最小值的操作。<br>我们一般都会腐蚀和膨胀进行对比理解和学习。下文就可以看到，两者的函数原型也基本是一眼的。腐蚀操作示例如图所示：</p>
+<div align="center"><br><img src="/images/docs/erosion_dilatation/2.png" alt="2.png"><br></div>  
+
+<p>示例腐蚀结果图：</p>
+<div align="center"><br><img src="/images/docs/erosion_dilatation/Morphology_1_Tutorial_Theory_Erosion.png" alt="Morphology_1_Tutorial_Theory_Erosion.png.png"><br></div> 
+
+
+<h2 id="程序例子" class="article-heading"><a href="#程序例子" class="headerlink" title="程序例子"></a>程序例子<a class="article-anchor" href="#程序例子" aria-hidden="true"></a></h2><h3 id="源码" class="article-heading"><a href="#源码" class="headerlink" title="源码"></a>源码<a class="article-anchor" href="#源码" aria-hidden="true"></a></h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Mat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Size</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Point</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">imread</span>,</span><br><span class="line">    <span class="title">namedWindow</span>,</span><br><span class="line">    <span class="title">moveWindow</span>,</span><br><span class="line">    <span class="title">waitKey</span>,</span><br><span class="line">    <span class="title">createTrackbar</span>,</span><br><span class="line">    <span class="title">getStructuringElement</span>,</span><br><span class="line">    <span class="title">erode</span>, <span class="title">imshow</span>, <span class="title">dilate</span>,</span><br><span class="line">    <span class="title">getTrackBarPos</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">IMREAD_COLOR</span>, <span class="title">WINDOW_AUTOSIZE</span>, <span class="title">MORPH_RECT</span>, <span class="title">MORPH_CROSS</span>, <span class="title">MORPH_ELLIPSE</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$src = <span class="keyword">null</span>;</span><br><span class="line">$erosion_dst = <span class="keyword">null</span>;</span><br><span class="line">$dilation_dst = <span class="keyword">null</span>;</span><br><span class="line">$erosion_elem = <span class="number">0</span>;</span><br><span class="line">$erosion_size = <span class="number">0</span>;</span><br><span class="line">$dilation_elem = <span class="number">0</span>;</span><br><span class="line">$dilation_size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> max_elem = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> max_kernel_size = <span class="number">21</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> EROSION_WINDOW_NAME = <span class="string">"Erosion Demo"</span>;</span><br><span class="line"><span class="keyword">const</span> DILATION_WINDOW_NAME = <span class="string">"Dilation Demo"</span>;</span><br><span class="line"><span class="keyword">const</span> ELEM_TYPE_TRACK_BAR_NAME = <span class="string">"Element:\n 0: Rect \n 1: Cross \n 2: Ellipse"</span>;</span><br><span class="line"><span class="keyword">const</span> ELEM_SIZE_TRACK_BAR_NAME = <span class="string">"Kernel size:\n 2n +1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调整腐蚀(核类型/核大小)闭包</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> $num</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$erosionClosure = <span class="function"><span class="keyword">function</span> <span class="params">($num)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">global</span> $src;</span><br><span class="line">    <span class="keyword">global</span> $erosion_elem;</span><br><span class="line">    <span class="keyword">global</span> $erosion_size;</span><br><span class="line">    $erosion_elem = getTrackBarPos(ELEM_TYPE_TRACK_BAR_NAME, EROSION_WINDOW_NAME);</span><br><span class="line">    $erosion_size = getTrackBarPos(ELEM_SIZE_TRACK_BAR_NAME, EROSION_WINDOW_NAME);</span><br><span class="line">    $erosion_type = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ($erosion_elem == <span class="number">0</span>) &#123;</span><br><span class="line">        $erosion_type = MORPH_RECT;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($erosion_elem == <span class="number">1</span>) &#123;</span><br><span class="line">        $erosion_type = MORPH_CROSS;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($erosion_elem == <span class="number">2</span>) &#123;</span><br><span class="line">        $erosion_type = MORPH_ELLIPSE;</span><br><span class="line">    &#125;</span><br><span class="line">    $element = getStructuringElement($erosion_type,</span><br><span class="line">        <span class="keyword">new</span> Size(<span class="number">2</span> * $erosion_size + <span class="number">1</span>, <span class="number">2</span> * $erosion_size + <span class="number">1</span>),</span><br><span class="line">        <span class="keyword">new</span> Point($erosion_size, $erosion_size));</span><br><span class="line">    $erosion_dst = <span class="keyword">null</span>;</span><br><span class="line">    erode($src, $erosion_dst, $element);</span><br><span class="line">    imshow(<span class="string">"Erosion Demo"</span>, $erosion_dst);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调整膨胀(核类型/核大小)闭包</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> $num</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$dilationClosure = <span class="function"><span class="keyword">function</span> <span class="params">($num)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $src;</span><br><span class="line">    <span class="keyword">global</span> $dilation_elem;</span><br><span class="line">    <span class="keyword">global</span> $dilation_size;</span><br><span class="line">    $dilation_elem = getTrackBarPos(ELEM_TYPE_TRACK_BAR_NAME, DILATION_WINDOW_NAME);</span><br><span class="line">    $dilation_size = getTrackBarPos(ELEM_SIZE_TRACK_BAR_NAME, DILATION_WINDOW_NAME);</span><br><span class="line">    $dilation_type = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ($dilation_elem == <span class="number">0</span>) &#123;</span><br><span class="line">        $dilation_type = MORPH_RECT;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($dilation_elem == <span class="number">1</span>) &#123;</span><br><span class="line">        $dilation_type = MORPH_CROSS;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($dilation_elem == <span class="number">2</span>) &#123;</span><br><span class="line">        $dilation_type = MORPH_ELLIPSE;</span><br><span class="line">    &#125;</span><br><span class="line">    $element = getStructuringElement($dilation_type,</span><br><span class="line">        <span class="keyword">new</span> Size(<span class="number">2</span> * $dilation_size + <span class="number">1</span>, <span class="number">2</span> * $dilation_size + <span class="number">1</span>),</span><br><span class="line">        <span class="keyword">new</span> Point($dilation_size, $dilation_size));</span><br><span class="line">    $dilation_dst = <span class="keyword">null</span>;</span><br><span class="line">    dilate($src, $dilation_dst, $element);</span><br><span class="line">    imshow(DILATION_WINDOW_NAME, $dilation_dst);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $src;</span><br><span class="line">    <span class="keyword">global</span> $erosion_elem;</span><br><span class="line">    <span class="keyword">global</span> $erosion_size;</span><br><span class="line">    <span class="keyword">global</span> $dilation_size;</span><br><span class="line">    <span class="keyword">global</span> $dilation_elem;</span><br><span class="line">    <span class="keyword">global</span> $erosionClosure;</span><br><span class="line">    <span class="keyword">global</span> $dilationClosure;</span><br><span class="line">    $src = imread(<span class="string">"cat.jpg"</span>, IMREAD_COLOR);<span class="comment">//读取原图像</span></span><br><span class="line">    <span class="keyword">if</span> ($src-&gt;empty()) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">"can't load image."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建两个窗口并命名</span></span><br><span class="line">    namedWindow(<span class="string">"Erosion Demo"</span>, WINDOW_AUTOSIZE);</span><br><span class="line">    namedWindow(<span class="string">"Dilation Demo"</span>, WINDOW_AUTOSIZE);</span><br><span class="line">    moveWindow(<span class="string">"Dilation Demo"</span>, $src-&gt;cols, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">//添加调整腐蚀核类型滑条</span></span><br><span class="line">    createTrackbar(ELEM_TYPE_TRACK_BAR_NAME, EROSION_WINDOW_NAME,</span><br><span class="line">        $erosion_elem, max_elem,</span><br><span class="line">        $erosionClosure);</span><br><span class="line">    <span class="comment">//添加调整腐蚀核大小滑条</span></span><br><span class="line">    createTrackbar(ELEM_SIZE_TRACK_BAR_NAME, EROSION_WINDOW_NAME,</span><br><span class="line">        $erosion_size, max_kernel_size,</span><br><span class="line">        $erosionClosure);</span><br><span class="line">    <span class="comment">//添加调整膨胀核类型滑条</span></span><br><span class="line">    createTrackbar(ELEM_TYPE_TRACK_BAR_NAME, DILATION_WINDOW_NAME,</span><br><span class="line">        $dilation_elem, max_elem,</span><br><span class="line">        $dilationClosure);</span><br><span class="line">    <span class="comment">//添加调整膨胀核大小滑条</span></span><br><span class="line">    createTrackbar(ELEM_SIZE_TRACK_BAR_NAME, DILATION_WINDOW_NAME,</span><br><span class="line">        $dilation_size, max_kernel_size,</span><br><span class="line">        $dilationClosure);</span><br><span class="line">    <span class="comment">//展示原图</span></span><br><span class="line">    imshow(<span class="string">"Erosion Demo"</span>, $src);</span><br><span class="line">    imshow(<span class="string">"Dilation Demo"</span>, $src);</span><br><span class="line"></span><br><span class="line">    waitKey(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">run();</span><br></pre></td></tr></table></figure>
+<h3 id="结果" class="article-heading"><a href="#结果" class="headerlink" title="结果"></a>结果<a class="article-anchor" href="#结果" aria-hidden="true"></a></h3><p>原图效果：</p>
+<div align="center"><br><img src="/images/docs/erosion_dilatation/cat.jpg" alt="cat.jpg"><br></div> 
+
+<p>我们得到以下结果。自然地，改变轨道栏中的指标会给出不同的输出图像。试试吧！甚至可以尝试添加第三个Trackbar来控制迭代次数。</p>
+<div align="center"><br><img src="/images/docs/erosion_dilatation/result.png" alt="result.png"><br></div> 
+
+<h3 id="代码下载地址" class="article-heading"><a href="#代码下载地址" class="headerlink" title="代码下载地址"></a>代码下载地址<a class="article-anchor" href="#代码下载地址" aria-hidden="true"></a></h3><p><a href="https://github.com/phpopencv/tutorial-demo/tree/master/ImgProc/erosion_dilatation" target="_blank" rel="noopener">代码下载地址</a></p>
+
+              </div>
+              <footer class="article-footer">
+                <time class="article-footer-updated" datetime="2019-05-31T02:04:10.258Z" itemprop="dateModified">Last updated: 2019-05-31</time>
+                <a href="gausian_median_blur_bilateral_filter.html" class="article-footer-prev" title="Smoothing Images"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="opening_closing_hats.html" class="article-footer-next" title="More Morphology Transformations"><span>Next</span><i class="fa fa-chevron-right"></i></a>
+              </footer>
+              
+<section id="comments">
+  <div id="disqus_thread"></div>
+</section>
+<script>
+  var disqus_shortname = 'phpopencv';
+  var disqus_url = 'http://phpopencv.org/docs/erosion_dilatation.html';
+  var disqus_title = "腐蚀和膨胀";
+  var disqus_config = function(){
+    this.language = 'en';
+  };
+  (function(){
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+            </div>
+          </div>
+          <aside id="article-toc" role="navigation">
+            <div id="article-toc-inner">
+              <strong class="sidebar-title">Contents</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理论"><span class="toc-text">理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#形态操作"><span class="toc-text">形态操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#膨胀"><span class="toc-text">膨胀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#腐蚀"><span class="toc-text">腐蚀</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序例子"><span class="toc-text">程序例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码"><span class="toc-text">源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结果"><span class="toc-text">结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码下载地址"><span class="toc-text">代码下载地址</span></a></li></ol></li></ol>
+              <a href="#" id="article-toc-top">Back to Top</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <aside id="sidebar" role="navigation">
+  <div class="inner"><strong class="sidebar-title">Getting Started</strong><a href="index.html" class="sidebar-link">Overview</a><a href="install.html" class="sidebar-link">Install</a><a href="structure.html" class="sidebar-link">结构</a><a href="dev-prepare.html" class="sidebar-link">Preparation</a><a href="quick-start.html" class="sidebar-link">Quick Start</a><strong class="sidebar-title">Core</strong><a href="core/mat.html" class="sidebar-link">sidebar.docs.mat123</a><a href="mat.html" class="sidebar-link">Mat</a><a href="how_to_scan_images.html" class="sidebar-link">Images Scan</a><a href="mat_mask_operations.html" class="sidebar-link">Mask operations on matrices</a><a href="mat_operations.html" class="sidebar-link">Operations with images</a><a href="adding_images.html" class="sidebar-link">Adding (blending) two images using PHPOpenCV</a><a href="basic_linear_transform.html" class="sidebar-link">Changing the contrast and brightness of an image!</a><a href="basic_geometric_drawing.html" class="sidebar-link">Basic Drawing</a><a href="random_generator_and_text.html" class="sidebar-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="sidebar-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="sidebar-link">文件输入和输出使用XML和YAML文件</a><strong class="sidebar-title">Image Processing</strong><a href="gausian_median_blur_bilateral_filter.html" class="sidebar-link">Smoothing Images</a><a href="erosion_dilatation.html" class="sidebar-link current">Eroding and Dilating</a><a href="opening_closing_hats.html" class="sidebar-link">More Morphology Transformations</a><a href="flood_fill.html" class="sidebar-link">Flood Fill</a><a href="pyramids.html" class="sidebar-link">图像金字塔</a><a href="threshold.html" class="sidebar-link">基本的阈值操作</a><a href="threshold_inRange.html" class="sidebar-link">阈值的使用范围</a><a href="filter_2d.html" class="sidebar-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="sidebar-link">向图像添加边框</a><a href="sobel_derivatives.html" class="sidebar-link">索贝尔衍生物</a><a href="laplace_operator.html" class="sidebar-link">拉普拉斯算子</a><a href="canny_detector.html" class="sidebar-link">Canny边缘检测器</a><a href="hough_lines.html" class="sidebar-link">霍夫线变换</a><a href="hough_circle.html" class="sidebar-link">霍夫圈变换</a><strong class="sidebar-title">highgui</strong><a href="trackbar.html" class="sidebar-link">滑动条</a><strong class="sidebar-title">Object Detection</strong><a href="cascade_classifier.html" class="sidebar-link">Cascade Classifier</a><a href="cascade_classifier_training.html" class="sidebar-link">Cascade Classifier Training</a><strong class="sidebar-title">contaib</strong><a href="face.html" class="sidebar-link">Face Recognition</a></div>
+</aside>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="wrapper">
+  <div class="inner">
+    <div id="footer-copyright">
+      &copy; 2019 <a href="https://github.com/hihozhou" target="_blank">HiHo Zhou</a><br>
+      Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
+    </div>
+    <div id="footer-links">
+      <a href="http://weibo.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-weibo"></i></a>
+      <a href="https://twitter.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-twitter"></i></a>
+      <a href="https://github.com/hihozhou/php-opencv" class="footer-link" target="_blank"><i class="fa fa-github-alt"></i></a>
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <div id="mobile-nav-dimmer"></div>
+  <nav id="mobile-nav">
+  <div id="mobile-nav-inner">
+    <ul id="mobile-nav-list">
+      <a href="/docs/" class="mobile-nav-link">Docs</a>
+      <li class="mobile-nav-item">
+        <a href="https://github.com/hihozhou/php-opencv" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
+      </li>
+    </ul>
+    
+      <strong class="mobile-nav-title">Getting Started</strong><a href="index.html" class="mobile-nav-link">Overview</a><a href="install.html" class="mobile-nav-link">Install</a><a href="structure.html" class="mobile-nav-link">结构</a><a href="dev-prepare.html" class="mobile-nav-link">Preparation</a><a href="quick-start.html" class="mobile-nav-link">Quick Start</a><strong class="mobile-nav-title">Core</strong><a href="core/mat.html" class="mobile-nav-link">sidebar.docs.mat123</a><a href="mat.html" class="mobile-nav-link">Mat</a><a href="how_to_scan_images.html" class="mobile-nav-link">Images Scan</a><a href="mat_mask_operations.html" class="mobile-nav-link">Mask operations on matrices</a><a href="mat_operations.html" class="mobile-nav-link">Operations with images</a><a href="adding_images.html" class="mobile-nav-link">Adding (blending) two images using PHPOpenCV</a><a href="basic_linear_transform.html" class="mobile-nav-link">Changing the contrast and brightness of an image!</a><a href="basic_geometric_drawing.html" class="mobile-nav-link">Basic Drawing</a><a href="random_generator_and_text.html" class="mobile-nav-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="mobile-nav-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="mobile-nav-link">文件输入和输出使用XML和YAML文件</a><strong class="mobile-nav-title">Image Processing</strong><a href="gausian_median_blur_bilateral_filter.html" class="mobile-nav-link">Smoothing Images</a><a href="erosion_dilatation.html" class="mobile-nav-link current">Eroding and Dilating</a><a href="opening_closing_hats.html" class="mobile-nav-link">More Morphology Transformations</a><a href="flood_fill.html" class="mobile-nav-link">Flood Fill</a><a href="pyramids.html" class="mobile-nav-link">图像金字塔</a><a href="threshold.html" class="mobile-nav-link">基本的阈值操作</a><a href="threshold_inRange.html" class="mobile-nav-link">阈值的使用范围</a><a href="filter_2d.html" class="mobile-nav-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="mobile-nav-link">向图像添加边框</a><a href="sobel_derivatives.html" class="mobile-nav-link">索贝尔衍生物</a><a href="laplace_operator.html" class="mobile-nav-link">拉普拉斯算子</a><a href="canny_detector.html" class="mobile-nav-link">Canny边缘检测器</a><a href="hough_lines.html" class="mobile-nav-link">霍夫线变换</a><a href="hough_circle.html" class="mobile-nav-link">霍夫圈变换</a><strong class="mobile-nav-title">highgui</strong><a href="trackbar.html" class="mobile-nav-link">滑动条</a><strong class="mobile-nav-title">Object Detection</strong><a href="cascade_classifier.html" class="mobile-nav-link">Cascade Classifier</a><a href="cascade_classifier_training.html" class="mobile-nav-link">Cascade Classifier Training</a><strong class="mobile-nav-title">contaib</strong><a href="face.html" class="mobile-nav-link">Face Recognition</a>
+    
+  </div>
+  <div id="mobile-lang-select-wrap">
+    <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>English</span></span>
+    <select id="mobile-lang-select" data-canonical="docs/erosion_dilatation.html">
+      
+        <option value="en" selected>English</option>
+      
+        <option value="zh-cn">简体中文</option>
+      
+    </select>
+  </div>
+</nav>
+  <!-- Scripts -->
+<!-- build:js build/js/main.js -->
+<script src="/js/lang_select.js"></script>
+<script src="/js/scrollingelement.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/mobile_nav.js"></script>
+<!-- endbuild -->
+<script src="https://cdn.jsdelivr.net/retinajs/1.3.0/retina.min.js" async></script>
+
+<!-- Algolia -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript">
+document.getElementById('search-input-wrap').classList.add('on');
+docsearch({
+  apiKey: 'c3d5d4c995b5e0c2ffb5623900279a66',
+  indexName: 'hexo',
+  inputSelector: '#search-input'
+});
+</script>
+
+
+</body>
+</html>

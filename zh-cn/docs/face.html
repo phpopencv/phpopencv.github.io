@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>人脸识别 | PHPOpenCV</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://phpopencv.org/zh-cn/docs/face.html">
+  <!-- Alternative links -->
+  
+    
+      <link rel="alternative" hreflang="en" href="http://phpopencv.org/docs/face.html">
+    
+      <link rel="alternative" hreflang="zh-cn" href="http://phpopencv.org/zh-cn/docs/face.html">
+    
+  
+  <!-- Icon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/icon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/icon/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#2f83cd">
+  <meta name="msapplication-TileImage" content="/icon/mstile-144x144.png">
+  <!-- CSS -->
+  <!-- build:css build/css/navy.css -->
+  <link rel="stylesheet" href="/css/navy.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css">
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="PHPOpenCV">
+  <!-- Open Graph -->
+  <meta name="description" content="注意注意：如果你想要扩展支持人脸识别功能，那么在安装OpenCV时候，需要安装contrib模块  PHPOpenCV使用FaceRecognizer类做人脸识别，所以你可以开始尝试人脸识别吧。本章将教你如何做基本的人脸识别。目前可用的算法是：  Eigenfaces (see EigenFaceRecognizer::create) Fisherfaces (see FisherFaceReco">
+<meta property="og:type" content="website">
+<meta property="og:title" content="人脸识别">
+<meta property="og:url" content="http://phpopencv.org/zh-cn/docs/face.html">
+<meta property="og:site_name" content="PHPOpenCV">
+<meta property="og:description" content="注意注意：如果你想要扩展支持人脸识别功能，那么在安装OpenCV时候，需要安装contrib模块  PHPOpenCV使用FaceRecognizer类做人脸识别，所以你可以开始尝试人脸识别吧。本章将教你如何做基本的人脸识别。目前可用的算法是：  Eigenfaces (see EigenFaceRecognizer::create) Fisherfaces (see FisherFaceReco">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://phpopencv.org/images/docs/face/att_faces.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/face/myPics.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/face/1.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/face/myFaces.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/face/2.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/face/result.png">
+<meta property="og:updated_time" content="2019-05-31T02:04:10.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="人脸识别">
+<meta name="twitter:description" content="注意注意：如果你想要扩展支持人脸识别功能，那么在安装OpenCV时候，需要安装contrib模块  PHPOpenCV使用FaceRecognizer类做人脸识别，所以你可以开始尝试人脸识别吧。本章将教你如何做基本的人脸识别。目前可用的算法是：  Eigenfaces (see EigenFaceRecognizer::create) Fisherfaces (see FisherFaceReco">
+<meta name="twitter:image" content="http://phpopencv.org/images/docs/face/att_faces.png">
+<meta name="twitter:site" content="hexojs">
+<meta property="fb:admins" content="100000247608790">
+  <!-- Google Analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48498357-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  <!-- Google AdSense -->
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9461880259118621",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <!-- Github Button -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <header id="header" class="wrapper">
+  <div id="header-inner" class="inner">
+    <h1 id="logo-wrap">
+      <a href="/zh-cn/" id="logo">PHPOpenCV</a>
+    </h1>
+    <nav id="main-nav">
+      <a href="/docs/" class="main-nav-link">文档</a>
+      <a href="https://github.com/hihozhou/php-opencv" class="main-nav-link"><i class="fa fa-github-alt"></i></a>
+
+    </nav>
+    <div id="lang-select-wrap">
+      <label id="lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></label>
+      <select id="lang-select" data-canonical="docs/face.html">
+        
+          <option value="en">English</option>
+        
+          <option value="zh-cn" selected>简体中文</option>
+        
+      </select>
+    </div>
+    <a id="mobile-nav-toggle">
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+    </a>
+  </div>
+</header>
+
+    <div id="content-wrap">
+  <div id="content" class="wrapper">
+    <div id="content-inner">
+      <article class="article-container" itemscope itemtype="http://schema.org/Article">
+        <div class="article-inner">
+          <div class="article">
+            <div class="inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">人脸识别</h1>
+                <a href="https://github.com/phpopencv/site/edit/master/source/zh-cn/docs/face.md" class="article-edit-link" title="改进本文"><i class="fa fa-pencil"></i></a>
+              </header>
+              <div class="article-content" itemprop="articleBody">
+                <blockquote class="note tip"><strong class="note-title">注意</strong><p>注意：如果你想要扩展支持人脸识别功能，那么在安装OpenCV时候，需要安装<a href="install.html#下载opencv-contrib模块">contrib模块</a></p>
+</blockquote>
+<p>PHPOpenCV使用FaceRecognizer类做人脸识别，所以你可以开始尝试人脸识别吧。本章将教你如何做基本的人脸识别。<br>目前可用的算法是：</p>
+<ul>
+<li>Eigenfaces (see EigenFaceRecognizer::create)</li>
+<li>Fisherfaces (see FisherFaceRecognizer::create)</li>
+<li>Local Binary Patterns Histograms (see LBPHFaceRecognizer::create)</li>
+</ul>
+<h2 id="人脸库Face-Database" class="article-heading"><a href="#人脸库Face-Database" class="headerlink" title="人脸库Face Database"></a>人脸库Face Database<a class="article-anchor" href="#人脸库Face-Database" aria-hidden="true"></a></h2><p>我们先获取一些数据来进行实验吧。我不想在这里做一个幼稚的例子。我们在研究人脸识别，所以我们需要一个真的人脸图像！<br>你可以自己创建自己的数据集，也可以从这里<a href="http://face-rec.org/databases/" target="_blank" rel="noopener">http://face-rec.org/databases</a>下载一个。</p>
+<ul>
+<li><a href="http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html" target="_blank" rel="noopener">AT&amp;TFacedatabase</a>又称ORL人脸数据库，<ul>
+<li>40个人，每人10张照片。照片在不同时间、不同光照、不同表情(睁眼闭眼、笑或者不笑)、不同人脸细节(戴眼镜或者不戴眼镜)下采集。</li>
+<li>所有的图像都在一个黑暗均匀的背景下采集的，正面竖直人脸(有些有有轻微旋转)。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="http://vision.ucsd.edu/content/yale-face-database" target="_blank" rel="noopener">YaleFacedatabase A</a> ORL数据库对于初始化测试比较适合，<ul>
+<li>但它是一个简单的数据库，特征脸已经可以达到97%的识别率，所以你使用其他方法很难得到更好的提升。</li>
+<li>Yale人脸数据库是一个对于初始实验更好的数据库，因为识别问题更复杂。</li>
+<li>这个数据库包括15个人(14个男人,1个女人)，每一个都有11个灰度图像，大小是320*243像素。数据库中有光照变化(中心光照、左侧光照、右侧光照)、表情变化(开心、正常、悲伤、瞌睡、惊讶、眨眼)、眼镜(戴眼镜或者没戴)。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="http://vision.ucsd.edu/~leekc/ExtYaleDatabase/ExtYaleB.html" target="_blank" rel="noopener">ExtendedYale Facedatabase B</a><ul>
+<li>此数据库包含38个人的2414张图片，并且是剪裁好的。这个数据库重点是测试特征提取是否对光照变化强健，因为图像的表情、遮挡等都没变化。</li>
+<li>我认为这个数据库太大，不适合这篇文章的实验，我建议使用ORL数据库。</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据准备" class="article-heading"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备<a class="article-anchor" href="#数据准备" aria-hidden="true"></a></h2><h3 id="准备基本的数据图像" class="article-heading"><a href="#准备基本的数据图像" class="headerlink" title="准备基本的数据图像"></a>准备基本的数据图像<a class="article-anchor" href="#准备基本的数据图像" aria-hidden="true"></a></h3><p>这里我们采用<a href="http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html" target="_blank" rel="noopener">AT&amp;TFacedatabase</a>数据集，又称ORL。<br>下载它并解压，可以看到一下结构：<br><img src="/images/docs/face/att_faces.png" alt="att_faces.png"><br>可以看到每个人一个文件夹，每个文件夹下是这个人的十张照片，但是不是我们熟悉的BMP或者是PNG或者是JPEG格式的，而是PGM格式的。</p>
+<h3 id="准备自己的图像数据" class="article-heading"><a href="#准备自己的图像数据" class="headerlink" title="准备自己的图像数据"></a>准备自己的图像数据<a class="article-anchor" href="#准备自己的图像数据" aria-hidden="true"></a></h3><p>准备好基本的人脸数据库后，我们不是要识别数据库的人脸，我们要做识别我们自己。既然这样，我们还需要准备自己的人俩图像</p>
+<p>首先我们先写一个程序调用电脑摄像头进行对自己的头像拍摄</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">VideoCapture</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">waitKey</span>, <span class="title">imshow</span>, <span class="title">imwrite</span>,<span class="title">destroyWindow</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$capture = <span class="keyword">new</span> VideoCapture();<span class="comment">//创建视频对象</span></span><br><span class="line">$capture-&gt;open(<span class="number">0</span>);<span class="comment">//打开电脑一个摄像头</span></span><br><span class="line"><span class="keyword">if</span> (!$capture-&gt;isOpened()) &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">'打开摄像头失败'</span>);</span><br><span class="line">&#125;</span><br><span class="line">$frame = <span class="keyword">null</span>;</span><br><span class="line">$number = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">    $capture-&gt;read($frame);<span class="comment">//把当前摄像头的图像捕捉并保存到$frame变量当中</span></span><br><span class="line">    imshow(<span class="string">"frame"</span>, $frame);<span class="comment">//暂时摄像头捕捉到的图像</span></span><br><span class="line">    $key = waitKey(<span class="number">50</span>);<span class="comment">//等待用户输入</span></span><br><span class="line">    $myPicsPath = realpath(<span class="string">'./myPics'</span>);<span class="comment">//保存拍摄自己人脸的路径</span></span><br><span class="line">    $filename = $myPicsPath . <span class="string">'/pic'</span> . $number . <span class="string">'.jpg'</span>;<span class="comment">//保存图像名称</span></span><br><span class="line">    <span class="keyword">if</span> ($key != <span class="number">-1</span>) &#123;</span><br><span class="line">        $key = chr($key);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> ($key) &#123;</span><br><span class="line">        <span class="keyword">case</span><span class="string">'p'</span>:<span class="comment">//当用户键入'p'则拍照</span></span><br><span class="line">            $number++;</span><br><span class="line">            imwrite($filename, $frame);<span class="comment">//保存图像</span></span><br><span class="line">            imshow(<span class="string">"photo"</span>, $frame);</span><br><span class="line">            waitKey(<span class="number">500</span>);</span><br><span class="line">            destroyWindow(<span class="string">"photo"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'s'</span>:<span class="comment">//当用户键入's'，跳出循环</span></span><br><span class="line">            <span class="keyword">break</span> <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>保存为<code>photograph.php</code>，并直接用cli模式运行，然后让我们对着摄像头拍10张照片，这里我们只需要10张就足够了。</p>
+<ul>
+<li>按“<code>p</code>”进行拍照</li>
+<li>按“<code>s</code>”退出程序</li>
+</ul>
+<p><img src="/images/docs/face/myPics.png" alt="myPics.png"></p>
+<h3 id="对自己人脸图像预处理" class="article-heading"><a href="#对自己人脸图像预处理" class="headerlink" title="对自己人脸图像预处理"></a>对自己人脸图像预处理<a class="article-anchor" href="#对自己人脸图像预处理" aria-hidden="true"></a></h3><p>在得到自己的人脸照片之后，还需要对这些照片进行一些预处理才能拿去训练模型。所谓预处理，其实就是检测并分割出人脸，并改变人脸的大小与下载的数据集中图片大小一致。<br>人脸检测在之前已经做了介绍。详情参考：<a href="cascade_classifier.html">级联分类器</a>。用ROI分割即可。</p>
+<p>检测出人脸之后改变大小使之与ORL人脸数据库人脸大小一致。<br>通过加断点在Locals里面或者是ImageWatch可以看到ORL人脸数据库人脸的大小是92 x 112。<br><img src="/images/docs/face/1.png" alt="1.png"><br>这里只需要对检测后得到的ROI做一次resize即可。</p>
+<h4 id="预处理代码" class="article-heading"><a href="#预处理代码" class="headerlink" title="预处理代码"></a>预处理代码<a class="article-anchor" href="#预处理代码" aria-hidden="true"></a></h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">CascadeClassifier</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Size</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Mat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">imread</span>, <span class="title">cvtColor</span>, <span class="title">equalizeHist</span>, <span class="title">waitKey</span>,<span class="title">resize</span>,<span class="title">imwrite</span>,<span class="title">imshow</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">COLOR_BGR2GRAY</span>,<span class="title">CV_HAAR_DO_ROUGH_SEARCH</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$cascadeClassifier = <span class="keyword">new</span> CascadeClassifier();</span><br><span class="line">$cascadeClassifier-&gt;load(<span class="string">'./haarcascade_frontalface_alt2.xml'</span>);</span><br><span class="line"></span><br><span class="line">$faces = [];</span><br><span class="line">$imgGray = <span class="keyword">null</span>;</span><br><span class="line">$number = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= $number; $i++) &#123;</span><br><span class="line">    $filePath = <span class="string">'./myPics/pic'</span> . $i . <span class="string">'.jpg'</span>;</span><br><span class="line">    <span class="keyword">if</span> ($filePath = realpath($filePath)) &#123;</span><br><span class="line">        $img = imread($filePath);</span><br><span class="line">        $imgGray = cvtColor($img, COLOR_BGR2GRAY);</span><br><span class="line">        equalizeHist($imgGray, $imgGray);</span><br><span class="line">        $cascadeClassifier-&gt;detectMultiScale($imgGray, $faces, <span class="number">1.1</span>, <span class="number">3</span>, CV_HAAR_DO_ROUGH_SEARCH, <span class="keyword">new</span> Size(<span class="number">50</span>, <span class="number">50</span>));</span><br><span class="line">        <span class="keyword">for</span> ($j = <span class="number">0</span>; $j &lt; count($faces); $j++) &#123;</span><br><span class="line">            $faceROI = $img-&gt;getImageROI($faces[$j]);</span><br><span class="line">            $MyFace = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">if</span> ($faceROI-&gt;cols &gt; <span class="number">100</span>) &#123;</span><br><span class="line">                resize($faceROI, $MyFace, <span class="keyword">new</span> Size(<span class="number">92</span>, <span class="number">112</span>));</span><br><span class="line">                $facePath = <span class="string">'./myFaces/'</span>;</span><br><span class="line">                $facePath = realpath($facePath).<span class="string">'/MyFcae'</span> . $i . <span class="string">'.jpg'</span>;</span><br><span class="line">                imwrite($facePath, $MyFace);</span><br><span class="line">                imshow(<span class="string">"ii"</span>, $MyFace);</span><br><span class="line">            &#125;</span><br><span class="line">            waitKey(<span class="number">10</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="处理后结果" class="article-heading"><a href="#处理后结果" class="headerlink" title="处理后结果"></a>处理后结果<a class="article-anchor" href="#处理后结果" aria-hidden="true"></a></h4><p><img src="/images/docs/face/myFaces.png" alt="myFaces.png"></p>
+<h3 id="整合数据" class="article-heading"><a href="#整合数据" class="headerlink" title="整合数据"></a>整合数据<a class="article-anchor" href="#整合数据" aria-hidden="true"></a></h3><h4 id="整合自己的图像集到人脸数据目录" class="article-heading"><a href="#整合自己的图像集到人脸数据目录" class="headerlink" title="整合自己的图像集到人脸数据目录"></a>整合自己的图像集到人脸数据目录<a class="article-anchor" href="#整合自己的图像集到人脸数据目录" aria-hidden="true"></a></h4><p>至此，我们就得到和ORL人脸数据库人脸大小一致的自己的人脸数据集。然后我们把自己的作为第41个人，<br>在我们下载的人脸文件夹下建立一个s41的子文件夹，把自己的人脸数据放进去。<br>就成了这样下面这样，最后一个文件夹里面是我自己的头像照片：<br><img src="/images/docs/face/2.png" alt="2.png"></p>
+<h4 id="生成csv文件" class="article-heading"><a href="#生成csv文件" class="headerlink" title="生成csv文件"></a>生成csv文件<a class="article-anchor" href="#生成csv文件" aria-hidden="true"></a></h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">searchDir</span><span class="params">($path, &amp;$data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//判断是否未文件夹</span></span><br><span class="line">    <span class="keyword">if</span> (is_dir($path)) &#123;</span><br><span class="line">        $dp = dir($path);<span class="comment">//</span></span><br><span class="line">        <span class="keyword">while</span> ($file = $dp-&gt;read()) &#123;</span><br><span class="line">            <span class="keyword">if</span> ($file != <span class="string">'.'</span> &amp;&amp; $file != <span class="string">'..'</span>) &#123;</span><br><span class="line">                searchDir($path . <span class="string">'/'</span> . $file, $data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        $dp-&gt;close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断是否未文件</span></span><br><span class="line">    <span class="keyword">if</span> (is_file($path)) &#123;</span><br><span class="line">        $data[] = $path;<span class="comment">//加到data数组中</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDir</span><span class="params">($dir)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $data = <span class="keyword">array</span>();</span><br><span class="line">    searchDir($dir, $data);</span><br><span class="line">    <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$paths = getDir(<span class="string">'./att_faces'</span>);</span><br><span class="line"><span class="comment">//var_dump($paths);</span></span><br><span class="line">$fp = fopen(<span class="string">"at.txt"</span>, <span class="string">"w"</span>);</span><br><span class="line">$pwdPath = realpath(<span class="string">'./att_faces'</span>);</span><br><span class="line">$strStartLen = strlen($pwdPath . <span class="string">"/s"</span>);</span><br><span class="line">sort($paths, SORT_STRING);</span><br><span class="line">$i = <span class="number">0</span>;</span><br><span class="line">$oldNum = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">foreach</span> ($paths <span class="keyword">as</span> $key =&gt; $path) &#123;</span><br><span class="line">    $realpath = realpath($path);</span><br><span class="line">    $info = explode(<span class="string">"/"</span>, $realpath);</span><br><span class="line">    $num = count($info) - <span class="number">1</span>;</span><br><span class="line">    $filename = $info[$num];</span><br><span class="line">    <span class="keyword">if</span> (strpos($filename, <span class="string">".pgm"</span>) || strpos($filename, <span class="string">".jpg"</span>)) &#123;</span><br><span class="line">        $endLen = strpos($realpath, <span class="string">'/'</span> . $filename);</span><br><span class="line">        $num = substr($realpath, $strStartLen, $endLen - $strStartLen);</span><br><span class="line">        $flag = fwrite($fp, $realpath . <span class="string">';'</span> . $num . <span class="string">"\r\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fclose($fp);</span><br></pre></td></tr></table></figure>
+<p>保存为<code>generateCSV.php</code>并运行，会生成一个<code>at.txt文件</code></p>
+<h2 id="人脸识别模型训练与识别" class="article-heading"><a href="#人脸识别模型训练与识别" class="headerlink" title="人脸识别模型训练与识别"></a>人脸识别模型训练与识别<a class="article-anchor" href="#人脸识别模型训练与识别" aria-hidden="true"></a></h2><h3 id="代码" class="article-heading"><a href="#代码" class="headerlink" title="代码"></a>代码<a class="article-anchor" href="#代码" aria-hidden="true"></a></h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Mat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Face</span>\<span class="title">FaceRecognizer</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Face</span>\<span class="title">LBPHFaceRecognizer</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Face</span>\<span class="title">BaseFaceRecognizer</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Size</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Scalar</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">Point</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">CascadeClassifier</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">CV</span>\<span class="title">VideoCapture</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">function</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">normalize</span>, <span class="title">imread</span>, <span class="title">cvtColor</span>, <span class="title">equalizeHist</span>, <span class="title">rectangleByRect</span>, <span class="title">imshow</span>, <span class="title">waitKey</span>, <span class="title">putText</span>, <span class="title">imwrite</span>, <span class="title">resize</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> <span class="title">const</span> <span class="title">CV</span>\&#123;</span><br><span class="line">    <span class="title">NORM_MINMAX</span>, <span class="title">CV_8UC1</span>, <span class="title">CV_8UC3</span>, <span class="title">IMREAD_GRAYSCALE</span>, <span class="title">COLOR_BGR2GRAY</span>, <span class="title">CV_HAAR_SCALE_IMAGE</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建和返回一个归一化后的图像矩阵</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">norm_0_255</span><span class="params">(Mat $src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $dst = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">switch</span> ($src-&gt;channels()) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            normalize($src, $dst, <span class="number">0</span>, <span class="number">255</span>, NORM_MINMAX, CV_8UC1);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            normalize($src, $dst, <span class="number">0</span>, <span class="number">255</span>, NORM_MINMAX, CV_8UC3);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            $src-&gt;copyTo($dst);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $dst;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">read_csv</span><span class="params">($filename, $separator = <span class="string">';'</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $images = [];</span><br><span class="line">    $labels = [];</span><br><span class="line">    $file = fopen($filename, <span class="string">"r"</span>);</span><br><span class="line">    <span class="keyword">while</span> (!feof($file)) &#123;</span><br><span class="line">        $str = fgets($file);<span class="comment">//fgets()函数从文件指针中读取一行</span></span><br><span class="line">        <span class="keyword">if</span> ($str) &#123;</span><br><span class="line">            $array = explode($separator, $str);</span><br><span class="line">            $images[] = imread($array[<span class="number">0</span>], IMREAD_GRAYSCALE);</span><br><span class="line">            $labels[] = intval($array[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fclose($file);</span><br><span class="line">    <span class="keyword">return</span> [$images, $labels];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $cvsPath = <span class="string">'at.txt'</span>;</span><br><span class="line">    <span class="keyword">list</span>($images, $labels) = read_csv($cvsPath);</span><br><span class="line">    <span class="keyword">if</span> (count($images) &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'至少需要两张图片'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    $faceRecognizer = LBPHFaceRecognizer::create();</span><br><span class="line">    $faceRecognizer-&gt;train($images, $labels);<span class="comment">//识别器训练</span></span><br><span class="line">    $cascadeClassifier = <span class="keyword">new</span> CascadeClassifier();</span><br><span class="line">    $cascadeClassifier-&gt;load(<span class="string">'./haarcascade_frontalface_alt2.xml'</span>);<span class="comment">//加载人脸识别分类器</span></span><br><span class="line">    $videoCapture = <span class="keyword">new</span> VideoCapture(<span class="number">0</span>);<span class="comment">//打开默认摄像头</span></span><br><span class="line">    <span class="keyword">if</span> (!$videoCapture-&gt;isOpened()) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'摄像头开启失败。'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $isStop = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">while</span> (!$isStop) &#123;</span><br><span class="line">        $frame = <span class="keyword">null</span>;</span><br><span class="line">        $videoCapture-&gt;read($frame);<span class="comment">//读取图像</span></span><br><span class="line">        $gray = cvtColor($frame, COLOR_BGR2GRAY);<span class="comment">//转为灰度图</span></span><br><span class="line">        equalizeHist($gray, $gray);</span><br><span class="line">        $faces = <span class="keyword">null</span>;</span><br><span class="line">        $cascadeClassifier-&gt;detectMultiScale($gray, $faces, <span class="number">1.1</span>, <span class="number">2</span>, CV_HAAR_SCALE_IMAGE, <span class="keyword">new</span> Size(<span class="number">50</span>, <span class="number">50</span>));</span><br><span class="line">        $face = <span class="keyword">null</span>;</span><br><span class="line">        $textLb = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($faces); $i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ($faces[$i]-&gt;height &gt; <span class="number">0</span> &amp;&amp; $faces[$i]-&gt;width &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                $face = $gray-&gt;getImageROI($faces[$i]);</span><br><span class="line">                $textLb = <span class="keyword">new</span> Point($faces[$i]-&gt;x, $faces[$i]-&gt;y - <span class="number">10</span>);</span><br><span class="line">                rectangleByRect($frame, $faces[$i], <span class="keyword">new</span> Scalar(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">1</span>, <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">                $faceLabel = $faceRecognizer-&gt;predict($face);</span><br><span class="line">                <span class="keyword">if</span> ($faceLabel == <span class="number">41</span>) &#123;</span><br><span class="line">                    $name = <span class="string">"hiho"</span>;</span><br><span class="line">                    putText($frame, $name, $textLb, <span class="number">3</span>, <span class="number">1</span>, <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        imshow(<span class="string">'frame'</span>, $frame);</span><br><span class="line">        <span class="keyword">if</span> (waitKey(<span class="number">50</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            $isStop = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">run();</span><br></pre></td></tr></table></figure>
+<h3 id="结果" class="article-heading"><a href="#结果" class="headerlink" title="结果"></a>结果<a class="article-anchor" href="#结果" aria-hidden="true"></a></h3><p><img src="/images/docs/face/result.png" alt="result.png"></p>
+<h2 id="代码下载" class="article-heading"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载<a class="article-anchor" href="#代码下载" aria-hidden="true"></a></h2><p><a href="https://github.com/phpopencv/tutorial-demo/tree/master/faceRecognition" target="_blank" rel="noopener">代码地址</a></p>
+
+              </div>
+              <footer class="article-footer">
+                <time class="article-footer-updated" datetime="2019-05-31T02:04:10.262Z" itemprop="dateModified">上次更新：2019-05-31</time>
+                <a href="cascade_classifier_training.html" class="article-footer-prev" title="级联分类器训练"><i class="fa fa-chevron-left"></i><span>上一页</span></a>
+              </footer>
+              
+<section id="comments">
+  <div id="disqus_thread"></div>
+</section>
+<script>
+  var disqus_shortname = 'phpopencv';
+  var disqus_url = 'http://phpopencv.org/zh-cn/docs/face.html';
+  var disqus_title = "人脸识别";
+  var disqus_config = function(){
+    this.language = 'zh';
+  };
+  (function(){
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+            </div>
+          </div>
+          <aside id="article-toc" role="navigation">
+            <div id="article-toc-inner">
+              <strong class="sidebar-title">目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#人脸库Face-Database"><span class="toc-text">人脸库Face Database</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据准备"><span class="toc-text">数据准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备基本的数据图像"><span class="toc-text">准备基本的数据图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#准备自己的图像数据"><span class="toc-text">准备自己的图像数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对自己人脸图像预处理"><span class="toc-text">对自己人脸图像预处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#预处理代码"><span class="toc-text">预处理代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理后结果"><span class="toc-text">处理后结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整合数据"><span class="toc-text">整合数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#整合自己的图像集到人脸数据目录"><span class="toc-text">整合自己的图像集到人脸数据目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#生成csv文件"><span class="toc-text">生成csv文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#人脸识别模型训练与识别"><span class="toc-text">人脸识别模型训练与识别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结果"><span class="toc-text">结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码下载"><span class="toc-text">代码下载</span></a></li></ol>
+              <a href="#" id="article-toc-top">回到顶部</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <aside id="sidebar" role="navigation">
+  <div class="inner"><strong class="sidebar-title">开始使用</strong><a href="index.html" class="sidebar-link">概述</a><a href="install.html" class="sidebar-link">安装</a><a href="structure.html" class="sidebar-link">结构</a><a href="dev-prepare.html" class="sidebar-link">开发前准备</a><a href="quick-start.html" class="sidebar-link">快速开始</a><strong class="sidebar-title">核心模块</strong><a href="core/mat.html" class="sidebar-link">sidebar.docs.mat123</a><a href="mat.html" class="sidebar-link">Mat</a><a href="how_to_scan_images.html" class="sidebar-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="sidebar-link">矩阵的掩码操作</a><a href="mat_operations.html" class="sidebar-link">图像操作</a><a href="adding_images.html" class="sidebar-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="sidebar-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="sidebar-link">基本绘图</a><a href="random_generator_and_text.html" class="sidebar-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="sidebar-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="sidebar-link">文件输入和输出使用XML和YAML文件</a><strong class="sidebar-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="sidebar-link">图像平滑处理</a><a href="erosion_dilatation.html" class="sidebar-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="sidebar-link">更多的形态变换</a><a href="flood_fill.html" class="sidebar-link">漫水填充</a><a href="pyramids.html" class="sidebar-link">图像金字塔</a><a href="threshold.html" class="sidebar-link">基本的阈值操作</a><a href="threshold_inRange.html" class="sidebar-link">阈值的使用范围</a><a href="filter_2d.html" class="sidebar-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="sidebar-link">向图像添加边框</a><a href="sobel_derivatives.html" class="sidebar-link">索贝尔衍生物</a><a href="laplace_operator.html" class="sidebar-link">拉普拉斯算子</a><a href="canny_detector.html" class="sidebar-link">Canny边缘检测器</a><a href="hough_lines.html" class="sidebar-link">霍夫线变换</a><a href="hough_circle.html" class="sidebar-link">霍夫圈变换</a><strong class="sidebar-title">highgui</strong><a href="trackbar.html" class="sidebar-link">滑动条</a><strong class="sidebar-title">目标检测</strong><a href="cascade_classifier.html" class="sidebar-link">级联分类器</a><a href="cascade_classifier_training.html" class="sidebar-link">级联分类器训练</a><strong class="sidebar-title">contaib模块</strong><a href="face.html" class="sidebar-link current">人脸识别</a></div>
+</aside>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="wrapper">
+  <div class="inner">
+    <div id="footer-copyright">
+      &copy; 2019 <a href="https://github.com/hihozhou" target="_blank">HiHo Zhou</a><br>
+      Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
+    </div>
+    <div id="footer-links">
+      <a href="http://weibo.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-weibo"></i></a>
+      <a href="https://twitter.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-twitter"></i></a>
+      <a href="https://github.com/hihozhou/php-opencv" class="footer-link" target="_blank"><i class="fa fa-github-alt"></i></a>
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <div id="mobile-nav-dimmer"></div>
+  <nav id="mobile-nav">
+  <div id="mobile-nav-inner">
+    <ul id="mobile-nav-list">
+      <a href="/docs/" class="mobile-nav-link">文档</a>
+      <li class="mobile-nav-item">
+        <a href="https://github.com/hihozhou/php-opencv" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
+      </li>
+    </ul>
+    
+      <strong class="mobile-nav-title">开始使用</strong><a href="index.html" class="mobile-nav-link">概述</a><a href="install.html" class="mobile-nav-link">安装</a><a href="structure.html" class="mobile-nav-link">结构</a><a href="dev-prepare.html" class="mobile-nav-link">开发前准备</a><a href="quick-start.html" class="mobile-nav-link">快速开始</a><strong class="mobile-nav-title">核心模块</strong><a href="core/mat.html" class="mobile-nav-link">sidebar.docs.mat123</a><a href="mat.html" class="mobile-nav-link">Mat</a><a href="how_to_scan_images.html" class="mobile-nav-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="mobile-nav-link">矩阵的掩码操作</a><a href="mat_operations.html" class="mobile-nav-link">图像操作</a><a href="adding_images.html" class="mobile-nav-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="mobile-nav-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="mobile-nav-link">基本绘图</a><a href="random_generator_and_text.html" class="mobile-nav-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="mobile-nav-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="mobile-nav-link">文件输入和输出使用XML和YAML文件</a><strong class="mobile-nav-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="mobile-nav-link">图像平滑处理</a><a href="erosion_dilatation.html" class="mobile-nav-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="mobile-nav-link">更多的形态变换</a><a href="flood_fill.html" class="mobile-nav-link">漫水填充</a><a href="pyramids.html" class="mobile-nav-link">图像金字塔</a><a href="threshold.html" class="mobile-nav-link">基本的阈值操作</a><a href="threshold_inRange.html" class="mobile-nav-link">阈值的使用范围</a><a href="filter_2d.html" class="mobile-nav-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="mobile-nav-link">向图像添加边框</a><a href="sobel_derivatives.html" class="mobile-nav-link">索贝尔衍生物</a><a href="laplace_operator.html" class="mobile-nav-link">拉普拉斯算子</a><a href="canny_detector.html" class="mobile-nav-link">Canny边缘检测器</a><a href="hough_lines.html" class="mobile-nav-link">霍夫线变换</a><a href="hough_circle.html" class="mobile-nav-link">霍夫圈变换</a><strong class="mobile-nav-title">highgui</strong><a href="trackbar.html" class="mobile-nav-link">滑动条</a><strong class="mobile-nav-title">目标检测</strong><a href="cascade_classifier.html" class="mobile-nav-link">级联分类器</a><a href="cascade_classifier_training.html" class="mobile-nav-link">级联分类器训练</a><strong class="mobile-nav-title">contaib模块</strong><a href="face.html" class="mobile-nav-link current">人脸识别</a>
+    
+  </div>
+  <div id="mobile-lang-select-wrap">
+    <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></span>
+    <select id="mobile-lang-select" data-canonical="docs/face.html">
+      
+        <option value="en">English</option>
+      
+        <option value="zh-cn" selected>简体中文</option>
+      
+    </select>
+  </div>
+</nav>
+  <!-- Scripts -->
+<!-- build:js build/js/main.js -->
+<script src="/js/lang_select.js"></script>
+<script src="/js/scrollingelement.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/mobile_nav.js"></script>
+<!-- endbuild -->
+<script src="https://cdn.jsdelivr.net/retinajs/1.3.0/retina.min.js" async></script>
+
+<!-- Algolia -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript">
+document.getElementById('search-input-wrap').classList.add('on');
+docsearch({
+  apiKey: 'cdea7d4e47d84f6145b77e7f68689f35',
+  indexName: 'hexo_zh-cn',
+  inputSelector: '#search-input'
+});
+</script>
+
+
+</body>
+</html>

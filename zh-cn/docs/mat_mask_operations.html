@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head prefix="og: http://ogp.me/ns#"><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>矩阵的掩码操作 | PHPOpenCV</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://phpopencv.org/zh-cn/docs/mat_mask_operations.html">
+  <!-- Alternative links -->
+  
+    
+      <link rel="alternative" hreflang="en" href="http://phpopencv.org/docs/mat_mask_operations.html">
+    
+      <link rel="alternative" hreflang="zh-cn" href="http://phpopencv.org/zh-cn/docs/mat_mask_operations.html">
+    
+  
+  <!-- Icon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/icon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/icon/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#2f83cd">
+  <meta name="msapplication-TileImage" content="/icon/mstile-144x144.png">
+  <!-- CSS -->
+  <!-- build:css build/css/navy.css -->
+  <link rel="stylesheet" href="/css/navy.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css">
+  <!-- RSS -->
+  <link rel="alternate" href="/atom.xml" title="PHPOpenCV">
+  <!-- Open Graph -->
+  <meta name="description" content="在矩阵上进行掩码操作是非常简单的。其思想是:根据掩码矩阵（也称作核）重新计算图像中每个像素的值。这个掩码矩阵里面的值将决定临近的像素对新像素值的影响多大。从数学的观点上来看，我们利用我们给定的值做了一个加权平均。 测试例子实现的功能现在需要实现一个功能，对一张图像的对比度进行增强。基本上我们要对图像的每一个像素应用下面的公式：   公式理解很多人看了公式后不能理解，其实上述的I(i,j) = 5*">
+<meta property="og:type" content="website">
+<meta property="og:title" content="矩阵的掩码操作">
+<meta property="og:url" content="http://phpopencv.org/zh-cn/docs/mat_mask_operations.html">
+<meta property="og:site_name" content="PHPOpenCV">
+<meta property="og:description" content="在矩阵上进行掩码操作是非常简单的。其思想是:根据掩码矩阵（也称作核）重新计算图像中每个像素的值。这个掩码矩阵里面的值将决定临近的像素对新像素值的影响多大。从数学的观点上来看，我们利用我们给定的值做了一个加权平均。 测试例子实现的功能现在需要实现一个功能，对一张图像的对比度进行增强。基本上我们要对图像的每一个像素应用下面的公式：   公式理解很多人看了公式后不能理解，其实上述的I(i,j) = 5*">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://phpopencv.org/images/docs/mat_mask_operations/1.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/mat_mask_operations/2.png">
+<meta property="og:image" content="http://phpopencv.org/images/docs/mat_mask_operations/3.png">
+<meta property="og:updated_time" content="2019-05-31T02:04:10.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="矩阵的掩码操作">
+<meta name="twitter:description" content="在矩阵上进行掩码操作是非常简单的。其思想是:根据掩码矩阵（也称作核）重新计算图像中每个像素的值。这个掩码矩阵里面的值将决定临近的像素对新像素值的影响多大。从数学的观点上来看，我们利用我们给定的值做了一个加权平均。 测试例子实现的功能现在需要实现一个功能，对一张图像的对比度进行增强。基本上我们要对图像的每一个像素应用下面的公式：   公式理解很多人看了公式后不能理解，其实上述的I(i,j) = 5*">
+<meta name="twitter:image" content="http://phpopencv.org/images/docs/mat_mask_operations/1.png">
+<meta name="twitter:site" content="hexojs">
+<meta property="fb:admins" content="100000247608790">
+  <!-- Google Analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48498357-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  <!-- Google AdSense -->
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9461880259118621",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <!-- Github Button -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <header id="header" class="wrapper">
+  <div id="header-inner" class="inner">
+    <h1 id="logo-wrap">
+      <a href="/zh-cn/" id="logo">PHPOpenCV</a>
+    </h1>
+    <nav id="main-nav">
+      <a href="/docs/" class="main-nav-link">文档</a>
+      <a href="https://github.com/hihozhou/php-opencv" class="main-nav-link"><i class="fa fa-github-alt"></i></a>
+
+    </nav>
+    <div id="lang-select-wrap">
+      <label id="lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></label>
+      <select id="lang-select" data-canonical="docs/mat_mask_operations.html">
+        
+          <option value="en">English</option>
+        
+          <option value="zh-cn" selected>简体中文</option>
+        
+      </select>
+    </div>
+    <a id="mobile-nav-toggle">
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+      <span class="mobile-nav-toggle-bar"></span>
+    </a>
+  </div>
+</header>
+
+    <div id="content-wrap">
+  <div id="content" class="wrapper">
+    <div id="content-inner">
+      <article class="article-container" itemscope itemtype="http://schema.org/Article">
+        <div class="article-inner">
+          <div class="article">
+            <div class="inner">
+              <header class="article-header">
+                <h1 class="article-title" itemprop="name">矩阵的掩码操作</h1>
+                <a href="https://github.com/phpopencv/site/edit/master/source/zh-cn/docs/mat_mask_operations.md" class="article-edit-link" title="改进本文"><i class="fa fa-pencil"></i></a>
+              </header>
+              <div class="article-content" itemprop="articleBody">
+                <p>在矩阵上进行掩码操作是非常简单的。其思想是:根据<code>掩码矩阵</code>（也称作<code>核</code>）重新计算图像中每个像素的值。<br>这个掩码矩阵里面的值将决定临近的像素对新像素值的影响多大。从数学的观点上来看，我们利用我们给定的值做了一个加权平均。</p>
+<h2 id="测试例子" class="article-heading"><a href="#测试例子" class="headerlink" title="测试例子"></a>测试例子<a class="article-anchor" href="#测试例子" aria-hidden="true"></a></h2><h3 id="实现的功能" class="article-heading"><a href="#实现的功能" class="headerlink" title="实现的功能"></a>实现的功能<a class="article-anchor" href="#实现的功能" aria-hidden="true"></a></h3><p>现在需要实现一个功能，对一张图像的对比度进行增强。基本上我们要对图像的每一个像素应用下面的公式：</p>
+<div align="center"><br><img src="/images/docs/mat_mask_operations/1.png" alt="1.png"><br></div>
+
+<h3 id="公式理解" class="article-heading"><a href="#公式理解" class="headerlink" title="公式理解"></a>公式理解<a class="article-anchor" href="#公式理解" aria-hidden="true"></a></h3><p>很多人看了公式后不能理解，其实上述的<code>I(i,j) = 5*I(i,j)-[I(i-1,j)+I(i+1,j)+I(i,j-1)+I(i,j+1)]</code>公式可以理解为：<br>要计算的中心点<code>I(i,j)</code>=中心点的值乘以5,再减去中心点上下左右相邻的值。<br>所以这里中心点的计算的值不是原值简简单单的乘以5,还受到原图像相邻的像素值影响。<br>这里也可以直接将公式转换中心点<code>I(i,j)</code>乘以一个权重值<code>M</code>，而M的权重值计算为：</p>
+<div align="center"><br><img src="/images/docs/mat_mask_operations/2.png" alt="2.png"><br></div>
+
+<h2 id="实现思路" class="article-heading"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路<a class="article-anchor" href="#实现思路" aria-hidden="true"></a></h2><p>我们可以有两种实现方案：</p>
+<ul>
+<li>第一种方式是直接套用上面的公式</li>
+<li>第二种通过使用掩码</li>
+</ul>
+<p>第一种就不用说了，第二种通过把掩码矩阵的中心放在你想要计算的像素上并把像素和覆盖在上面的掩码相加来使用掩码。<br>最易一些较大的矩阵，第二种方式会更加简单。<br>现在让我们来看看我们怎样通过基本的像素处理方法和使用<code>CV\filter2D</code>函数来做上述操作。</p>
+<h3 id="基本的方法" class="article-heading"><a href="#基本的方法" class="headerlink" title="基本的方法"></a>基本的方法<a class="article-anchor" href="#基本的方法" aria-hidden="true"></a></h3><p>下面是我们自己实现上面公式的代码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sharpen</span><span class="params">(Mat $myImage, &amp;$result)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ($myImage-&gt;depth() != CV_8U) &#123;<span class="comment">// accept only uchar images</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"图像必须未unchar类型"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $nChannels = $myImage-&gt;channels();</span><br><span class="line">    $result = Mat::zerosBySize($myImage-&gt;size(), $myImage-&gt;type());</span><br><span class="line">    <span class="keyword">for</span> ($j = <span class="number">1</span>; $j &lt; $myImage-&gt;rows - <span class="number">1</span>; ++$j) &#123;<span class="comment">//从矩阵第二行开始循环到倒数第二行</span></span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt; $myImage-&gt;cols - <span class="number">1</span>; ++$i) &#123;<span class="comment">//从矩阵第二列开始循环到倒数第二列</span></span><br><span class="line">            <span class="keyword">for</span> ($channel = <span class="number">0</span>; $channel &lt; $nChannels; $channel++) &#123;<span class="comment">//循环每个像素的矩阵通道</span></span><br><span class="line">                $value = $myImage-&gt;at($j, $i, $channel) * <span class="number">5</span><span class="comment">//原中心值乘以5</span></span><br><span class="line">                    - $myImage-&gt;at($j, $i - <span class="number">1</span>, $channel)<span class="comment">//减去中心值左边的值</span></span><br><span class="line">                    - $myImage-&gt;at($j, $i + <span class="number">1</span>, $channel)<span class="comment">//减去中心值右边的值</span></span><br><span class="line">                    - $myImage-&gt;at($j - <span class="number">1</span>, $i, $channel)<span class="comment">//减去中心值上面的值</span></span><br><span class="line">                    - $myImage-&gt;at($j + <span class="number">1</span>, $i, $channel);<span class="comment">//减去中心值下面的值</span></span><br><span class="line">                $result-&gt;at($j, $i, $channel, $value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//在图像的边界上，我们未对其做任何掩码操作，所以都赋值为0</span></span><br><span class="line">    $result-&gt;row(<span class="number">0</span>)-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>));</span><br><span class="line">    $result-&gt;row($result-&gt;rows - <span class="number">1</span>)-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>));</span><br><span class="line">    $result-&gt;col(<span class="number">0</span>)-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>));</span><br><span class="line">    $result-&gt;col($result-&gt;cols - <span class="number">1</span>)-&gt;setTo(<span class="keyword">new</span> Scalar(<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="filter2D函数实现" class="article-heading"><a href="#filter2D函数实现" class="headerlink" title="filter2D函数实现"></a>filter2D函数实现<a class="article-anchor" href="#filter2D函数实现" aria-hidden="true"></a></h3><p>应用这样的过滤器和应用图像处理的其它模块是共同的。首先你需要定义一个Mat对象，持有一个这样的掩码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$kernel = <span class="keyword">new</span> Mat(<span class="number">3</span>, <span class="number">3</span>, CV\CV_8SC1);</span><br><span class="line">$kernel-&gt;at(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">$kernel-&gt;at(<span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>然后，调用filter2D函数，指定输入和输出图像，和要使用的掩码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">filter2D($myImage, $filter2DResult, $myImage-&gt;depth(), $kernel);</span><br></pre></td></tr></table></figure>
+<h2 id="结果" class="article-heading"><a href="#结果" class="headerlink" title="结果"></a>结果<a class="article-anchor" href="#结果" aria-hidden="true"></a></h2><p>运行的结果是一样的，但是时间差距就比较明显</p>
+<div align="center"><br><img src="/images/docs/mat_mask_operations/3.png" alt="3.png"><br></div>
+
+<h2 id="完整代码下载地址" class="article-heading"><a href="#完整代码下载地址" class="headerlink" title="完整代码下载地址"></a>完整代码下载地址<a class="article-anchor" href="#完整代码下载地址" aria-hidden="true"></a></h2><p><a href="https://github.com/phpopencv/tutorial-demo/tree/master/core/mat_mask_operations" target="_blank" rel="noopener">例子地址</a></p>
+
+              </div>
+              <footer class="article-footer">
+                <time class="article-footer-updated" datetime="2019-05-31T02:04:10.262Z" itemprop="dateModified">上次更新：2019-05-31</time>
+                <a href="how_to_scan_images.html" class="article-footer-prev" title="扫描图像，查找表和时间测量"><i class="fa fa-chevron-left"></i><span>上一页</span></a><a href="mat_operations.html" class="article-footer-next" title="图像操作"><span>下一页</span><i class="fa fa-chevron-right"></i></a>
+              </footer>
+              
+<section id="comments">
+  <div id="disqus_thread"></div>
+</section>
+<script>
+  var disqus_shortname = 'phpopencv';
+  var disqus_url = 'http://phpopencv.org/zh-cn/docs/mat_mask_operations.html';
+  var disqus_title = "矩阵的掩码操作";
+  var disqus_config = function(){
+    this.language = 'zh';
+  };
+  (function(){
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+            </div>
+          </div>
+          <aside id="article-toc" role="navigation">
+            <div id="article-toc-inner">
+              <strong class="sidebar-title">目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#测试例子"><span class="toc-text">测试例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现的功能"><span class="toc-text">实现的功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公式理解"><span class="toc-text">公式理解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现思路"><span class="toc-text">实现思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本的方法"><span class="toc-text">基本的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter2D函数实现"><span class="toc-text">filter2D函数实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-text">结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整代码下载地址"><span class="toc-text">完整代码下载地址</span></a></li></ol>
+              <a href="#" id="article-toc-top">回到顶部</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <aside id="sidebar" role="navigation">
+  <div class="inner"><strong class="sidebar-title">开始使用</strong><a href="index.html" class="sidebar-link">概述</a><a href="install.html" class="sidebar-link">安装</a><a href="structure.html" class="sidebar-link">结构</a><a href="dev-prepare.html" class="sidebar-link">开发前准备</a><a href="quick-start.html" class="sidebar-link">快速开始</a><strong class="sidebar-title">核心模块</strong><a href="core/mat.html" class="sidebar-link">sidebar.docs.mat123</a><a href="mat.html" class="sidebar-link">Mat</a><a href="how_to_scan_images.html" class="sidebar-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="sidebar-link current">矩阵的掩码操作</a><a href="mat_operations.html" class="sidebar-link">图像操作</a><a href="adding_images.html" class="sidebar-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="sidebar-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="sidebar-link">基本绘图</a><a href="random_generator_and_text.html" class="sidebar-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="sidebar-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="sidebar-link">文件输入和输出使用XML和YAML文件</a><strong class="sidebar-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="sidebar-link">图像平滑处理</a><a href="erosion_dilatation.html" class="sidebar-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="sidebar-link">更多的形态变换</a><a href="flood_fill.html" class="sidebar-link">漫水填充</a><a href="pyramids.html" class="sidebar-link">图像金字塔</a><a href="threshold.html" class="sidebar-link">基本的阈值操作</a><a href="threshold_inRange.html" class="sidebar-link">阈值的使用范围</a><a href="filter_2d.html" class="sidebar-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="sidebar-link">向图像添加边框</a><a href="sobel_derivatives.html" class="sidebar-link">索贝尔衍生物</a><a href="laplace_operator.html" class="sidebar-link">拉普拉斯算子</a><a href="canny_detector.html" class="sidebar-link">Canny边缘检测器</a><a href="hough_lines.html" class="sidebar-link">霍夫线变换</a><a href="hough_circle.html" class="sidebar-link">霍夫圈变换</a><strong class="sidebar-title">highgui</strong><a href="trackbar.html" class="sidebar-link">滑动条</a><strong class="sidebar-title">目标检测</strong><a href="cascade_classifier.html" class="sidebar-link">级联分类器</a><a href="cascade_classifier_training.html" class="sidebar-link">级联分类器训练</a><strong class="sidebar-title">contaib模块</strong><a href="face.html" class="sidebar-link">人脸识别</a></div>
+</aside>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="wrapper">
+  <div class="inner">
+    <div id="footer-copyright">
+      &copy; 2019 <a href="https://github.com/hihozhou" target="_blank">HiHo Zhou</a><br>
+      Documentation licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
+    </div>
+    <div id="footer-links">
+      <a href="http://weibo.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-weibo"></i></a>
+      <a href="https://twitter.com/hexojs" class="footer-link" target="_blank"><i class="fa fa-twitter"></i></a>
+      <a href="https://github.com/hihozhou/php-opencv" class="footer-link" target="_blank"><i class="fa fa-github-alt"></i></a>
+    </div>
+  </div>
+</footer>
+
+  </div>
+  <div id="mobile-nav-dimmer"></div>
+  <nav id="mobile-nav">
+  <div id="mobile-nav-inner">
+    <ul id="mobile-nav-list">
+      <a href="/docs/" class="mobile-nav-link">文档</a>
+      <li class="mobile-nav-item">
+        <a href="https://github.com/hihozhou/php-opencv" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
+      </li>
+    </ul>
+    
+      <strong class="mobile-nav-title">开始使用</strong><a href="index.html" class="mobile-nav-link">概述</a><a href="install.html" class="mobile-nav-link">安装</a><a href="structure.html" class="mobile-nav-link">结构</a><a href="dev-prepare.html" class="mobile-nav-link">开发前准备</a><a href="quick-start.html" class="mobile-nav-link">快速开始</a><strong class="mobile-nav-title">核心模块</strong><a href="core/mat.html" class="mobile-nav-link">sidebar.docs.mat123</a><a href="mat.html" class="mobile-nav-link">Mat</a><a href="how_to_scan_images.html" class="mobile-nav-link">扫描图像，查找表和时间测量</a><a href="mat_mask_operations.html" class="mobile-nav-link current">矩阵的掩码操作</a><a href="mat_operations.html" class="mobile-nav-link">图像操作</a><a href="adding_images.html" class="mobile-nav-link">添加（混合）两个图像</a><a href="basic_linear_transform.html" class="mobile-nav-link">改变图像的对比度和亮度！</a><a href="basic_geometric_drawing.html" class="mobile-nav-link">基本绘图</a><a href="random_generator_and_text.html" class="mobile-nav-link">随机生成器和OpenCV文本</a><a href="discrete_fourier_transform.html" class="mobile-nav-link">离散傅里叶变换</a><a href="file_input_output_with_xml_yml.html" class="mobile-nav-link">文件输入和输出使用XML和YAML文件</a><strong class="mobile-nav-title">图像处理</strong><a href="gausian_median_blur_bilateral_filter.html" class="mobile-nav-link">图像平滑处理</a><a href="erosion_dilatation.html" class="mobile-nav-link">腐蚀和膨胀</a><a href="opening_closing_hats.html" class="mobile-nav-link">更多的形态变换</a><a href="flood_fill.html" class="mobile-nav-link">漫水填充</a><a href="pyramids.html" class="mobile-nav-link">图像金字塔</a><a href="threshold.html" class="mobile-nav-link">基本的阈值操作</a><a href="threshold_inRange.html" class="mobile-nav-link">阈值的使用范围</a><a href="filter_2d.html" class="mobile-nav-link">制作自己的线性滤波器！</a><a href="copyMakeBorder.html" class="mobile-nav-link">向图像添加边框</a><a href="sobel_derivatives.html" class="mobile-nav-link">索贝尔衍生物</a><a href="laplace_operator.html" class="mobile-nav-link">拉普拉斯算子</a><a href="canny_detector.html" class="mobile-nav-link">Canny边缘检测器</a><a href="hough_lines.html" class="mobile-nav-link">霍夫线变换</a><a href="hough_circle.html" class="mobile-nav-link">霍夫圈变换</a><strong class="mobile-nav-title">highgui</strong><a href="trackbar.html" class="mobile-nav-link">滑动条</a><strong class="mobile-nav-title">目标检测</strong><a href="cascade_classifier.html" class="mobile-nav-link">级联分类器</a><a href="cascade_classifier_training.html" class="mobile-nav-link">级联分类器训练</a><strong class="mobile-nav-title">contaib模块</strong><a href="face.html" class="mobile-nav-link">人脸识别</a>
+    
+  </div>
+  <div id="mobile-lang-select-wrap">
+    <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>简体中文</span></span>
+    <select id="mobile-lang-select" data-canonical="docs/mat_mask_operations.html">
+      
+        <option value="en">English</option>
+      
+        <option value="zh-cn" selected>简体中文</option>
+      
+    </select>
+  </div>
+</nav>
+  <!-- Scripts -->
+<!-- build:js build/js/main.js -->
+<script src="/js/lang_select.js"></script>
+<script src="/js/scrollingelement.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/mobile_nav.js"></script>
+<!-- endbuild -->
+<script src="https://cdn.jsdelivr.net/retinajs/1.3.0/retina.min.js" async></script>
+
+<!-- Algolia -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript">
+document.getElementById('search-input-wrap').classList.add('on');
+docsearch({
+  apiKey: 'cdea7d4e47d84f6145b77e7f68689f35',
+  indexName: 'hexo_zh-cn',
+  inputSelector: '#search-input'
+});
+</script>
+
+
+</body>
+</html>
